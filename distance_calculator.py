@@ -14,6 +14,3 @@ def dimensionalDistance(distances):
     for i in distances:
         currentDistance = pythagoreanDistance(currentDistance, i)
     return currentDistance
-
-distances = [2, 2, 2, 2]
-print(dimensionalDistance(distances))
