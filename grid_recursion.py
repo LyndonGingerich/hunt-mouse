@@ -4,9 +4,7 @@ import random
 
 goalItem = 'x'
 
-def buildGrid(grid, dimensions, size):
-    # <grid> must be a list.
-    # <dimensions> and <size> must be integers.
+def buildGrid(grid: list, dimensions: int, size: int):
     for i in range(size):
         grid.append([])
     newDimensions = dimensions - 1
