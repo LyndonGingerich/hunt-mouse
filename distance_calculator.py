@@ -1,16 +1,13 @@
-# To do:
-# Generate positions
-# Build or import speedometer
-
 import math
 
-def pythagoreanDistance(dis1, dis2):
-    hypotenuse = math.sqrt(math.pow(dis1, 2) + math.pow(dis2, 2))
-    return hypotenuse
-
-def dimensionalDistance(distances):
-    # <distances> should be an iterable of numbers.
-    currentDistance = 0
-    for i in distances:
-        currentDistance = pythagoreanDistance(currentDistance, i)
-    return currentDistance
+def distance(pointA, pointB):
+    # Assuming pointA and pointB are tuples, which will probably not be the case
+    if len(pointA) == len(pointB):
+        distances = []
+        for index, item in enumerate(pointA):
+            distance = abs(pointA[index] - pointB[index])
+            distances.append(distance)
+        totalDistance = math.hypot(*distances)
+        return totalDistance
+    else:
+        return None
