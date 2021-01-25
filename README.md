@@ -14,6 +14,7 @@ The PC is a mouse hunting for food hidden somewhere in a multi-dimensional grid.
 * Design and create game GUI
   * Dimensionality selection
   * PC control
+  * Velocity display
   * Flavor text
 * Implement terminal to run the game by program
 * Design and implement means of saving data
