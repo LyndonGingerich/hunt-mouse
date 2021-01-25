@@ -1,7 +1,7 @@
 import math
 
 def distance(pointA, pointB):
-    # Assuming pointA and pointB are tuples, which will probably not be the case
+    # Assuming pointA and pointB are tuples
     if len(pointA) == len(pointB):
         distances = []
         for index, dummy in enumerate(pointA):
