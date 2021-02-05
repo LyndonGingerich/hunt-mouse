@@ -21,7 +21,7 @@ def randomLocation(grid):
     else:
         return goalIndex
 
-def printGrid(grid): # For visualization, but may come in handy for graphics when dimensions > 2
+def printGrid(grid): # For testing, but may come in handy for graphics when dimensions > 2
     for i in grid:
         if len(i[0]) > 0 and i[0][0] != goalItem:
             printGrid(i)
