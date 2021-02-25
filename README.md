@@ -5,6 +5,7 @@ Turn-based dimensional search game guided solely by a display of velocity relati
 The PC is a mouse hunting for food hidden somewhere in a multi-dimensional grid.
 
 # To do
+* Learn how to use NumPy, doy
 * Consider possible names
 * Design and create game backend
   * PC object
