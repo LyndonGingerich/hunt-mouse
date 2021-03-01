@@ -4,13 +4,15 @@ import random
 
 goalItem = 'x'
 
-def buildGrid(grid: list, dimensions: int, size: int):
+def buildGrid(dimensions: int, size: int, grid: list = None):
+    if grid == None:
+        grid == []
     for i in range(size):
         grid.append([])
     newDimensions = dimensions - 1
     if newDimensions > 0:
         for i in grid:
-            buildGrid(i, newDimensions, size)
+            buildGrid(newDimensions, size, i)
     return grid
 
 def randomLocation(grid):
@@ -20,13 +22,6 @@ def randomLocation(grid):
         return randomLocation(goalIndex)
     else:
         return goalIndex
-
-def printGrid(grid): # For testing, but may come in handy for graphics when dimensions > 2
-    for i in grid:
-        if len(i[0]) > 0 and i[0][0] != goalItem:
-            printGrid(i)
-        else:
-            print(i)
 
 def insertGoalItem(grid):
     randomLocation(grid).append(goalItem)
