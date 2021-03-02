@@ -1,4 +1,3 @@
-class gridmaus:
+class Maus:
     def __init__(self, *coordinates):
-        for i in coordinates:
-            pass
+        self.pos = list(coordinates)
