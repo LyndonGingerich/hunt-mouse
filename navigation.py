@@ -1,4 +1,5 @@
 import math
+from newworld import goalItem
 
 def distance(pointA, pointB):
     # Assuming pointA and pointB are tuples
@@ -11,3 +12,6 @@ def distance(pointA, pointB):
         return totalDistance
     else:
         return None
+
+def checkLoc(entity, grid, coordinates): # recursive function to check whether the current location is the goal
+    pass
