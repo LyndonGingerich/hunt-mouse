@@ -6,7 +6,7 @@ goalItem = 'x'
 
 def buildGrid(dimensions: int, size: int, grid: list = None):
     if grid == None:
-        grid == []
+        grid = []
     for i in range(size):
         grid.append([])
     newDimensions = dimensions - 1
