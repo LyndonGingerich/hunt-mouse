@@ -1,14 +1,13 @@
-import navigation
-import newworld
 import random
 
 class Maus:
-    def __init__(self, *coordinates):
-        self.loc = list(coordinates)
+    def __init__(self, worldDimensions, worldSize):
+        self.loc = dict()
+        for i in range(worldDimensions):
+            self.loc[i] = int(worldSize / 2) # placing the maus in the middle of the world
 
 worldDimensions = int(input('Number of dimensions: '))
 worldLength = int(input('World size in cells: '))
-world = newworld.newWorld(worldDimensions, worldLength)
 
 def win():
     with open('foods.txt', 'r') as foodsFile:
