@@ -1,5 +1,10 @@
 import math
+import pygame
+from pygame.locals import *
 import random
+
+class App:
+    pass
 
 class Maus:
     def __init__(self, worldDimensions, worldSize):
