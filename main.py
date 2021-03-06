@@ -28,6 +28,10 @@ def getMausAddress(maus, worldDimensions):
     addressTuple = tuple(addressList)
     return addressTuple
 
+def getVelocity(distance1, distance2):
+    velocity = abs(distance1 = distance2)
+    return velocity
+
 def newGoal(worldDimensions, worldSize):
     addressList = []
     for dummy in range(worldDimensions):
