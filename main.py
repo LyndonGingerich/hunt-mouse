@@ -21,16 +21,47 @@ def distance(pointA = tuple, pointB = tuple):
     else:
         return None
 
-def getMausAddress(maus, worldDimensions):
+def getMausAddress(maus):
+    worldDimensions = maus.worldDimensions
     addressList = []
     for i in range(worldDimensions):
         addressList.append(maus.loc[i])
     addressTuple = tuple(addressList)
     return addressTuple
 
-def getVelocity(distance1, distance2):
-    velocity = abs(distance1 = distance2)
+def getVelocity(goal, oldAddress, newAddress):
+    oldDistance = distance(oldAddress, goal)
+    newDistance = distance(newAddress, goal)
+    velocity = abs(oldDistance - newDistance)
     return velocity
+
+def move(maus, movement = dict): # returns velocity
+    oldAddress = getMausAddress(maus)
+    for i in range(maus.worldSize):
+        maus.loc[i] += movement[i]
+    newAddress = getMausAddress(maus)
+    velocity = getVelocity(maus.goal, oldAddress, newAddress)
+    return velocity
+
+def moveDown(maus):
+    return moveOneInTwoDimensions(maus, 1, -1)
+
+def moveLeft(maus):
+    return moveOneInTwoDimensions(maus, 0, -1)
+
+def moveRight(maus):
+    return moveOneInTwoDimensions(maus, 0, 1)
+
+def moveOneInTwoDimensions(maus, dimension, distance):
+    dimensions = maus.worldDimensions
+    movement = dict()
+    for i in dimensions:
+        movement[i] = 0
+    movement[dimension] = distance
+    return move(maus, movement)
+
+def moveUp(maus):
+    return moveOneInTwoDimensions(maus, 1, 1)
 
 def newGoal(worldDimensions, worldSize):
     addressList = []
