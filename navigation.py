@@ -1,7 +1,6 @@
 import math
 
-def distance(pointA, pointB):
-    # Assuming pointA and pointB are tuples
+def distance(pointA = tuple, pointB = tuple):
     if len(pointA) == len(pointB):
         distances = []
         for index, dummy in enumerate(pointA):

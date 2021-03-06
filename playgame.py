@@ -5,6 +5,9 @@ class Maus:
         self.loc = dict()
         for i in range(worldDimensions):
             self.loc[i] = int(worldSize / 2) # placing the maus in the middle of the world
+        self.worldDimensions = worldDimensions
+        self.worldSize = worldSize
+        self.goal = newGoal(worldDimensions, worldSize)
 
 def win():
     with open('foods.txt', 'r') as foodsFile:
