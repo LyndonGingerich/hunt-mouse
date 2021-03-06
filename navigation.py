@@ -11,3 +11,10 @@ def distance(pointA, pointB):
         return totalDistance
     else:
         return None
+
+def getMausAddress(maus, worldDimensions):
+    addressList = []
+    for i in range(worldDimensions):
+        addressList.append(maus.loc[i])
+    addressTuple = tuple(addressList)
+    return addressTuple
