@@ -6,9 +6,6 @@ class Maus:
         for i in range(worldDimensions):
             self.loc[i] = int(worldSize / 2) # placing the maus in the middle of the world
 
-worldDimensions = int(input('Number of dimensions: '))
-worldLength = int(input('World size in cells: '))
-
 def win():
     with open('foods.txt', 'r') as foodsFile:
         foodsList = [x for x in foodsFile]
