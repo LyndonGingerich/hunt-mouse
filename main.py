@@ -26,25 +26,41 @@ class Maus:
         velocity = getVelocity(self.goal, oldAddress, newAddress)
         return velocity
 
+class ManualMaus(Maus):
+    def __init__(self, worldSize):
+        super().__init__(2, worldSize)
+
     def moveDown(self):
-        return self.moveOneInTwoDimensions(1, -1)
+        return self.keypadMove(1, -1)
+
+    def moveDownLeft(self):
+        return self.keypadMove(-1, -1)
+
+    def moveDownRight(self):
+        return self.keypadMove(1, -1)
 
     def moveLeft(self):
-        return self.moveOneInTwoDimensions(0, -1)
+        return self.keypadMove(0, -1)
 
     def moveRight(self):
-        return self.moveOneInTwoDimensions(0, 1)
+        return self.keypadMove(0, 1)
 
-    def moveOneInTwoDimensions(self, dimension, distance):
-        dimensions = self.worldDimensions
+    def keypadMove(self, dimension, distance):
+        dimensions = 2
         movement = dict()
-        for i in dimensions:
+        for i in range(dimensions):
             movement[i] = 0
         movement[dimension] = distance
-        return self.move(movement)
+        return super().move(movement)
 
     def moveUp(self):
-        return self.moveOneInTwoDimensions(1, 1)
+        return self.keypadMove(1, 1)
+
+    def moveUpLeft(self):
+        return self.keypadMove(-1, 1)
+
+    def moveUpRight(self):
+        return self.keypadMove(1, 1)
 
 def getDistance(pointA = tuple, pointB = tuple):
     if len(pointA) == len(pointB):
