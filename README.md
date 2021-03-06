@@ -10,8 +10,7 @@ The PC is a mouse hunting for food hidden somewhere in a multi-dimensional grid.
 
 * Consider the feasibility of implementing NumPy for speed
 * Implement a game engine, probably Pygame
-* Consider possible names
-* Write more of a story for the game
+* Write game narrative
 * Design and create game backend
   * PC object
   * PC movement
