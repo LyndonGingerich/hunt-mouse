@@ -24,8 +24,7 @@ class Maus:
 
     def generateGoal(self):
         addressList = []
-        for dummy in range(self.worldDimensions):
-            addressList.append(random.randrange(self.worldSize))
+        addressList = [random.randrange(self.worldSize) for x in range(self.worldDimensions)]
         addressTuple = tuple(addressList)
         return addressTuple
 
