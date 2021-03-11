@@ -13,7 +13,14 @@ class Maus:
             self.loc[i] = int(worldSize / 2) # placing the maus in the middle of the world
         self.worldDimensions = worldDimensions
         self.worldSize = worldSize
-        self.goal = generateGoal(worldDimensions, worldSize)
+        self.goal = Maus.generateGoal(self)
+
+    def generateGoal(self):
+        addressList = []
+        for dummy in range(self.worldDimensions):
+            addressList.append(random.randrange(self.worldSize))
+        addressTuple = tuple(addressList)
+        return addressTuple
 
     def getAddress(self):
         worldDimensions = self.worldDimensions
@@ -83,13 +90,6 @@ def getVelocity(goal, oldAddress, newAddress):
     newDistance = getDistance(newAddress, goal)
     velocity = abs(oldDistance - newDistance)
     return velocity
-
-def generateGoal(worldDimensions, worldSize):
-    addressList = []
-    for dummy in range(worldDimensions):
-        addressList.append(random.randrange(worldSize))
-    addressTuple = tuple(addressList)
-    return addressTuple
 
 def eatFood():
     with open('foods.txt', 'r') as foodsFile:
