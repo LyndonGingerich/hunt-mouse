@@ -56,8 +56,7 @@ class ManualMaus(Maus):
         return self.keypadMove(0, 1)
 
     def keypadMove(self, *movements):
-        movement = tuple(movements)
-        return super().move(movement)
+        return super().move(movements)
 
     def moveUp(self):
         return self.keypadMove(1, 1)
