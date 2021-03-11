@@ -72,9 +72,9 @@ def getDifference(int1, int2):
     difference = abs(int1 - int2)
     return difference
 
-def getDistance(pointA = tuple, pointB = tuple):
-    if len(pointA) == len(pointB):
-        distances = tuple([getDifference(pointA[x], pointB[x]) for x in range(len(pointA))])
+def getDistance(addressA = tuple, addressB = tuple):
+    if len(addressA) == len(addressB):
+        distances = tuple([getDifference(addressA[x], addressB[x]) for x in range(len(addressA))])
         totalDistance = math.hypot(*distances)
         return totalDistance
     else:
