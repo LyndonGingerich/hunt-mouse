@@ -25,12 +25,8 @@ class Maus:
         goalAddress = tuple([random.randrange(self.worldSize) for x in range(self.worldDimensions)])
         return goalAddress
 
-    def getAddress(self):
-        address = tuple([self.loc[x] for x in range(self.worldDimensions)])
-        return address
-
     def move(self, movement): # returns velocity
-        oldAddress = self.getAddress()
+        oldAddress = self.loc
         newAddress = tuple([oldAddress[x] + movement[x] for x in oldAddress])
         self.loc = newAddress
         velocity = getVelocity(self.goal, oldAddress, newAddress)
