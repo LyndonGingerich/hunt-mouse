@@ -8,9 +8,8 @@ class App:
 
 class Maus:
     def __init__(self, worldDimensions = int, worldSize = int):
-        self.loc = dict()
-        for i in range(worldDimensions):
-            self.loc[i] = int(worldSize / 2) # placing the maus in the middle of the world
+        dimensionCenter = int(worldSize / 2)
+        self.loc = tuple([dimensionCenter for x in range(worldDimensions)])
         self.worldDimensions = worldDimensions
         self.worldSize = worldSize
         self.goal = Maus.generateGoal(self)
@@ -30,11 +29,10 @@ class Maus:
         address = tuple([self.loc[x] for x in range(self.worldDimensions)])
         return address
 
-    def move(self, movement = dict): # returns velocity
+    def move(self, movement): # returns velocity
         oldAddress = self.getAddress()
-        for i in range(self.worldSize):
-            self.loc[i] += movement[i]
-        newAddress = self.getAddress()
+        newAddress = tuple([oldAddress[x] + movement[x] for x in oldAddress])
+        self.loc = newAddress
         velocity = getVelocity(self.goal, oldAddress, newAddress)
         return velocity
 
@@ -57,12 +55,8 @@ class ManualMaus(Maus):
     def moveRight(self):
         return self.keypadMove(0, 1)
 
-    def keypadMove(self, dimension, distance):
-        dimensions = 2
-        movement = dict()
-        for i in range(dimensions):
-            movement[i] = 0
-        movement[dimension] = distance
+    def keypadMove(self, dimension0, dimension1):
+        movement = (dimension0, dimension1)
         return super().move(movement)
 
     def moveUp(self):
