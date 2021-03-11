@@ -7,27 +7,27 @@ class App:
     pass
 
 class Maus:
-    def __init__(self, worldDimensions = int, worldSize = int):
+    def __init__(self, worldDimensions, worldSize):
         dimensionCenter = int(worldSize / 2)
-        self.loc = tuple([dimensionCenter for x in range(worldDimensions)])
+        self.loc = (dimensionCenter for x in range(worldDimensions))
         self.worldDimensions = worldDimensions
         self.worldSize = worldSize
         self.goal = Maus.generateGoal(self)
 
     def eatFood(self):
         with open('foods.txt', 'r') as foodsFile:
-            foodsList = [x for x in foodsFile]
-        food = foodsList[random.randrange(len(foodsList))]
+            foods = (x for x in foodsFile)
+        food = foods[random.randrange(len(foods))]
         food = food.rstrip('\n')
         print(f'The mouse finds {food} and scarfs it down. Good job!')
 
     def generateGoal(self):
-        goalAddress = tuple([random.randrange(self.worldSize) for x in range(self.worldDimensions)])
+        goalAddress = (random.randrange(self.worldSize) for x in range(self.worldDimensions))
         return goalAddress
 
     def move(self, movement): # returns velocity
         oldAddress = self.loc
-        newAddress = tuple([oldAddress[x] + movement[x] for x in oldAddress])
+        newAddress = (oldAddress[x] + movement[x] for x in oldAddress)
         self.loc = newAddress
         velocity = getVelocity(self.goal, oldAddress, newAddress)
         return velocity
@@ -67,9 +67,9 @@ def getDifference(int1, int2):
     difference = abs(int1 - int2)
     return difference
 
-def getDistance(addressA = tuple, addressB = tuple):
+def getDistance(addressA, addressB):
     if len(addressA) == len(addressB):
-        distances = tuple([getDifference(addressA[x], addressB[x]) for x in range(len(addressA))])
+        distances = (getDifference(addressA[x], addressB[x]) for x in range(len(addressA)))
         totalDistance = math.hypot(*distances)
         return totalDistance
     else:
