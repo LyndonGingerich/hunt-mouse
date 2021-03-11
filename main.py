@@ -7,7 +7,7 @@ class App:
     pass
 
 class Maus:
-    def __init__(self, worldDimensions, worldSize):
+    def __init__(self, worldDimensions = int, worldSize = int):
         self.loc = dict()
         for i in range(worldDimensions):
             self.loc[i] = int(worldSize / 2) # placing the maus in the middle of the world
@@ -23,18 +23,12 @@ class Maus:
         print(f'The mouse finds {food} and scarfs it down. Good job!')
 
     def generateGoal(self):
-        addressList = []
-        addressList = [random.randrange(self.worldSize) for x in range(self.worldDimensions)]
-        addressTuple = tuple(addressList)
-        return addressTuple
+        goalAddress = tuple([random.randrange(self.worldSize) for x in range(self.worldDimensions)])
+        return goalAddress
 
     def getAddress(self):
-        worldDimensions = self.worldDimensions
-        addressList = []
-        for i in range(worldDimensions):
-            addressList.append(self.loc[i])
-        addressTuple = tuple(addressList)
-        return addressTuple
+        address = tuple([self.loc[x] for x in range(self.worldDimensions)])
+        return address
 
     def move(self, movement = dict): # returns velocity
         oldAddress = self.getAddress()
@@ -80,12 +74,13 @@ class ManualMaus(Maus):
     def moveUpRight(self):
         return self.keypadMove(1, 1)
 
+def getDifference(int1, int2):
+    difference = abs(int1 - int2)
+    return difference
+
 def getDistance(pointA = tuple, pointB = tuple):
     if len(pointA) == len(pointB):
-        distances = []
-        for index, dummy in enumerate(pointA):
-            distance = abs(pointA[index] - pointB[index])
-            distances.append(distance)
+        distances = tuple([getDifference(pointA[x], pointB[x]) for x in range(len(pointA))])
         totalDistance = math.hypot(*distances)
         return totalDistance
     else:
@@ -94,5 +89,5 @@ def getDistance(pointA = tuple, pointB = tuple):
 def getVelocity(goal, oldAddress, newAddress):
     oldDistance = getDistance(oldAddress, goal)
     newDistance = getDistance(newAddress, goal)
-    velocity = abs(oldDistance - newDistance)
+    velocity = newDistance - oldDistance
     return velocity
