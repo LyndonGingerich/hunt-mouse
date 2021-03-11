@@ -15,6 +15,13 @@ class Maus:
         self.worldSize = worldSize
         self.goal = Maus.generateGoal(self)
 
+    def eatFood(self):
+        with open('foods.txt', 'r') as foodsFile:
+            foodsList = [x for x in foodsFile]
+        food = foodsList[random.randrange(len(foodsList))]
+        food = food.rstrip('\n')
+        print(f'The mouse finds {food} and scarfs it down. Good job!')
+
     def generateGoal(self):
         addressList = []
         for dummy in range(self.worldDimensions):
@@ -90,10 +97,3 @@ def getVelocity(goal, oldAddress, newAddress):
     newDistance = getDistance(newAddress, goal)
     velocity = abs(oldDistance - newDistance)
     return velocity
-
-def eatFood():
-    with open('foods.txt', 'r') as foodsFile:
-        foodsList = [x for x in foodsFile]
-    food = foodsList[random.randrange(len(foodsList))]
-    food = food.rstrip('\n')
-    print(f'The mouse finds {food} and scarfs it down. Good job!')
