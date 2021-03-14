@@ -27,8 +27,8 @@ class Maus:
 
     def move(self, movement): # returns velocity
         oldAddress = self.loc
-        newAddress = (oldAddress[x] + movement[x] for x in oldAddress)
-        self.loc = newAddress
+        self.loc = (oldAddress[x] + movement[x] for x in oldAddress)
+        newAddress = self.loc
         velocity = getVelocity(self.goal, oldAddress, newAddress)
         return velocity
 
