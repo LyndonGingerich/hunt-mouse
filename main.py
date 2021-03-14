@@ -9,27 +9,29 @@ class App:
 class Maus:
     def __init__(self, worldDimensions, worldSize):
         dimensionCenter = int(worldSize / 2)
-        self.loc = (dimensionCenter for x in range(worldDimensions))
+        self.loc = tuple([dimensionCenter for x in range(worldDimensions)])
         self.worldDimensions = worldDimensions
         self.worldSize = worldSize
         self.goal = Maus.generateGoal(self)
 
     def eatFood(self):
         with open('foods.txt', 'r') as foodsFile:
-            foods = (x for x in foodsFile)
+            foods = [x for x in foodsFile]
         food = foods[random.randrange(len(foods))]
         food = food.rstrip('\n')
         print(f'The mouse finds {food} and scarfs it down. Good job!')
 
     def generateGoal(self):
-        goalAddress = (random.randrange(self.worldSize) for x in range(self.worldDimensions))
+        goalAddress = tuple([random.randrange(self.worldSize) for x in range(self.worldDimensions)])
         return goalAddress
 
     def move(self, movement): # returns velocity
         oldAddress = self.loc
-        self.loc = (oldAddress[x] + movement[x] for x in oldAddress)
+        self.loc = tuple([oldAddress[x] + movement[x] for x in oldAddress])
         newAddress = self.loc
         velocity = getVelocity(self.goal, oldAddress, newAddress)
+        print(oldAddress)
+        print(newAddress)
         return velocity
 
 class ManualMaus(Maus):
@@ -68,12 +70,9 @@ def getDifference(int1, int2):
     return difference
 
 def getDistance(addressA, addressB):
-    if len(addressA) == len(addressB):
-        distances = (getDifference(addressA[x], addressB[x]) for x in range(len(addressA)))
-        totalDistance = math.hypot(*distances)
-        return totalDistance
-    else:
-        return None
+    distances = tuple([getDifference(addressA[x], addressB[x]) for x in range(len(addressA))])
+    totalDistance = math.hypot(*distances)
+    return totalDistance
 
 def getVelocity(goal, oldAddress, newAddress):
     oldDistance = getDistance(oldAddress, goal)
