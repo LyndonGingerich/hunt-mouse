@@ -3,8 +3,18 @@ import pygame
 # from pygame.locals import *
 import random
 
+dimensions = 3
+size = 5
+
 class App:
-    pass
+    def __init__(self):
+        maus = Maus(dimensions, size)
+        for dummy in range(10): # for testing; will be changed to while-loop
+            oldAddress = maus.loc
+            newAddress = maus.move(tuple([random.randrange(3) - 1 for x in range(maus.worldDimensions)]))
+            maus.loc = newAddress
+            velocity = getVelocity(maus.goal, oldAddress, newAddress)
+            print(velocity)
 
 class Maus:
     def __init__(self, worldDimensions, worldSize):
@@ -26,13 +36,8 @@ class Maus:
         return goalAddress
 
     def move(self, movement): # returns velocity
-        oldAddress = self.loc
-        self.loc = tuple([oldAddress[x] + movement[x] for x in oldAddress])
-        newAddress = self.loc
-        velocity = getVelocity(self.goal, oldAddress, newAddress)
-        print(oldAddress)
-        print(newAddress)
-        return velocity
+        newAddress = tuple([self.loc[x] + movement[x] for x in movement])
+        return newAddress
 
 class ManualMaus(Maus):
     def __init__(self, worldSize):
