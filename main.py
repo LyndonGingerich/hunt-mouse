@@ -2,12 +2,9 @@ import math
 import pygame
 from random import random
 
-dimensions = 3
-size = 5
-
 class Game:
     def __init__(self):
-        self.maus = Maus(dimensions, size)
+        self.maus = Maus(3, 5) # change to take input later
         self.running = True
     
     def playGame(self):
