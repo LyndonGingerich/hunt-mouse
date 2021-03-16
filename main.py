@@ -38,14 +38,12 @@ class Maus:
         print(f'The mouse finds {food} and scarfs it down. Good job!')
 
     def generateGoal(self):
-        goalAddress = tuple(
-            [randomInteger(self.worldSize) for x in self.dimensionRange]
-            )
+        goalAddress = tuple([randomInteger(self.worldSize) for x in self.dimensionRange])
         return goalAddress
 
     def move(self, movement): # returns velocity
-        newAddress = tuple([adjustToBoundaries(self.loc[x] + movement[x], self.worldSize - 1)
-             for x in movement])
+        newAddress = tuple([adjustToBoundaries(self.loc[x] + movement[x], self.worldSize - 1) 
+        for x in movement])
         return newAddress
 
 class ManualMaus(Maus):
