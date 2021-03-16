@@ -34,7 +34,7 @@ class Maus:
         return goalAddress
 
     def move(self, movement): # returns velocity
-        newAddress = tuple([self.loc[x] + movement[x] for x in movement])
+        newAddress = tuple([adjustToBoundaries(self.loc[x] + movement[x], self.worldSize - 1) for x in movement])
         return newAddress
 
 class ManualMaus(Maus):
@@ -67,6 +67,13 @@ class ManualMaus(Maus):
 
     def moveUpRight(self):
         return self.keypadMove(1, 1)
+
+def adjustToBoundaries(coordinate, boundary):
+    if coordinate > boundary:
+        coordinate = boundary
+    elif coordinate < 0:
+        coordinate = 0
+    return coordinate
 
 def getDifference(int1, int2):
     difference = abs(int1 - int2)
