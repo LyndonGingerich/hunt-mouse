@@ -1,7 +1,7 @@
 import math
 import pygame
 # from pygame.locals import *
-import random
+from random import random
 
 dimensions = 3
 size = 5
@@ -11,7 +11,7 @@ class App:
         maus = Maus(dimensions, size)
         for dummy in range(10): # for testing; will be changed to while-loop
             oldAddress = maus.loc
-            maus.loc = maus.move(tuple([random.randrange(3) - 1 for x in range(maus.worldDimensions)]))
+            maus.loc = maus.move(tuple([random() * 3 - 1 for x in range(maus.worldDimensions)]))
             velocity = getVelocity(maus.goal, oldAddress, maus.loc)
             print(velocity)
 
@@ -26,12 +26,12 @@ class Maus:
     def eatFood(self):
         with open('foods.txt', 'r') as foodsFile:
             foods = [x for x in foodsFile]
-        food = foods[random.randrange(len(foods))]
+        food = foods[random() * len(foods)]
         food = food.rstrip('\n')
         print(f'The mouse finds {food} and scarfs it down. Good job!')
 
     def generateGoal(self):
-        goalAddress = tuple([random.random() * self.worldSize for x in range(self.worldDimensions)])
+        goalAddress = tuple([random() * self.worldSize for x in range(self.worldDimensions)])
         return goalAddress
 
     def move(self, movement): # returns velocity
