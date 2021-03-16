@@ -5,36 +5,47 @@ from random import random
 dimensions = 3
 size = 5
 
-class App:
+class Game:
     def __init__(self):
-        maus = Maus(dimensions, size)
-        for dummy in range(10): # for testing; will be changed to while-loop
-            oldAddress = maus.loc
-            maus.loc = maus.move(tuple([random() * 3 - 1 for x in range(maus.worldDimensions)]))
-            velocity = getVelocity(maus.goal, oldAddress, maus.loc)
-            print(velocity)
+        self.maus = Maus(dimensions, size)
+        self.running = True
+    
+    def playGame(self):
+        while self.running == True:
+            oldAddress = self.maus.loc
+            self.maus.loc = self.maus.move(tuple(
+                [randomInteger(3) - 1 for x in self.maus.dimensionRange]))
+            if oldAddress == self.maus.loc:
+                self.maus.eatFood()
+                self.running = False
+            else:
+                velocity = getVelocity(self.maus.goal, oldAddress, self.maus.loc)
+                print(velocity)
 
 class Maus:
     def __init__(self, worldDimensions, worldSize):
         dimensionCenter = int(worldSize / 2)
-        self.loc = tuple([dimensionCenter for x in range(worldDimensions)])
-        self.worldDimensions = worldDimensions
+        self.dimensionRange = range(worldDimensions)
         self.worldSize = worldSize
         self.goal = Maus.generateGoal(self)
+        self.loc = tuple([dimensionCenter for x in self.dimensionRange])
 
     def eatFood(self):
         with open('foods.txt', 'r') as foodsFile:
             foods = [x for x in foodsFile]
-        food = foods[random() * len(foods)]
+        food = foods[randomInteger(len(foods))]
         food = food.rstrip('\n')
         print(f'The mouse finds {food} and scarfs it down. Good job!')
 
     def generateGoal(self):
-        goalAddress = tuple([random() * self.worldSize for x in range(self.worldDimensions)])
+        goalAddress = tuple(
+            [randomInteger(self.worldSize) for x in self.dimensionRange]
+            )
         return goalAddress
 
     def move(self, movement): # returns velocity
-        newAddress = tuple([adjustToBoundaries(self.loc[x] + movement[x], self.worldSize - 1) for x in movement])
+        newAddress = tuple([adjustToBoundaries(self.loc[x] + movement[x], self.worldSize - 1)
+             for x in movement])
         return newAddress
 
 class ManualMaus(Maus):
@@ -75,6 +86,10 @@ def adjustToBoundaries(coordinate, boundary):
         coordinate = 0
     return coordinate
 
+def randomInteger(maximum): # supposed to be faster than randrange
+    integer = int(random() * maximum)
+    return integer
+
 def getDifference(int1, int2):
     difference = abs(int1 - int2)
     return difference
@@ -89,3 +104,6 @@ def getVelocity(goal, oldAddress, newAddress):
     newDistance = getDistance(newAddress, goal)
     velocity = newDistance - oldDistance
     return velocity
+
+game = Game()
+game.playGame()
