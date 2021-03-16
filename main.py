@@ -11,9 +11,8 @@ class App:
         maus = Maus(dimensions, size)
         for dummy in range(10): # for testing; will be changed to while-loop
             oldAddress = maus.loc
-            newAddress = maus.move(tuple([random.randrange(3) - 1 for x in range(maus.worldDimensions)]))
-            maus.loc = newAddress
-            velocity = getVelocity(maus.goal, oldAddress, newAddress)
+            maus.loc = maus.move(tuple([random.randrange(3) - 1 for x in range(maus.worldDimensions)]))
+            velocity = getVelocity(maus.goal, oldAddress, maus.loc)
             print(velocity)
 
 class Maus:
