@@ -105,5 +105,6 @@ def getVelocity(goal, oldAddress, newAddress):
     velocity = newDistance - oldDistance
     return velocity
 
-game = Game()
-game.playGame()
+if __name__ == 'main':
+    game = Game()
+    game.playGame()
