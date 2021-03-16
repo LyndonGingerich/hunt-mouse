@@ -32,7 +32,7 @@ class Maus:
         print(f'The mouse finds {food} and scarfs it down. Good job!')
 
     def generateGoal(self):
-        goalAddress = tuple([random.randrange(self.worldSize) for x in range(self.worldDimensions)])
+        goalAddress = tuple([random.random() * self.worldSize for x in range(self.worldDimensions)])
         return goalAddress
 
     def move(self, movement): # returns velocity
