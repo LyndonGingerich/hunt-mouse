@@ -75,10 +75,7 @@ class ManualMaus(Maus):
         return self.keypadMove(1, 1)
 
 def adjustToBoundaries(coordinate, boundary):
-    if coordinate > boundary:
-        coordinate = boundary
-    elif coordinate < 0:
-        coordinate = 0
+    coordinate = boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
     return coordinate
 
 def randomInteger(maximum): # supposed to be faster than randrange
