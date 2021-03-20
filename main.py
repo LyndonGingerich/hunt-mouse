@@ -2,6 +2,7 @@ import math
 import pygame
 from random import random
 
+
 class Game:
     def __init__(self):
         self.maus = Maus(3, 5) # change to take input later
@@ -18,6 +19,7 @@ class Game:
             else:
                 velocity = getVelocity(self.maus.goal, oldAddress, self.maus.loc)
                 print(velocity)
+
 
 class Maus:
     def __init__(self, worldDimensions, worldSize):
@@ -42,6 +44,7 @@ class Maus:
         newAddress = tuple([adjustToBoundaries(self.loc[x] + movement[x], self.worldSize - 1) 
         for x in movement])
         return newAddress
+
 
 class ManualMaus(Maus):
     def __init__(self, worldSize):
@@ -73,6 +76,7 @@ class ManualMaus(Maus):
 
     def moveUpRight(self):
         return self.keypadMove(1, 1)
+
 
 def adjustToBoundaries(coordinate, boundary):
     coordinate = boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
