@@ -8,13 +8,14 @@ import pygame_menu
 class Game:
     '''The class that runs the game and calls all the other classes.'''
     def __init__(self):
-        self.maus = Maus(3, 5) # change to take input later
         pygame.init()
         self.running = True
         self.showMenu()
+        self.maus = None
 
     def playGame(self):
         '''The boss function of the boss class.'''
+        self.maus = Maus()
         while self.running:
             oldAddress = self.maus.loc
             self.maus.loc = self.maus.move(tuple(
@@ -28,12 +29,14 @@ class Game:
 
     def showMenu(self):
         '''Allows manual selection of world size; world dimensions are set to 2.'''
-        dummy = pygame.display.set_mode((600, 400))
+        screen = pygame.display.set_mode((600, 400))
         menu = pygame_menu.Menu('Welcome', 300, 400, theme=pygame_menu.themes.THEME_BLUE)
         menu.add.selector('World size:', [('2', 2), ('3', 3), ('4', 4), ('5', 5),
         ('6', 6), ('7', 7), ('8', 8), ('9', 9), ('10', 10)])
+         # left off here; try to get this to do stuff
         menu.add.button('Begin', self.playGame)
         menu.add.button('Quit', pygame_menu.events.EXIT)
+        menu.mainloop(screen)
 
 
 class Maus:
