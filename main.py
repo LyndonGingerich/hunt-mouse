@@ -31,8 +31,7 @@ class Game:
         '''Allows manual selection of world size; world dimensions are set to 2.'''
         screen = pygame.display.set_mode((600, 400))
         menu = pygame_menu.Menu('Welcome', 300, 400, theme=pygame_menu.themes.THEME_BLUE)
-        menu.add.selector('World size:', [('2', 2), ('3', 3), ('4', 4), ('5', 5),
-        ('6', 6), ('7', 7), ('8', 8), ('9', 9), ('10', 10)])
+        menu.add.selector('World size:', generateNumericalSelector(3, 10))
          # left off here; try to get this to do stuff
         menu.add.button('Begin', self.playGame)
         menu.add.button('Quit', pygame_menu.events.EXIT)
@@ -114,6 +113,9 @@ def eatFood():
     food = foods[randomInteger(len(foods))]
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
+
+def generateNumericalSelector(minSize, maxSize):
+    return [(str(x), x) for x in range(minSize, maxSize + 1)]
 
 def getDifference(int1, int2):
     '''To shorten an unweildy list comprehension'''
