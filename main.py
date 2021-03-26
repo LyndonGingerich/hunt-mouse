@@ -27,11 +27,15 @@ class Game:
                 velocity = getVelocity(self.maus.goal, oldAddress, self.maus.loc)
                 print(velocity)
 
+    def setWorldSize(self, dummy, size):
+        '''Takes arguments from menu selection'''
+        # build this
+
     def showMenu(self):
         '''Allows manual selection of world size; world dimensions are set to 2.'''
         screen = pygame.display.set_mode((600, 400))
         menu = pygame_menu.Menu('Welcome', 300, 400, theme=pygame_menu.themes.THEME_BLUE)
-        menu.add.selector('World size:', generateNumericalSelector(3, 10))
+        menu.add.selector('World size:', generateNumericalSelector(3, 10), onreturn=self.setWorldSize)
          # left off here; try to get this to do stuff
         menu.add.button('Begin', self.playGame)
         menu.add.button('Quit', pygame_menu.events.EXIT)
