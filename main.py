@@ -13,9 +13,10 @@ class Game:
     def __init__(self):
         pygame.init()
         self.running = True
-        self.showMenu()
         self.maus = None
-        self.world = None
+        self.screen = pygame.display.set_mode((600, 400))
+        worldDimensions, worldSize = self.getPlayerSelectionsFromMenu()
+        self.world = World(worldDimensions, worldSize)
 
     def playGame(self):
         '''The boss function of the boss class.'''
@@ -30,19 +31,21 @@ class Game:
                 velocity = getVelocity(self.maus.goal, oldAddress, self.maus.loc)
                 print(velocity)
 
-    def setWorldSize(self, dummy, size, **kwargs):
-        '''Takes arguments from menu selection'''
-        # build this
-
-    def showMenu(self):
+    def getPlayerSelectionsFromMenu(self):
         '''Allows manual selection of world size; world dimensions are set to 2.'''
-        screen = pygame.display.set_mode((600, 400))
+        worldDimensions = 2
+        worldSizeSelector = (None, None)
         menu = pygame_menu.Menu('Welcome', 300, 400, theme=pygame_menu.themes.THEME_BLUE)
-        menu.add.selector('World size:', generateNumericalSelector(3, 10), onreturn=self.setWorldSize)
-         # left off here; try to get this to do stuff
-        menu.add.button('Begin', self.playGame)
+        menu.add.selector(
+            'World size:',
+            generateNumericalSelector(3, 10),
+            onreturn=worldSizeSelector
+            )
+        (_, worldSize) = worldSizeSelector
+        menu.add.button('Begin', self.playGame) # not when self.playGame should be called
         menu.add.button('Quit', pygame_menu.events.EXIT)
-        menu.mainloop(screen)
+        menu.mainloop(self.screen)
+        return worldDimensions, worldSize
 
 
 class World():
