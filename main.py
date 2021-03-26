@@ -5,7 +5,7 @@ from random import random
 import pygame
 import pygame_menu
 
-import controls
+
 
 
 class Game:
