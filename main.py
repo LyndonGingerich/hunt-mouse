@@ -6,7 +6,7 @@ import pygame
 import pygame_menu
 
 class Game:
-    '''The class that runs the game and calls all the other classes.'''
+    '''Runs the game and calls all the other classes'''
     def __init__(self):
         pygame.init()
         self.running = True
