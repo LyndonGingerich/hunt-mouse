@@ -115,6 +115,7 @@ def eatFood():
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
 def generateNumericalSelector(minSize, maxSize):
+    '''Helper function for Game.showMenu()'''
     return [(str(x), x) for x in range(minSize, maxSize + 1)]
 
 def getDifference(int1, int2):
