@@ -30,7 +30,7 @@ class Game:
                 velocity = getVelocity(self.maus.goal, oldAddress, self.maus.loc)
                 print(velocity)
 
-    def setWorldSize(self, dummy, size):
+    def setWorldSize(self, dummy, size, **kwargs):
         '''Takes arguments from menu selection'''
         # build this
 
