@@ -12,13 +12,13 @@ class Game:
         self.running = True
         self.showMenu()
         self.maus = None
+        self.world = None
 
     def playGame(self):
         '''The boss function of the boss class.'''
-        self.maus = Maus()
         while self.running:
             oldAddress = self.maus.loc
-            self.maus.loc = self.maus.move(tuple(randomInteger(3) - 1
+            self.maus.loc = self.maus.move(tuple(randInt(3) - 1
              for x in self.maus.dimensionRange))
             if oldAddress == self.maus.loc:
                 eatFood()
@@ -42,31 +42,10 @@ class Game:
         menu.mainloop(screen)
 
 
-class Maus:
-    '''The class that runs the PC.'''
-    def __init__(self, worldDimensions, worldSize):
-        dimensionCenter = int(worldSize / 2)
-        self.dimensionRange = range(worldDimensions)
-        self.worldSize = worldSize
-        self.goal = Maus.generateGoal(self)
-        self.loc = tuple(dimensionCenter for x in self.dimensionRange)
-
-    def generateGoal(self):
-        '''Sets the goal at the beginning of the game'''
-        goalAddress = tuple(randomInteger(self.worldSize) for x in self.dimensionRange)
-        return goalAddress
-
-    def move(self, movement):
-        '''Pretty much all the controls are hooked here.'''
-        newAddress = tuple(adjustToBoundaries(self.loc[x] + movement[x], self.worldSize - 1)
-        for x in movement)
-        return newAddress
-
-
-class ManualMaus(Maus):
+class KeypadControls():
     '''For 2D manual mode for demonstration'''
-    def __init__(self, worldSize):
-        super().__init__(2, worldSize)
+    def __init__(self, world):
+        self.world = world
 
     def moveDown(self):
         '''Numpad 2 or down arrow'''
@@ -90,7 +69,7 @@ class ManualMaus(Maus):
 
     def keypadMove(self, *movements):
         '''Translates for the move() function'''
-        return super().move(movements)
+        return self.world.movePlayer(movements)
 
     def moveUp(self):
         '''Numpad 8 or up arrow'''
@@ -105,6 +84,28 @@ class ManualMaus(Maus):
         return self.keypadMove(1, 1)
 
 
+class World():
+    '''Handles in-game abstractions'''
+    def __init__(self, dimensions, size):
+        dimensionCenter = int(size / 2)
+        self.dimensions = dimensions
+        self.dimensionRange = range(dimensions)
+        self.goal = self.generateGoal()
+        self.playerLocation = tuple(dimensionCenter for x in range(dimensions))
+        self.size = size
+
+    def generateGoal(self):
+        '''Sets the goal at the beginning of the game'''
+        goalAddress = tuple(randInt(self.size) for x in self.dimensionRange)
+        return goalAddress
+
+    def movePlayer(self, movement):
+        '''Pretty much all the controls are hooked here.'''
+        newAddress = tuple(adjustToBoundaries(self.playerLocation[x] + movement[x], self.size - 1)
+        for x in movement)
+        return newAddress
+
+
 def adjustToBoundaries(coordinate, boundary):
     '''Keeps the player from leaving the game area'''
     coordinate = boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
@@ -114,7 +115,7 @@ def eatFood():
     '''Victory message'''
     with open('foods.txt', 'r') as foodsFile:
         foods = [foodsFile]
-    food = foods[randomInteger(len(foods))]
+    food = foods[randInt(len(foods))]
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
@@ -140,7 +141,7 @@ def getVelocity(goal, oldAddress, newAddress):
     velocity = newDistance - oldDistance
     return velocity
 
-def randomInteger(maximum):
+def randInt(maximum):
     '''Supposed to be faster than randrange'''
     integer = int(random() * maximum)
     return integer
