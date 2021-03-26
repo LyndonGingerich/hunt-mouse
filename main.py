@@ -67,10 +67,11 @@ def getPlayerSelectionsFromMenu():
         'World size:',
         generateNumericalSelector(3, 10),
         onreturn=worldSizeSelector
-        )
+        ) # doesn't work; onreturn calls functions only
     (_, selectedWorldSize) = worldSizeSelector
     menu.add.button('Begin', pygame_menu.events.CLOSE)
     menu.add.button('Quit', pygame_menu.events.EXIT)
+    menu.mainloop(screen)
     return selectedWorldDimensions, selectedWorldSize
 
 def getVelocity(goal, oldAddress, newAddress):
