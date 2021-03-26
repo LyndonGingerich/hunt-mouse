@@ -5,48 +5,8 @@ from random import random
 import pygame
 import pygame_menu
 
-
-
-
-class Game:
-    '''Runs the game and calls all the other classes'''
-    def __init__(self):
-        pygame.init()
-        self.running = True
-        self.maus = None
-        self.screen = pygame.display.set_mode((600, 400))
-        worldDimensions, worldSize = self.getPlayerSelectionsFromMenu()
-        self.world = World(worldDimensions, worldSize)
-
-    def playGame(self):
-        '''The boss function of the boss class.'''
-        while self.running:
-            oldAddress = self.maus.loc
-            self.maus.loc = self.maus.move(tuple(randInt(3) - 1
-             for x in self.maus.dimensionRange))
-            if oldAddress == self.maus.loc:
-                eatFood()
-                self.running = False
-            else:
-                velocity = getVelocity(self.maus.goal, oldAddress, self.maus.loc)
-                print(velocity)
-
-    def getPlayerSelectionsFromMenu(self):
-        '''Allows manual selection of world size; world dimensions are set to 2.'''
-        worldDimensions = 2
-        worldSizeSelector = (None, None)
-        menu = pygame_menu.Menu('Welcome', 300, 400, theme=pygame_menu.themes.THEME_BLUE)
-        menu.add.selector(
-            'World size:',
-            generateNumericalSelector(3, 10),
-            onreturn=worldSizeSelector
-            )
-        (_, worldSize) = worldSizeSelector
-        menu.add.button('Begin', self.playGame) # not when self.playGame should be called
-        menu.add.button('Quit', pygame_menu.events.EXIT)
-        menu.mainloop(self.screen)
-        return worldDimensions, worldSize
-
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT = 400
 
 class World():
     '''Handles in-game abstractions'''
@@ -98,6 +58,21 @@ def getDistance(addressA, addressB):
     totalDistance = math.hypot(*distances)
     return totalDistance
 
+def getPlayerSelectionsFromMenu():
+    '''Allows manual selection of world size; world dimensions are set to 2.'''
+    selectedWorldDimensions = 2 # change when more game modes are added
+    worldSizeSelector = (None, None)
+    menu = pygame_menu.Menu('Welcome', 300, 400, theme=pygame_menu.themes.THEME_BLUE)
+    menu.add.selector(
+        'World size:',
+        generateNumericalSelector(3, 10),
+        onreturn=worldSizeSelector
+        )
+    (_, selectedWorldSize) = worldSizeSelector
+    menu.add.button('Begin', pygame_menu.events.CLOSE)
+    menu.add.button('Quit', pygame_menu.events.EXIT)
+    return selectedWorldDimensions, selectedWorldSize
+
 def getVelocity(goal, oldAddress, newAddress):
     '''The player gets a readout of this.'''
     oldDistance = getDistance(oldAddress, goal)
@@ -110,5 +85,25 @@ def randInt(maximum):
     integer = int(random() * maximum)
     return integer
 
-if __name__ == '__main__':
-    game = Game()
+# Prime game
+pygame.init()
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+# Set world attributes
+worldDimensions, worldSize = getPlayerSelectionsFromMenu()
+world = World(worldDimensions, worldSize)
+
+# Run the game
+running = True
+while running:
+    oldAddress = world.playerLocation
+    world.playerLocation = world.movePlayer(tuple(randInt(3) - 1
+        for x in world.dimensionRange))
+    if oldAddress == world.playerLocation:
+        running = False
+    else:
+        playerVelocity = getVelocity(world.goal, oldAddress, world.playerLocation)
+        print(playerVelocity) # for testing; pipe to display
+
+# Win
+eatFood()
