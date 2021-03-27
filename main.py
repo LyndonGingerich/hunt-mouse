@@ -74,11 +74,11 @@ def getPlayerSelectionsFromMenu():
     menu.mainloop(screen)
     return selectedWorldDimensions, selectedWorldSize
 
-def getVelocity(goal, oldAddress, newAddress):
+def getVelocity(goal, firstAddress, secondAddress):
     '''The player gets a readout of this.'''
-    oldDistance = getDistance(oldAddress, goal)
-    newDistance = getDistance(newAddress, goal)
-    velocity = newDistance - oldDistance
+    firstDistance = getDistance(firstAddress, goal)
+    secondDistance = getDistance(secondAddress, goal)
+    velocity = secondDistance - firstDistance
     return velocity
 
 def randInt(maximum):
