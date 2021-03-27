@@ -107,4 +107,5 @@ while running:
         print(playerVelocity) # for testing; pipe to display
 
 # Win
+pygame.quit() # change to return to menu
 eatFood()
