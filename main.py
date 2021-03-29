@@ -8,6 +8,22 @@ import pygame_menu
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 400
 
+
+class BuildWorld():
+    '''Isn't a world, but prepares to build one'''
+    def __init__(self):
+        self.dimensions = 0
+        self.size = 0
+
+    def changeSize(self, _, size):
+        '''Called by selector onreturn'''
+        self.size = size
+
+    def changeDimensions(self, _, dimensions):
+        '''Called by selector onreturn'''
+        self.dimensions = dimensions
+
+
 class World():
     '''Handles in-game abstractions'''
     def __init__(self, dimensions, size):
@@ -20,20 +36,19 @@ class World():
 
     def generateGoal(self):
         '''Sets the goal at the beginning of the game'''
-        goalAddress = tuple(randInt(self.size) for x in self.dimensionRange)
-        return goalAddress
+        return tuple(randInt(self.size) for x in self.dimensionRange)
 
     def movePlayer(self, movement):
         '''Pretty much all the controls are hooked here.'''
-        newAddress = tuple(adjustToBoundaries(self.playerLocation[x] + movement[x], self.size - 1)
-        for x in movement)
-        return newAddress
+        return tuple(
+            adjustToBoundaries(self.playerLocation[x] + movement[x], self.size - 1)
+            for x in movement
+            )
 
 
 def adjustToBoundaries(coordinate, boundary):
     '''Keeps the player from leaving the game area'''
-    coordinate = boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
-    return coordinate
+    return boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
 
 def eatFood():
     '''Victory message'''
@@ -49,8 +64,7 @@ def generateNumericalSelector(minSize, maxSize):
 
 def getDifference(int1, int2):
     '''To shorten an unweildy list comprehension'''
-    difference = abs(int1 - int2)
-    return difference
+    return abs(int1 - int2)
 
 def getDistance(addressA, addressB):
     '''In Cartesian space using tuples'''
@@ -58,16 +72,21 @@ def getDistance(addressA, addressB):
     totalDistance = math.hypot(*distances)
     return totalDistance
 
-def getPlayerSelectionsFromMenu():
+def runMenu():
     '''Allows manual selection of world size; world dimensions are set to 2.'''
     selectedWorldDimensions = 2 # change when more game modes are added
     worldSizeSelector = (None, None)
-    menu = pygame_menu.Menu('Welcome', 300, 400, theme=pygame_menu.themes.THEME_BLUE)
+    menu = pygame_menu.Menu(
+        'Welcome',
+        300,
+        400,
+        theme=pygame_menu.themes.THEME_BLUE
+        )
     menu.add.selector(
         'World size:',
         generateNumericalSelector(3, 10),
-        onreturn=worldSizeSelector
-        ) # doesn't work; onreturn calls functions only
+        onreturn=buildWorld.changeSize # passes <option text>, <option value>
+        )
     (_, selectedWorldSize) = worldSizeSelector
     menu.add.button('Begin', pygame_menu.events.CLOSE)
     menu.add.button('Quit', pygame_menu.events.EXIT)
@@ -83,29 +102,30 @@ def getVelocity(goal, firstAddress, secondAddress):
 
 def randInt(maximum):
     '''Supposed to be faster than randrange'''
-    integer = int(random() * maximum)
-    return integer
+    return int(random() * maximum)
 
-# Prime game
-pygame.init()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+if __name__ == 'main':
+    # Prime game
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-# Set world attributes
-worldDimensions, worldSize = getPlayerSelectionsFromMenu()
-world = World(worldDimensions, worldSize)
+    # Set world attributes
+    buildWorld = BuildWorld()
+    runMenu()
+    gameWorld = World(buildWorld.dimensions, buildWorld.size)
 
-# Run the game
-running = True
-while running:
-    oldAddress = world.playerLocation
-    world.playerLocation = world.movePlayer(tuple(randInt(3) - 1
-        for x in world.dimensionRange))
-    if oldAddress == world.playerLocation:
-        running = False
-    else:
-        playerVelocity = getVelocity(world.goal, oldAddress, world.playerLocation)
-        print(playerVelocity) # for testing; pipe to display
+    # Run the game
+    running = True
+    while running:
+        oldAddress = gameWorld.playerLocation
+        gameWorld.playerLocation = gameWorld.movePlayer(tuple(randInt(3) - 1
+            for x in gameWorld.dimensionRange))
+        if oldAddress == gameWorld.playerLocation:
+            running = False
+        else:
+            playerVelocity = getVelocity(gameWorld.goal, oldAddress, gameWorld.playerLocation)
+            print(playerVelocity) # for testing; pipe to display
 
-# Win
-pygame.quit() # change to return to menu
-eatFood()
+    # Win
+    pygame.quit() # change to return to menu
+    eatFood()
