@@ -104,7 +104,7 @@ def randInt(maximum):
     '''Supposed to be faster than randrange'''
     return int(random() * maximum)
 
-if __name__ == 'main':
+if __name__ == '__main__':
     # Prime game
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
