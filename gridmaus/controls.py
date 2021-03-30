@@ -53,6 +53,19 @@ class KeypadControls():
         '''Numpad 9'''
         return self.keypad_move(1, 1)
 
+def run_game_loop():
+    '''The main game loop'''
+    game_world = main.World(main.world_template['dimensions'], main.world_template['size'])
+    running = True
+    while running:
+        move_results = game_world.move_player(
+            tuple(main.rand_range(3) - 1 for x in game_world.dimension_range)
+            )
+        if move_results['reached_goal']:
+            running = False
+        else:
+            print(move_results['velocity']) # for testing; pipe to display
+
 def run_game_menu():
     '''Allows manual selection of world size and dimensions.'''
     menu = pygame_menu.Menu(
@@ -73,7 +86,7 @@ def run_game_menu():
         default=str(main.world_template['dimensions']),
         onchange=main.change_world_template_dimensions # passes <option text>, <option value>
     )
-    menu.add.button('Begin', main.game_loop)
+    menu.add.button('Begin', run_game_loop)
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(screen)
 

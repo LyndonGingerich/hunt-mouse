@@ -58,19 +58,6 @@ def eat_food():
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
-def game_loop():
-    '''The main game loop'''
-    game_world = World(world_template['dimensions'], world_template['size'])
-    running = True
-    while running:
-        move_results = game_world.move_player(
-            tuple(rand_range(3) - 1 for x in game_world.dimension_range)
-            )
-        if move_results['reached_goal']:
-            running = False
-        else:
-            print(move_results['velocity']) # for testing; pipe to display
-
 def generate_numerical_selector(min_size, max_size):
     '''Helper function for Game.showMenu()'''
     return [(str(x), x) for x in range(min_size, max_size + 1)]
