@@ -116,7 +116,7 @@ def runMenu():
     menu.add.selector(
         'Dimensions:',
         generateNumericalSelector(2, 5),
-        onchange=buildWorld.changeDimensions
+        onchange=buildWorld.changeDimensions # passes <option text>, <option value>
     )
     menu.add.button('Begin', gameLoop)
     menu.add.button('Quit', pygame_menu.events.EXIT)
