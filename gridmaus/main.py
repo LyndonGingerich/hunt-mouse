@@ -58,6 +58,21 @@ def eatFood():
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
+def gameLoop(worldTemplate):
+    '''The main game loop'''
+    gameWorld = World(worldTemplate.dimensions, worldTemplate.size)
+    running = True
+    while running:
+        oldAddress = gameWorld.playerLocation
+        gameWorld.playerLocation = gameWorld.movePlayer(
+            tuple(randInt(3) - 1 for x in gameWorld.dimensionRange)
+            )
+        if oldAddress == gameWorld.playerLocation:
+            running = False
+        else:
+            playerVelocity = getVelocity(gameWorld.goal, oldAddress, gameWorld.playerLocation)
+            print(playerVelocity) # for testing; pipe to display
+
 def generateNumericalSelector(minSize, maxSize):
     '''Helper function for Game.showMenu()'''
     return [(str(x), x) for x in range(minSize, maxSize + 1)]
@@ -71,6 +86,17 @@ def getDistance(addressA, addressB):
     distances = tuple(getDifference(addressA[x], addressB[x]) for x in range(len(addressA)))
     totalDistance = math.hypot(*distances)
     return totalDistance
+
+def getVelocity(goal, firstAddress, secondAddress):
+    '''The player gets a readout of this.'''
+    firstDistance = getDistance(firstAddress, goal)
+    secondDistance = getDistance(secondAddress, goal)
+    velocity = secondDistance - firstDistance
+    return velocity
+
+def randInt(maximum):
+    '''Supposed to be faster than randrange'''
+    return int(random() * maximum)
 
 def runMenu():
     '''Allows manual selection of world size; world dimensions are set to 2.'''
@@ -89,17 +115,6 @@ def runMenu():
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(screen)
 
-def getVelocity(goal, firstAddress, secondAddress):
-    '''The player gets a readout of this.'''
-    firstDistance = getDistance(firstAddress, goal)
-    secondDistance = getDistance(secondAddress, goal)
-    velocity = secondDistance - firstDistance
-    return velocity
-
-def randInt(maximum):
-    '''Supposed to be faster than randrange'''
-    return int(random() * maximum)
-
 if __name__ == '__main__':
     # Prime game
     pygame.init()
@@ -108,20 +123,9 @@ if __name__ == '__main__':
     # Set world attributes
     buildWorld = BuildWorld()
     runMenu()
-    gameWorld = World(buildWorld.dimensions, buildWorld.size)
 
     # Run the game
-    running = True
-    while running:
-        oldAddress = gameWorld.playerLocation
-        gameWorld.playerLocation = gameWorld.movePlayer(tuple(randInt(3) - 1
-            for x in gameWorld.dimensionRange))
-        if oldAddress == gameWorld.playerLocation:
-            running = False
-        else:
-            playerVelocity = getVelocity(gameWorld.goal, oldAddress, gameWorld.playerLocation)
-            print(playerVelocity) # for testing; pipe to display
+    gameLoop(buildWorld)
 
     # Win
-    pygame.quit() # change to return to menu
     eatFood()
