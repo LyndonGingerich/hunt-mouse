@@ -39,12 +39,12 @@ class World():
         '''Sets the goal at the beginning of the game'''
         return tuple(rand_range(self.size) for x in self.dimension_range)
 
-    def move_player(self, movement):
+    def move_and_get_velocity(self, movement):
         '''Pretty much all the controls are hooked here.'''
-        return tuple(
-            adjust_to_boundaries(self.player_location[x] + movement[x], self.size - 1)
-            for x in movement
-            )
+        address = move_address(self.player_location, movement, self.size - 1)
+        velocity = get_velocity(self.goal, self.player_location, address)
+        self.player_location = address
+        return velocity
 
 
 def adjust_to_boundaries(coordinate, boundary):
@@ -65,7 +65,7 @@ def game_loop():
     running = True
     while running:
         old_address = game_world.player_location
-        game_world.player_location = game_world.move_player(
+        game_world.player_location = game_world.move_and_get_velocity(
             tuple(rand_range(3) - 1 for x in game_world.dimension_range)
             )
         if old_address == game_world.player_location:
@@ -92,8 +92,16 @@ def get_velocity(goal, address1, address2):
     '''The player gets a readout of this.'''
     return get_distance(address1, goal) - get_distance(address2, goal)
 
+def move_address(address, movement, boundary):
+    '''Helper function for World.move_and_get_velocity'''
+    return tuple(
+            adjust_to_boundaries(address[x] + movement[x], boundary)
+            for x in movement
+            )
+
 def rand_range(maximum):
     '''Supposed to be faster than randrange'''
     return int(random() * maximum)
+
 
 build_world = BuildWorld()

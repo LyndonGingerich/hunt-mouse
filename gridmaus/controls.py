@@ -39,7 +39,7 @@ class KeypadControls():
 
     def keypad_move(self, *movements):
         '''Translates for the move() function'''
-        return self.world.move_player(movements)
+        return self.world.move_and_get_velocity(movements)
 
     def move_up(self):
         '''Numpad 8 or up arrow'''
