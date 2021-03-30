@@ -121,24 +121,6 @@ def run_game_menu():
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(screen)
 
-def run_move_menu(world, velocity=0):
-    '''In-game display'''
-    menu = pygame_menu.Menu(
-        'Welcome',
-        SCREEN_HEIGHT,
-        SCREEN_WIDTH,
-        theme=pygame_menu.themes.THEME_BLUE
-    )
-    menu.add.label('Velocity: ' + str(velocity))
-    for i in world.dimension_range:
-        menu.add.selector(
-            'Dimension ' + str(i),
-            [('Forward', 1), ('Still', 0), ('Back', -1)],
-            onchange=None
-        )
-    menu.add.button('Go', None)
-    menu.add.button('Quit', None)
-    menu.mainloop(screen)
 
 if __name__ == '__main__':
     # Prime game

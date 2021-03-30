@@ -1,5 +1,9 @@
 '''Holds control stuff to keep it out of the way of the main file'''
 
+import pygame_menu
+
+import main
+
 class KeypadControls():
     '''For 2D manual mode for demonstration'''
     def __init__(self, world):
@@ -40,3 +44,22 @@ class KeypadControls():
     def move_up_right(self):
         '''Numpad 9'''
         return self.keypad_move(1, 1)
+
+def run_move_menu(world, velocity=0):
+    '''In-game display'''
+    menu = pygame_menu.Menu(
+        'Welcome',
+        main.SCREEN_HEIGHT,
+        main.SCREEN_WIDTH,
+        theme=pygame_menu.themes.THEME_BLUE
+    )
+    menu.add.label('Velocity: ' + str(velocity))
+    for i in world.dimension_range:
+        menu.add.selector(
+            'Dimension ' + str(i),
+            [('Forward', 1), ('Still', 0), ('Back', -1)],
+            onchange=None
+        )
+    menu.add.button('Go', None)
+    menu.add.button('Quit', None)
+    menu.mainloop(main.screen)
