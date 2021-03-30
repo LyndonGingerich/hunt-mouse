@@ -30,10 +30,10 @@ class World():
         self.dimensions = dimensions
         self.size = size
 
-        self.dimensionRange = range(dimensions)
-        self.goal = self.generateGoal()
-
         dimensionCenter = int(self.size / 2)
+        self.dimensionRange = range(dimensions)
+
+        self.goal = self.generateGoal()
         self.playerLocation = tuple(dimensionCenter for x in self.dimensionRange)
 
     def generateGoal(self):
