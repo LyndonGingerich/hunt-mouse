@@ -1,5 +1,5 @@
 '''The game controls.
-This file calls main.py.'''
+This file calls backend.py.'''
 
 import sys
 
@@ -8,7 +8,7 @@ import pygame_menu
 
 sys.path.append('..')
 
-from gridmaus.gridmaus import main
+from gridmaus.gridmaus import backend
 
 screen = pygame.display.set_mode((600, 400))
 
@@ -54,12 +54,12 @@ class KeypadControls():
         return self.keypad_move(1, 1)
 
 def run_game_loop():
-    '''The main game loop'''
-    game_world = main.World(main.world_template['dimensions'], main.world_template['size'])
+    '''The backend game loop'''
+    game_world = backend.World(backend.world_template['dimensions'], backend.world_template['size'])
     running = True
     while running:
         move_results = game_world.move_player(
-            tuple(main.rand_range(3) - 1 for x in game_world.dimension_range)
+            tuple(backend.rand_range(3) - 1 for x in game_world.dimension_range)
             )
         if move_results['reached_goal']:
             running = False
@@ -76,15 +76,15 @@ def run_game_menu():
     )
     menu.add.selector(
         'World size:',
-        main.generate_numerical_selector(3, 10),
-        default=str(main.world_template['size']),
-        onchange=main.change_world_template_size # passes <option text>, <option value>
+        backend.generate_numerical_selector(3, 10),
+        default=str(backend.world_template['size']),
+        onchange=backend.change_world_template_size # passes <option text>, <option value>
     )
     menu.add.selector(
         'Dimensions:',
-        main.generate_numerical_selector(2, 5),
-        default=str(main.world_template['dimensions']),
-        onchange=main.change_world_template_dimensions # passes <option text>, <option value>
+        backend.generate_numerical_selector(2, 5),
+        default=str(backend.world_template['dimensions']),
+        onchange=backend.change_world_template_dimensions # passes <option text>, <option value>
     )
     menu.add.button('Begin', run_game_loop)
     menu.add.button('Quit', pygame_menu.events.EXIT)
@@ -94,8 +94,8 @@ def run_move_menu(world, velocity=0):
     '''In-game display'''
     menu = pygame_menu.Menu(
         'Welcome',
-        main.SCREEN_HEIGHT,
-        main.SCREEN_WIDTH,
+        backend.SCREEN_HEIGHT,
+        backend.SCREEN_WIDTH,
         theme=pygame_menu.themes.THEME_BLUE
     )
     menu.add.label('Velocity: ' + str(velocity))
