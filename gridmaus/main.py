@@ -107,12 +107,17 @@ def runMenu():
         300,
         400,
         theme=pygame_menu.themes.THEME_BLUE
-        )
+    )
     menu.add.selector(
         'World size:',
         generateNumericalSelector(3, 10),
         onchange=buildWorld.changeSize # passes <option text>, <option value>
-        )
+    )
+    menu.add.selector(
+        'Dimensions:',
+        generateNumericalSelector(2, 5),
+        onchange=buildWorld.changeDimensions
+    )
     menu.add.button('Begin', gameLoop)
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(screen)
