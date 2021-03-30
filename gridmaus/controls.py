@@ -55,7 +55,7 @@ class KeypadControls():
 
 def run_game_loop():
     '''The main game loop'''
-    game_world = backend.World(backend.world_template['dimensions'], backend.world_template['size'])
+    game_world = backend.create_world()
     running = True
     while running:
         move_results = game_world.move_player(

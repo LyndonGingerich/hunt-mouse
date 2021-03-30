@@ -50,6 +50,11 @@ def change_world_template_size(_, value):
     '''Called by selector onreturn'''
     world_template['size'] = value
 
+def create_world():
+    '''Instantiates World using attributes from world_template'''
+    world = World(world_template['dimensions'], world_template['size'])
+    return world
+
 def eat_food():
     '''Victory message'''
     with open('foods.txt', 'r') as foods_file:
