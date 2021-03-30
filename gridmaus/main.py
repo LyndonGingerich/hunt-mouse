@@ -12,8 +12,8 @@ SCREEN_HEIGHT = 400
 class BuildWorld():
     '''Isn't a world, but prepares to build one'''
     def __init__(self):
-        self.dimensions = 0
-        self.size = 0
+        self.dimensions = 2
+        self.size = 5
 
     def changeSize(self, _, size):
         '''Called by selector onchange'''
