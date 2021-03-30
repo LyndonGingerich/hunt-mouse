@@ -11,7 +11,7 @@ SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 400
 
 
-class build_world():
+class BuildWorld():
     '''Isn't a world, but prepares to build one'''
     def __init__(self):
         self.dimensions = 2
