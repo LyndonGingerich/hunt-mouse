@@ -1,15 +1,12 @@
-'''The game backend, and also frontend.
+'''The game backend.
 All addresses, including movement addresses, are tuples.
 '''
 
 import math
 from random import random
-import pygame
-import pygame_menu
 
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 400
-
 
 class BuildWorld():
     '''Isn't a world, but prepares to build one'''
@@ -42,7 +39,7 @@ class World():
         '''Sets the goal at the beginning of the game'''
         return tuple(rand_int(self.size) for x in self.dimension_range)
 
-    def movePlayer(self, movement):
+    def move_player(self, movement):
         '''Pretty much all the controls are hooked here.'''
         return tuple(
             adjust_to_boundaries(self.player_location[x] + movement[x], self.size - 1)
@@ -68,7 +65,7 @@ def game_loop():
     running = True
     while running:
         old_address = game_world.player_location
-        game_world.player_location = game_world.movePlayer(
+        game_world.player_location = game_world.move_player(
             tuple(rand_int(3) - 1 for x in game_world.dimension_range)
             )
         if old_address == game_world.player_location:
@@ -99,39 +96,4 @@ def rand_int(maximum):
     '''Supposed to be faster than randrange'''
     return int(random() * maximum)
 
-def run_game_menu():
-    '''Allows manual selection of world size; world dimensions are set to 2.'''
-    menu = pygame_menu.Menu(
-        'Welcome',
-        300,
-        400,
-        theme=pygame_menu.themes.THEME_BLUE
-    )
-    menu.add.selector(
-        'World size:',
-        generate_numerical_selector(3, 10),
-        onchange=build_world.change_size # passes <option text>, <option value>
-    )
-    menu.add.selector(
-        'Dimensions:',
-        generate_numerical_selector(2, 5),
-        onchange=build_world.change_dimensions # passes <option text>, <option value>
-    )
-    menu.add.button('Begin', game_loop)
-    menu.add.button('Quit', pygame_menu.events.EXIT)
-    menu.mainloop(screen)
-
-
-if __name__ == '__main__':
-    # Prime game
-    pygame.init()
-
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-    while True:
-        # Set world attributes
-        build_world = build_world()
-        run_game_menu()
-
-        # Win
-        eat_food()
+build_world = BuildWorld()

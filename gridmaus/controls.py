@@ -1,8 +1,12 @@
-'''Holds control stuff to keep it out of the way of the main file'''
+'''The game controls.
+This file calls main.py.'''
 
+import pygame
 import pygame_menu
 
 import main
+
+screen = pygame.display.set_mode((600, 400))
 
 class KeypadControls():
     '''For 2D manual mode for demonstration'''
@@ -45,6 +49,28 @@ class KeypadControls():
         '''Numpad 9'''
         return self.keypad_move(1, 1)
 
+def run_game_menu():
+    '''Allows manual selection of world size; world dimensions are set to 2.'''
+    menu = pygame_menu.Menu(
+        'Welcome',
+        300,
+        400,
+        theme=pygame_menu.themes.THEME_BLUE
+    )
+    menu.add.selector(
+        'World size:',
+        main.generate_numerical_selector(3, 10),
+        onchange=main.build_world.change_size # passes <option text>, <option value>
+    )
+    menu.add.selector(
+        'Dimensions:',
+        main.generate_numerical_selector(2, 5),
+        onchange=main.build_world.change_dimensions # passes <option text>, <option value>
+    )
+    menu.add.button('Begin', main.game_loop)
+    menu.add.button('Quit', pygame_menu.events.EXIT)
+    menu.mainloop(screen)
+
 def run_move_menu(world, velocity=0):
     '''In-game display'''
     menu = pygame_menu.Menu(
@@ -62,4 +88,4 @@ def run_move_menu(world, velocity=0):
         )
     menu.add.button('Go', None)
     menu.add.button('Quit', None)
-    menu.mainloop(main.screen)
+    menu.mainloop(screen)
