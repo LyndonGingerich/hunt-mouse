@@ -39,12 +39,17 @@ class World():
         '''Sets the goal at the beginning of the game'''
         return tuple(rand_range(self.size) for x in self.dimension_range)
 
-    def move_and_get_velocity(self, movement):
+    def move_player(self, movement):
         '''Pretty much all the controls are hooked here.'''
+        results = dict()
         address = move_address(self.player_location, movement, self.size - 1)
-        velocity = get_velocity(self.goal, self.player_location, address)
-        self.player_location = address
-        return velocity
+        results['velocity'] = get_velocity(self.goal, self.player_location, address)
+        if self.player_location == address:
+            results['reached_goal'] = True
+        else:
+            results['reached_goal'] = False
+            self.player_location = address
+        return results
 
 
 def adjust_to_boundaries(coordinate, boundary):
@@ -64,15 +69,13 @@ def game_loop():
     game_world = World(build_world.dimensions, build_world.size)
     running = True
     while running:
-        old_address = game_world.player_location
-        game_world.player_location = game_world.move_and_get_velocity(
+        move_results = game_world.move_player(
             tuple(rand_range(3) - 1 for x in game_world.dimension_range)
             )
-        if old_address == game_world.player_location:
+        if move_results['reached_goal']:
             running = False
         else:
-            player_velocity = get_velocity(game_world.goal, old_address, game_world.player_location)
-            print(player_velocity) # for testing; pipe to display
+            print(move_results['velocity']) # for testing; pipe to display
 
 def generate_numerical_selector(min_size, max_size):
     '''Helper function for Game.showMenu()'''
@@ -93,7 +96,7 @@ def get_velocity(goal, address1, address2):
     return get_distance(address1, goal) - get_distance(address2, goal)
 
 def move_address(address, movement, boundary):
-    '''Helper function for World.move_and_get_velocity'''
+    '''Helper function for World.move_player'''
     return tuple(
             adjust_to_boundaries(address[x] + movement[x], boundary)
             for x in movement
