@@ -5,38 +5,38 @@ class KeypadControls():
     def __init__(self, world):
         self.world = world
 
-    def moveDown(self):
+    def move_down(self):
         '''Numpad 2 or down arrow'''
-        return self.keypadMove(1, -1)
+        return self.keypad_move(1, -1)
 
-    def moveDownLeft(self):
+    def move_down_left(self):
         '''Numpad 1'''
-        return self.keypadMove(-1, -1)
+        return self.keypad_move(-1, -1)
 
-    def moveDownRight(self):
+    def move_down_right(self):
         '''Numpad 3'''
-        return self.keypadMove(1, -1)
+        return self.keypad_move(1, -1)
 
-    def moveLeft(self):
+    def move_left(self):
         '''Numpad 4 or left arrow'''
-        return self.keypadMove(0, -1)
+        return self.keypad_move(0, -1)
 
-    def moveRight(self):
+    def move_right(self):
         '''Numpad 6 or right arrow'''
-        return self.keypadMove(0, 1)
+        return self.keypad_move(0, 1)
 
-    def keypadMove(self, *movements):
+    def keypad_move(self, *movements):
         '''Translates for the move() function'''
-        return self.world.movePlayer(movements)
+        return self.world.move_player(movements)
 
-    def moveUp(self):
+    def move_up(self):
         '''Numpad 8 or up arrow'''
-        return self.keypadMove(1, 1)
+        return self.keypad_move(1, 1)
 
-    def moveUpLeft(self):
+    def move_up_left(self):
         '''Numpad 7'''
-        return self.keypadMove(-1, 1)
+        return self.keypad_move(-1, 1)
 
-    def moveUpRight(self):
+    def move_up_right(self):
         '''Numpad 9'''
-        return self.keypadMove(1, 1)
+        return self.keypad_move(1, 1)
