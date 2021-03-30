@@ -100,7 +100,7 @@ def randInt(maximum):
     '''Supposed to be faster than randrange'''
     return int(random() * maximum)
 
-def runMenu():
+def runGameMenu():
     '''Allows manual selection of world size; world dimensions are set to 2.'''
     menu = pygame_menu.Menu(
         'Welcome',
@@ -122,6 +122,24 @@ def runMenu():
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(screen)
 
+def runMoveMenu(world, velocity=0):
+    '''In-game display'''
+    menu = pygame_menu.Menu(
+        'Welcome',
+        SCREEN_HEIGHT,
+        SCREEN_WIDTH,
+        theme=pygame_menu.themes.THEME_BLUE
+    )
+    menu.add.label('Velocity: ' + str(velocity))
+    for i in world.dimensionRange:
+        menu.add.selector(
+            'Dimension ' + str(i),
+            [('Forward', 1), ('Still', 0), ('Back', -1)],
+            onchange=None
+        )
+    menu.add.button('Go', None)
+    menu.add.button('Quit', None)
+
 if __name__ == '__main__':
     # Prime game
     pygame.init()
@@ -131,7 +149,7 @@ if __name__ == '__main__':
     while True:
         # Set world attributes
         buildWorld = BuildWorld()
-        runMenu()
+        runGameMenu()
 
         # Win
         eatFood()
