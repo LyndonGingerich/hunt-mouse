@@ -1,8 +1,8 @@
 '''Automates testing'''
 
-import unittest
+import pytest
 
 from gridmaus import main
 
 if __name__ == '__main__':
-    unittest.main()
+    pytest.main()
