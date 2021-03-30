@@ -5,9 +5,6 @@ All addresses, including movement addresses, are tuples.
 import math
 from random import random
 
-SCREEN_WIDTH = 600
-SCREEN_HEIGHT = 400
-
 
 class World():
     '''Handles in-game abstractions'''

@@ -10,7 +10,11 @@ sys.path.append('..')
 
 from gridmaus.gridmaus import backend
 
-screen = pygame.display.set_mode((600, 400))
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT = 400
+
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
 
 class KeypadControls():
     '''For 2D manual mode for demonstration'''
@@ -53,18 +57,21 @@ class KeypadControls():
         '''Numpad 9'''
         return self.keypad_move(1, 1)
 
+
+def iterate_game_loop(game_world):
+    '''Iterate the game loop once'''
+    movement = tuple(backend.rand_range(3) - 1 for x in game_world.dimension_range)
+    move_results = game_world.move_player(movement)
+    if move_results['reached_goal']:
+        return False
+    return move_results['velocity']
+
 def run_game_loop():
     '''The main game loop'''
     game_world = backend.create_world()
     running = True
     while running:
-        move_results = game_world.move_player(
-            tuple(backend.rand_range(3) - 1 for x in game_world.dimension_range)
-            )
-        if move_results['reached_goal']:
-            running = False
-        else:
-            print(move_results['velocity']) # for testing; pipe to display
+        iterate_game_loop(game_world)
 
 def run_game_menu():
     '''Allows manual selection of world size and dimensions.'''
@@ -94,8 +101,8 @@ def run_move_menu(world, velocity=0):
     '''In-game display'''
     menu = pygame_menu.Menu(
         'Welcome',
-        backend.SCREEN_HEIGHT,
-        backend.SCREEN_WIDTH,
+        SCREEN_HEIGHT,
+        SCREEN_WIDTH,
         theme=pygame_menu.themes.THEME_BLUE
     )
     menu.add.label('Velocity: ' + str(velocity))
