@@ -141,6 +141,7 @@ def runMoveMenu(world, velocity=0):
         )
     menu.add.button('Go', None)
     menu.add.button('Quit', None)
+    menu.mainloop(screen)
 
 if __name__ == '__main__':
     # Prime game
