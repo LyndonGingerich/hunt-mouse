@@ -54,7 +54,7 @@ class KeypadControls():
         return self.keypad_move(1, 1)
 
 def run_game_menu():
-    '''Allows manual selection of world size; world dimensions are set to 2.'''
+    '''Allows manual selection of world size and dimensions.'''
     menu = pygame_menu.Menu(
         'Welcome',
         300,
