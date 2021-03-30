@@ -1,8 +1,12 @@
 '''The game controls.
 This file calls main.py.'''
 
+import sys
+
 import pygame
 import pygame_menu
+
+sys.path.append('..')
 
 from gridmaus.gridmaus import main
 
