@@ -11,17 +11,17 @@ SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 400
 
 
-class BuildWorld():
+class build_world():
     '''Isn't a world, but prepares to build one'''
     def __init__(self):
         self.dimensions = 2
         self.size = 5
 
-    def changeSize(self, _, size):
+    def change_size(self, _, size):
         '''Called by selector onchange'''
         self.size = size
 
-    def changeDimensions(self, _, dimensions):
+    def change_dimensions(self, _, dimensions):
         '''Called by selector onchange'''
         self.dimensions = dimensions
 
@@ -32,77 +32,74 @@ class World():
         self.dimensions = dimensions
         self.size = size
 
-        dimensionCenter = int(self.size / 2)
-        self.dimensionRange = range(dimensions)
+        dimension_center = int(self.size / 2)
+        self.dimension_range = range(dimensions)
 
-        self.goal = self.generateGoal()
-        self.playerLocation = tuple(dimensionCenter for x in self.dimensionRange)
+        self.goal = self.generate_goal()
+        self.player_location = tuple(dimension_center for x in self.dimension_range)
 
-    def generateGoal(self):
+    def generate_goal(self):
         '''Sets the goal at the beginning of the game'''
-        return tuple(randInt(self.size) for x in self.dimensionRange)
+        return tuple(rand_int(self.size) for x in self.dimension_range)
 
     def movePlayer(self, movement):
         '''Pretty much all the controls are hooked here.'''
         return tuple(
-            adjustToBoundaries(self.playerLocation[x] + movement[x], self.size - 1)
+            adjust_to_boundaries(self.player_location[x] + movement[x], self.size - 1)
             for x in movement
             )
 
 
-def adjustToBoundaries(coordinate, boundary):
+def adjust_to_boundaries(coordinate, boundary):
     '''Keeps the player from leaving the game area'''
     return boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
 
-def eatFood():
+def eat_food():
     '''Victory message'''
-    with open('foods.txt', 'r') as foodsFile:
-        foods = [foodsFile]
-    food = foods[randInt(len(foods))]
+    with open('foods.txt', 'r') as foods_file:
+        foods = [foods_file]
+    food = foods[rand_int(len(foods))]
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
-def gameLoop():
+def game_loop():
     '''The main game loop'''
-    gameWorld = World(buildWorld.dimensions, buildWorld.size)
+    game_world = World(build_world.dimensions, build_world.size)
     running = True
     while running:
-        oldAddress = gameWorld.playerLocation
-        gameWorld.playerLocation = gameWorld.movePlayer(
-            tuple(randInt(3) - 1 for x in gameWorld.dimensionRange)
+        old_address = game_world.player_location
+        game_world.player_location = game_world.movePlayer(
+            tuple(rand_int(3) - 1 for x in game_world.dimension_range)
             )
-        if oldAddress == gameWorld.playerLocation:
+        if old_address == game_world.player_location:
             running = False
         else:
-            playerVelocity = getVelocity(gameWorld.goal, oldAddress, gameWorld.playerLocation)
-            print(playerVelocity) # for testing; pipe to display
+            player_velocity = get_velocity(game_world.goal, old_address, game_world.player_location)
+            print(player_velocity) # for testing; pipe to display
 
-def generateNumericalSelector(minSize, maxSize):
+def generate_numerical_selector(min_size, max_size):
     '''Helper function for Game.showMenu()'''
-    return [(str(x), x) for x in range(minSize, maxSize + 1)]
+    return [(str(x), x) for x in range(min_size, max_size + 1)]
 
-def getDifference(int1, int2):
+def get_difference(int1, int2):
     '''To shorten an unwieldy list comprehension'''
     return abs(int1 - int2)
 
-def getDistance(addressA, addressB):
+def get_distance(address1, address2):
     '''In Cartesian space using tuples'''
-    distances = tuple(getDifference(addressA[x], addressB[x]) for x in range(len(addressA)))
+    distances = tuple(get_difference(address1[x], address2[x]) for x in range(len(address1)))
     totalDistance = math.hypot(*distances)
     return totalDistance
 
-def getVelocity(goal, firstAddress, secondAddress):
+def get_velocity(goal, address1, address2):
     '''The player gets a readout of this.'''
-    firstDistance = getDistance(firstAddress, goal)
-    secondDistance = getDistance(secondAddress, goal)
-    velocity = secondDistance - firstDistance
-    return velocity
+    return get_distance(address2, goal) - get_distance(address1, goal)
 
-def randInt(maximum):
+def rand_int(maximum):
     '''Supposed to be faster than randrange'''
     return int(random() * maximum)
 
-def runGameMenu():
+def run_game_menu():
     '''Allows manual selection of world size; world dimensions are set to 2.'''
     menu = pygame_menu.Menu(
         'Welcome',
@@ -112,19 +109,19 @@ def runGameMenu():
     )
     menu.add.selector(
         'World size:',
-        generateNumericalSelector(3, 10),
-        onchange=buildWorld.changeSize # passes <option text>, <option value>
+        generate_numerical_selector(3, 10),
+        onchange=build_world.change_size # passes <option text>, <option value>
     )
     menu.add.selector(
         'Dimensions:',
-        generateNumericalSelector(2, 5),
-        onchange=buildWorld.changeDimensions # passes <option text>, <option value>
+        generate_numerical_selector(2, 5),
+        onchange=build_world.change_dimensions # passes <option text>, <option value>
     )
-    menu.add.button('Begin', gameLoop)
+    menu.add.button('Begin', game_loop)
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(screen)
 
-def runMoveMenu(world, velocity=0):
+def run_move_menu(world, velocity=0):
     '''In-game display'''
     menu = pygame_menu.Menu(
         'Welcome',
@@ -133,7 +130,7 @@ def runMoveMenu(world, velocity=0):
         theme=pygame_menu.themes.THEME_BLUE
     )
     menu.add.label('Velocity: ' + str(velocity))
-    for i in world.dimensionRange:
+    for i in world.dimension_range:
         menu.add.selector(
             'Dimension ' + str(i),
             [('Forward', 1), ('Still', 0), ('Back', -1)],
@@ -151,8 +148,8 @@ if __name__ == '__main__':
 
     while True:
         # Set world attributes
-        buildWorld = BuildWorld()
-        runGameMenu()
+        build_world = build_world()
+        run_game_menu()
 
         # Win
-        eatFood()
+        eat_food()
