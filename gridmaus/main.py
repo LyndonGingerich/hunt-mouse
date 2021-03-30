@@ -8,20 +8,6 @@ from random import random
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 400
 
-class BuildWorld():
-    '''Isn't a world, but prepares to build one'''
-    def __init__(self):
-        self.dimensions = 2
-        self.size = 5
-
-    def change_size(self, _, size):
-        '''Called by selector onchange'''
-        self.size = size
-
-    def change_dimensions(self, _, dimensions):
-        '''Called by selector onchange'''
-        self.dimensions = dimensions
-
 
 class World():
     '''Handles in-game abstractions'''
@@ -56,6 +42,14 @@ def adjust_to_boundaries(coordinate, boundary):
     '''Keeps the player from leaving the game area'''
     return boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
 
+def change_world_template_dimensions(_, value):
+    '''Called by selector onreturn'''
+    world_template['dimensions'] = value
+
+def change_world_template_size(_, value):
+    '''Called by selector onreturn'''
+    world_template['size'] = value
+
 def eat_food():
     '''Victory message'''
     with open('foods.txt', 'r') as foods_file:
@@ -66,7 +60,7 @@ def eat_food():
 
 def game_loop():
     '''The main game loop'''
-    game_world = World(build_world.dimensions, build_world.size)
+    game_world = World(world_template['dimensions'], world_template['size'])
     running = True
     while running:
         move_results = game_world.move_player(
@@ -107,4 +101,4 @@ def rand_range(maximum):
     return int(random() * maximum)
 
 
-build_world = BuildWorld()
+world_template = {'dimensions': 2, 'size': 5}

@@ -64,12 +64,12 @@ def run_game_menu():
     menu.add.selector(
         'World size:',
         main.generate_numerical_selector(3, 10),
-        onchange=main.build_world.change_size # passes <option text>, <option value>
+        onchange=main.change_world_template_size # passes <option text>, <option value>
     )
     menu.add.selector(
         'Dimensions:',
         main.generate_numerical_selector(2, 5),
-        onchange=main.build_world.change_dimensions # passes <option text>, <option value>
+        onchange=main.change_world_template_dimensions # passes <option text>, <option value>
     )
     menu.add.button('Begin', main.game_loop)
     menu.add.button('Quit', pygame_menu.events.EXIT)
