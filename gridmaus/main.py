@@ -16,11 +16,11 @@ class BuildWorld():
         self.size = 0
 
     def changeSize(self, _, size):
-        '''Called by selector onreturn'''
+        '''Called by selector onchange'''
         self.size = size
 
     def changeDimensions(self, _, dimensions):
-        '''Called by selector onreturn'''
+        '''Called by selector onchange'''
         self.dimensions = dimensions
 
 
@@ -85,7 +85,7 @@ def runMenu():
     menu.add.selector(
         'World size:',
         generateNumericalSelector(3, 10),
-        onreturn=buildWorld.changeSize # passes <option text>, <option value>
+        onchange=buildWorld.changeSize # passes <option text>, <option value>
         )
     (_, selectedWorldSize) = worldSizeSelector
     menu.add.button('Begin', pygame_menu.events.CLOSE)
