@@ -1,4 +1,6 @@
-'''The game backend, and also frontend.'''
+'''The game backend, and also frontend.
+All addresses, including movement addresses, are tuples.
+'''
 
 import math
 from random import random
