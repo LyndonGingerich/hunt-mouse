@@ -37,7 +37,7 @@ class World():
 
     def generate_goal(self):
         '''Sets the goal at the beginning of the game'''
-        return tuple(rand_int(self.size) for x in self.dimension_range)
+        return tuple(rand_range(self.size) for x in self.dimension_range)
 
     def move_player(self, movement):
         '''Pretty much all the controls are hooked here.'''
@@ -55,7 +55,7 @@ def eat_food():
     '''Victory message'''
     with open('foods.txt', 'r') as foods_file:
         foods = [foods_file]
-    food = foods[rand_int(len(foods))]
+    food = foods[rand_range(len(foods))]
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
@@ -66,7 +66,7 @@ def game_loop():
     while running:
         old_address = game_world.player_location
         game_world.player_location = game_world.move_player(
-            tuple(rand_int(3) - 1 for x in game_world.dimension_range)
+            tuple(rand_range(3) - 1 for x in game_world.dimension_range)
             )
         if old_address == game_world.player_location:
             running = False
@@ -90,9 +90,9 @@ def get_distance(address1, address2):
 
 def get_velocity(goal, address1, address2):
     '''The player gets a readout of this.'''
-    return get_distance(address2, goal) - get_distance(address1, goal)
+    return get_distance(address1, goal) - get_distance(address2, goal)
 
-def rand_int(maximum):
+def rand_range(maximum):
     '''Supposed to be faster than randrange'''
     return int(random() * maximum)
 

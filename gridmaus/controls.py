@@ -4,7 +4,7 @@ This file calls main.py.'''
 import pygame
 import pygame_menu
 
-import main
+from gridmaus.gridmaus import main
 
 screen = pygame.display.set_mode((600, 400))
 
