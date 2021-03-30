@@ -64,11 +64,13 @@ def run_game_menu():
     menu.add.selector(
         'World size:',
         main.generate_numerical_selector(3, 10),
+        default=str(main.world_template['size']),
         onchange=main.change_world_template_size # passes <option text>, <option value>
     )
     menu.add.selector(
         'Dimensions:',
         main.generate_numerical_selector(2, 5),
+        default=str(main.world_template['dimensions']),
         onchange=main.change_world_template_dimensions # passes <option text>, <option value>
     )
     menu.add.button('Begin', main.game_loop)
