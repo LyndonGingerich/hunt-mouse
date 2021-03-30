@@ -58,9 +58,9 @@ def eatFood():
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
-def gameLoop(worldTemplate):
+def gameLoop():
     '''The main game loop'''
-    gameWorld = World(worldTemplate.dimensions, worldTemplate.size)
+    gameWorld = World(buildWorld.dimensions, buildWorld.size)
     running = True
     while running:
         oldAddress = gameWorld.playerLocation
@@ -78,7 +78,7 @@ def generateNumericalSelector(minSize, maxSize):
     return [(str(x), x) for x in range(minSize, maxSize + 1)]
 
 def getDifference(int1, int2):
-    '''To shorten an unweildy list comprehension'''
+    '''To shorten an unwieldy list comprehension'''
     return abs(int1 - int2)
 
 def getDistance(addressA, addressB):
@@ -111,21 +111,20 @@ def runMenu():
         generateNumericalSelector(3, 10),
         onchange=buildWorld.changeSize # passes <option text>, <option value>
         )
-    menu.add.button('Begin', pygame_menu.events.CLOSE)
+    menu.add.button('Begin', gameLoop)
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(screen)
 
 if __name__ == '__main__':
     # Prime game
     pygame.init()
+
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    # Set world attributes
-    buildWorld = BuildWorld()
-    runMenu()
+    while True:
+        # Set world attributes
+        buildWorld = BuildWorld()
+        runMenu()
 
-    # Run the game
-    gameLoop(buildWorld)
-
-    # Win
-    eatFood()
+        # Win
+        eatFood()
