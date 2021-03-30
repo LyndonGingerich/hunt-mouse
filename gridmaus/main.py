@@ -74,8 +74,6 @@ def getDistance(addressA, addressB):
 
 def runMenu():
     '''Allows manual selection of world size; world dimensions are set to 2.'''
-    selectedWorldDimensions = 2 # change when more game modes are added
-    worldSizeSelector = (None, None)
     menu = pygame_menu.Menu(
         'Welcome',
         300,
@@ -87,11 +85,9 @@ def runMenu():
         generateNumericalSelector(3, 10),
         onchange=buildWorld.changeSize # passes <option text>, <option value>
         )
-    (_, selectedWorldSize) = worldSizeSelector
     menu.add.button('Begin', pygame_menu.events.CLOSE)
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(screen)
-    return selectedWorldDimensions, selectedWorldSize
 
 def getVelocity(goal, firstAddress, secondAddress):
     '''The player gets a readout of this.'''
