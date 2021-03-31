@@ -29,11 +29,8 @@ class World():
         return tuple(rand_range(self.size) for x in self.dimension_range)
 
     def move_player(self, movement):
-        '''Probably the most important method of the game; returns velocity'''
-        address = move_address(self.player_location, movement, self.size - 1)
-        velocity = get_velocity(self.goal, self.player_location, address)
-        self.player_location = address
-        return velocity
+        '''Probably the most important method of the game'''
+        self.player_location = move_address(self.player_location, movement, self.size - 1)
 
 
 def adjust_to_boundaries(coordinate, boundary):

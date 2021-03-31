@@ -79,26 +79,18 @@ def run_game():
                 [('Forward', i, 1), ('Still', i, 0), ('Back', i, -1)],
                 onchange=edit_move_template
             )
-        menu.add.button('Go', pygame_menu.events.CLOSE)
-        menu.add.button('New game', show_main_menu)
+        menu.add.button('Go', game_world.move_player, tuple(move_template))
+        menu.add.button('Exit', show_main_menu)
         menu.mainloop(screen)
-
-    def show_win_menu():
-        menu = pygame_menu.Menu(
-            'Congratulations!',
-            MENU_WIDTH,
-            MENU_HEIGHT,
-            theme=pygame_menu.themes.THEME_BLUE
-        )
-        menu.add.label(backend.eat_food())
-        menu.add.button('Done', show_main_menu)
 
     game_world = backend.create_world()
     move_template = [0 for x in game_world.dimension_range]
     velocity = 0
     while game_world.player_location != game_world.goal:
+        position1 = game_world.player_location
         show_move_menu(game_world, velocity)
-        velocity = game_world.move_player(tuple(move_template))
+        position2 = game_world.player_location
+        velocity = backend.get_velocity(game_world.goal, position1, position2)
     show_win_menu()
 
 def show_main_menu():
@@ -132,6 +124,17 @@ def show_main_menu():
     menu.add.button('Begin', run_game)
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(screen)
+
+def show_win_menu():
+    '''Flavor text upon victory'''
+    menu = pygame_menu.Menu(
+        'Congratulations!',
+        MENU_WIDTH,
+        MENU_HEIGHT,
+        theme=pygame_menu.themes.THEME_BLUE
+    )
+    menu.add.label(backend.eat_food())
+    menu.add.button('Done', show_main_menu)
 
 pygame.init()
 
