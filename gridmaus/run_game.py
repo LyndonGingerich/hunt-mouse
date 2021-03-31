@@ -71,8 +71,8 @@ def iterate_game_loop(game_world):
         '''In-game display'''
         menu = pygame_menu.Menu(
             'Velocity: ' + str(velocity),
-            SCREEN_HEIGHT,
             SCREEN_WIDTH,
+            SCREEN_HEIGHT,
             theme=pygame_menu.themes.THEME_BLUE
         )
         for i in world.dimension_range:
