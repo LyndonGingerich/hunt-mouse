@@ -29,7 +29,7 @@ class World():
         return tuple(rand_range(self.size) for x in self.dimension_range)
 
     def move_player(self, movement):
-        '''Pretty much all the controls are hooked here.'''
+        '''Probably the most important method of the game'''
         results = dict()
         address = move_address(self.player_location, movement, self.size - 1)
         results['velocity'] = get_velocity(self.goal, self.player_location, address)

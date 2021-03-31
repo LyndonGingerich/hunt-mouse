@@ -82,12 +82,11 @@ def iterate_game_loop(game_world):
                 onchange=edit_move_template
             )
         menu.add.button('Go', pygame_menu.events.CLOSE)
-        menu.add.button('Quit', pygame_menu.events.RESET)
+        menu.add.button('New game', pygame_menu.events.RESET)
         menu.mainloop(screen)
 
     show_move_menu(game_world)
-    movement = tuple(move_template)
-    move_results = game_world.move_player(movement)
+    move_results = game_world.move_player(tuple(move_template))
     if move_results['reached_goal']:
         return False
     return move_results['velocity']
