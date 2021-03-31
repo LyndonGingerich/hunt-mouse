@@ -29,16 +29,11 @@ class World():
         return tuple(rand_range(self.size) for x in self.dimension_range)
 
     def move_player(self, movement):
-        '''Probably the most important method of the game'''
-        results = dict()
+        '''Probably the most important method of the game; returns velocity'''
         address = move_address(self.player_location, movement, self.size - 1)
-        results['velocity'] = get_velocity(self.goal, self.player_location, address)
-        if self.player_location == address:
-            results['reached_goal'] = True
-        else:
-            results['reached_goal'] = False
-            self.player_location = address
-        return results
+        velocity = get_velocity(self.goal, self.player_location, address)
+        self.player_location = address
+        return velocity
 
 
 def adjust_to_boundaries(coordinate, boundary):
