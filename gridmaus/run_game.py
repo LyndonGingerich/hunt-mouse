@@ -137,5 +137,4 @@ pygame.init()
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-while True:
-    show_main_menu()
+show_main_menu()
