@@ -6,6 +6,12 @@ import math
 from random import random
 
 
+MAX_DIMENSIONS = 5
+MIN_DIMENSIONS = 2
+MAX_SIZE = 10
+MIN_SIZE = 3
+
+
 class World():
     '''Handles in-game abstractions'''
     def __init__(self, dimensions, size):

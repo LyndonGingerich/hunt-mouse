@@ -111,14 +111,22 @@ def show_game_menu():
     )
     menu.add.selector(
         'Game size:',
-        backend.generate_numerical_selector(3, 10, 'size'),
-        default=str(backend.world_template['size']),
+        backend.generate_numerical_selector(
+            backend.MIN_SIZE,
+            backend.MAX_SIZE,
+            'size'
+        ),
+        default=backend.world_template['size'] - backend.MIN_SIZE,
         onchange=backend.change_world_template # passes <option text>, <option value>
     )
     menu.add.selector(
         'Dimensions:',
-        backend.generate_numerical_selector(2, 5, 'dimensions'),
-        default=str(backend.world_template['dimensions']),
+        backend.generate_numerical_selector(
+            backend.MIN_DIMENSIONS,
+            backend.MAX_DIMENSIONS,
+            'dimensions'
+        ),
+        default=backend.world_template['dimensions'] - backend.MIN_DIMENSIONS,
         onchange=backend.change_world_template # passes <option text>, <option value>
     )
     menu.add.button('Begin', run_game)
