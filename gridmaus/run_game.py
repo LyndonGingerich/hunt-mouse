@@ -90,7 +90,7 @@ def run_game():
         show_move_menu(game_world, velocity)
         velocity = game_world.move_player(tuple(move_template))
 
-def show_game_menu():
+def show_main_menu():
     '''Allows manual selection of world size and dimensions.'''
     menu = pygame_menu.Menu(
         'Welcome',
@@ -127,4 +127,4 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 while True:
-    show_game_menu()
+    show_main_menu()
