@@ -8,17 +8,14 @@ The PC is a mouse hunting for food hidden somewhere in a multi-dimensional grid.
 
 ## To do
 
-* Implement a game engine, probably Pygame
-* Write game narrative
+* Consider overhauling game flavor
 * Design and create game backend
   * Game modes
-  * DOS protection against experimental dimension-spammers
-* Design and create game GUI
-  * Dimensionality selection
-  * PC control
-  * Velocity display
-  * Flavor text
-* Implement terminal to run the game by program
-* Design and implement means of saving data
+  * API
+* Write frontend
+  * Terminal integration for API control
+  * Graphics
+  * Sounds
+* Design and implement database for user input
   * High scores
   * Programs
