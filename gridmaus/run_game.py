@@ -12,8 +12,10 @@ from gridmaus.gridmaus import backend
 
 # TODO: Add move menu "quit" code
 
-SCREEN_WIDTH = 600
+MENU_HEIGHT = 400
+MENU_WIDTH = 600
 SCREEN_HEIGHT = 400
+SCREEN_WIDTH = 600
 
 
 class KeypadControls():
@@ -71,8 +73,8 @@ def iterate_game_loop(game_world):
         '''In-game display'''
         menu = pygame_menu.Menu(
             'Velocity: ' + str(velocity),
-            SCREEN_WIDTH,
-            SCREEN_HEIGHT,
+            MENU_WIDTH,
+            MENU_HEIGHT,
             theme=pygame_menu.themes.THEME_BLUE
         )
         for i in world.dimension_range:
@@ -102,8 +104,8 @@ def show_game_menu():
     '''Allows manual selection of world size and dimensions.'''
     menu = pygame_menu.Menu(
         'Welcome',
-        300,
-        400,
+        MENU_WIDTH,
+        MENU_HEIGHT,
         theme=pygame_menu.themes.THEME_BLUE
     )
     menu.add.selector(
