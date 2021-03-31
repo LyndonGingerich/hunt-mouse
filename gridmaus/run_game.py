@@ -83,12 +83,23 @@ def run_game():
         menu.add.button('New game', pygame_menu.events.RESET)
         menu.mainloop(screen)
 
+    def show_win_menu():
+        menu = pygame_menu.Menu(
+            'Congratulations!',
+            MENU_WIDTH,
+            MENU_HEIGHT,
+            theme=pygame_menu.themes.THEME_BLUE
+        )
+        menu.add.label(backend.eat_food())
+        menu.add.button('Done', show_main_menu)
+
     game_world = backend.create_world()
     move_template = [0 for x in game_world.dimension_range]
     velocity = 0
     while game_world.player_location != game_world.goal:
         show_move_menu(game_world, velocity)
         velocity = game_world.move_player(tuple(move_template))
+    show_win_menu()
 
 def show_main_menu():
     '''Allows manual selection of world size and dimensions.'''
