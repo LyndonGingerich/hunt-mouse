@@ -39,13 +39,9 @@ def adjust_to_boundaries(coordinate, boundary):
     '''Keeps the player from leaving the game area'''
     return boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
 
-def change_world_template_dimensions(_, value):
+def change_world_template(_, value, index):
     '''Called by selector onreturn'''
-    world_template['dimensions'] = value
-
-def change_world_template_size(_, value):
-    '''Called by selector onreturn'''
-    world_template['size'] = value
+    world_template[index] = value
 
 def create_world():
     '''Instantiates World using attributes from world_template'''
@@ -60,9 +56,9 @@ def eat_food():
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
-def generate_numerical_selector(min_size, max_size):
+def generate_numerical_selector(min_size, max_size, argument=None):
     '''Helper function for Game.showMenu()'''
-    return [(str(x), x) for x in range(min_size, max_size + 1)]
+    return [(str(x), x, argument) for x in range(min_size, max_size + 1)]
 
 def get_difference(int1, int2):
     '''To shorten an unwieldy list comprehension'''

@@ -112,16 +112,16 @@ def show_game_menu():
         theme=pygame_menu.themes.THEME_BLUE
     )
     menu.add.selector(
-        'World size:',
-        backend.generate_numerical_selector(3, 10),
+        'Game size:',
+        backend.generate_numerical_selector(3, 10, 'size'),
         default=str(backend.world_template['size']),
-        onchange=backend.change_world_template_size # passes <option text>, <option value>
+        onchange=backend.change_world_template # passes <option text>, <option value>
     )
     menu.add.selector(
         'Dimensions:',
-        backend.generate_numerical_selector(2, 5),
+        backend.generate_numerical_selector(2, 5, 'dimensions'),
         default=str(backend.world_template['dimensions']),
-        onchange=backend.change_world_template_dimensions # passes <option text>, <option value>
+        onchange=backend.change_world_template # passes <option text>, <option value>
     )
     menu.add.button('Begin', run_game)
     menu.add.button('Quit', pygame_menu.events.EXIT)
