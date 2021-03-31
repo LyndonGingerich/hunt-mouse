@@ -55,7 +55,7 @@ def eat_food():
         foods = [foods_file]
     food = foods[rand_range(len(foods))]
     food = food.rstrip('\n')
-    print(f'The mouse finds {food} and scarfs it down. Good job!')
+    return f'The mouse finds {food} and scarfs it down. Good job!'
 
 def generate_numerical_selector(min_size, max_size, argument=None):
     '''Helper function for Game.showMenu()'''
