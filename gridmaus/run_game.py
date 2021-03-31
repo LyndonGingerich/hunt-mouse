@@ -11,8 +11,6 @@ sys.path.append('..')
 from gridmaus.gridmaus import backend
 
 # TODO: Add move menu "quit" code
-# TODO: Add move menu "go" code
-# TODO: Check game menu with knowledge of onreturn arguments
 
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 400
@@ -85,8 +83,8 @@ def iterate_game_loop(game_world):
                 [('Forward', i, 1), ('Still', i, 0), ('Back', i, -1)],
                 onchange=edit_move_template
             )
-        menu.add.button('Go', None)
-        menu.add.button('Quit', None)
+        menu.add.button('Go', pygame_menu.events.CLOSE)
+        menu.add.button('Quit', pygame_menu.events.RESET)
         menu.mainloop(screen)
 
     show_move_menu(game_world)
