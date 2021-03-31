@@ -80,7 +80,7 @@ def run_game():
                 onchange=edit_move_template
             )
         menu.add.button('Go', pygame_menu.events.CLOSE)
-        menu.add.button('New game', pygame_menu.events.RESET)
+        menu.add.button('New game', show_main_menu)
         menu.mainloop(screen)
 
     def show_win_menu():
