@@ -15,8 +15,6 @@ from gridmaus.gridmaus import backend
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 400
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
 
 class KeypadControls():
     '''For 2D manual mode for demonstration'''
@@ -65,7 +63,7 @@ def iterate_game_loop(game_world):
 
     move_template = [0 for x in game_world.dimension_range]
 
-    def edit_move_template(index, value):
+    def edit_move_template(_, index, value):
         '''Called by show_move_menu()'''
         move_template[index] += value
 
@@ -134,6 +132,8 @@ def show_game_menu():
     menu.mainloop(screen)
 
 pygame.init()
+
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 while True:
     show_game_menu()

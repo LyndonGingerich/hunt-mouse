@@ -45,7 +45,7 @@ def adjust_to_boundaries(coordinate, boundary):
     '''Keeps the player from leaving the game area'''
     return boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
 
-def change_world_template(value, index):
+def change_world_template(_, value, index):
     '''Called by selector onreturn'''
     world_template[index] = value
 
