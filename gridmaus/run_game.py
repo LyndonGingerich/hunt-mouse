@@ -109,7 +109,7 @@ def show_main_menu():
             'size'
         ),
         default=backend.world_template['size'] - backend.MIN_SIZE,
-        onchange=backend.change_world_template # passes <option text>, <option value>
+        onchange=backend.change_world_template  # passes <option text>, <option value>
     )
     menu.add.selector(
         'Dimensions:',
@@ -119,7 +119,7 @@ def show_main_menu():
             'dimensions'
         ),
         default=backend.world_template['dimensions'] - backend.MIN_DIMENSIONS,
-        onchange=backend.change_world_template # passes <option text>, <option value>
+        onchange=backend.change_world_template  # passes <option text>, <option value>
     )
     menu.add.button('Begin', run_game)
     menu.add.button('Quit', pygame_menu.events.EXIT)
