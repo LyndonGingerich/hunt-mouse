@@ -3,7 +3,7 @@ All addresses, including movement addresses, are tuples.
 '''
 
 import math
-from random import random
+from random import random, sample
 
 
 MAX_DIMENSIONS = 5
@@ -57,7 +57,7 @@ def eat_food():
     '''Victory message'''
     with open('foods.txt', 'r') as foods_file:
         foods = [foods_file]
-    food = foods[rand_range(len(foods))]
+    food = sample(foods, 1)[0]
     food = food.rstrip('\n')
     return f'The mouse finds {food} and scarfs it down. Good job!'
 
