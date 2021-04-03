@@ -28,9 +28,16 @@ class World():
         '''Sets the goal at the beginning of the game'''
         return tuple(rand_range(self.size) for x in self.dimension_range)
 
+    def move_address(self, address, movement):
+        '''Helper function for World.move_player'''
+        return tuple(
+                adjust_to_boundaries(address[x] + movement[x], self.size - 1)
+                for x in movement
+                )
+
     def move_player(self, movement):
         '''Probably the most important method of the game'''
-        self.player_location = move_address(self.player_location, movement, self.size - 1)
+        self.player_location = self.move_address(self.player_location, movement)
 
 
 def adjust_to_boundaries(coordinate, boundary):
@@ -66,13 +73,6 @@ def get_distance(address1, address2):
 def get_velocity(goal, from_address, to_address):
     '''The player gets a readout of this.'''
     return get_distance(from_address, goal) - get_distance(to_address, goal)
-
-def move_address(address, movement, boundary):
-    '''Helper function for World.move_player'''
-    return tuple(
-            adjust_to_boundaries(address[x] + movement[x], boundary)
-            for x in movement
-            )
 
 def rand_range(maximum):
     '''Supposed to be faster than randrange'''
