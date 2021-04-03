@@ -58,19 +58,14 @@ def generate_numerical_selector(min_size, max_size, argument=None):
     '''Helper function for Game.showMenu()'''
     return [(str(x), x, argument) for x in range(min_size, max_size + 1)]
 
-def get_difference(int1, int2):
-    '''To shorten an unwieldy list comprehension'''
-    return abs(int1 - int2)
-
 def get_distance(address1, address2):
     '''In Cartesian space using tuples'''
-    distances = tuple(get_difference(address1[x], address2[x]) for x in range(len(address1)))
-    totalDistance = math.hypot(*distances)
-    return totalDistance
+    distances = tuple(abs(address1[x] - address2[x]) for x in range(len(address1)))
+    return math.hypot(*distances)
 
-def get_velocity(goal, address1, address2):
+def get_velocity(goal, from_address, to_address):
     '''The player gets a readout of this.'''
-    return get_distance(address1, goal) - get_distance(address2, goal)
+    return get_distance(from_address, goal) - get_distance(to_address, goal)
 
 def move_address(address, movement, boundary):
     '''Helper function for World.move_player'''
