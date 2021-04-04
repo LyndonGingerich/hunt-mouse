@@ -37,8 +37,9 @@ def adjust_address_to_boundary(address, boundary):
     return tuple(adjust_coordinate_to_boundary(x, boundary) for x in address)
 
 def adjust_coordinate_to_boundary(coordinate, boundary):
-    '''Helper function for adjust_address_to_boundary()'''
-    return boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
+    '''Helper function for adjust_address_to_boundary()
+    Ensures that boundary <= coordinate <= 0.'''
+    return boundary if coordinate > boundary else coordinate if coordinate >= 0 else 0
 
 def eat_food():
     '''Victory message'''
