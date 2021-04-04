@@ -44,10 +44,6 @@ def adjust_to_boundaries(coordinate, boundary):
     '''Keeps the player from leaving the game area'''
     return boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
 
-def change_world_template(_, value, index):
-    '''Called by selector onreturn'''
-    world_template[index] = value
-
 def eat_food():
     '''Victory message'''
     with open('foods.txt', 'r') as foods_file:
@@ -80,7 +76,7 @@ def run_game():
         '''Called by show_move_menu()'''
         move_template[index] += value
 
-    game_world = World(world_template['dimensions'], world_template['size'])
+    game_world = World(world_dimensions, world_size)
     move_template = [0 for x in game_world.dimension_range]
     velocity = 0
     while game_world.player_location != game_world.goal:
@@ -89,4 +85,5 @@ def run_game():
         velocity = get_velocity(game_world.goal, position1, position2)
 
 
-world_template = {'dimensions': 2, 'size': 5}
+world_dimensions = 2
+world_size = 5
