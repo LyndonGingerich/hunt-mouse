@@ -24,18 +24,20 @@ class World():
 
     def move_address(self, address, movement):
         '''Helper function for World.move_player'''
-        return tuple(
-                adjust_to_boundary(address[x] + movement[x], self.size - 1)
-                for x in movement
-                )
+        to_address = tuple(address[x] + movement[x] for x in self.dimension_range)
+        return adjust_address_to_boundary(to_address, self.size - 1)
 
     def move_player(self, movement):
         '''Probably the most important method of the game'''
         self.player_location = self.move_address(self.player_location, movement)
 
 
-def adjust_to_boundary(coordinate, boundary):
+def adjust_address_to_boundary(address, boundary):
     '''Keeps the player from leaving the game area'''
+    return tuple(adjust_coordinate_to_boundary(x, boundary) for x in address)
+
+def adjust_coordinate_to_boundary(coordinate, boundary):
+    '''Helper function for adjust_address_to_boundary()'''
     return boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
 
 def eat_food():
