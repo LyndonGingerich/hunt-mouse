@@ -50,7 +50,8 @@ def eat_food():
     return f'The mouse finds {food} and scarfs it down. Good job!'
 
 def get_distance(address1, address2):
-    '''In Cartesian space using tuples'''
+    '''In Cartesian space using tuples
+    Iterates by index to display correlation between address1[x] and address2[x]'''
     distances = tuple(abs(address1[x] - address2[x]) for x in range(len(address1)))
     return math.hypot(*distances)
 
