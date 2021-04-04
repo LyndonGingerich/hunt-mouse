@@ -78,5 +78,20 @@ def rand_range(maximum):
     '''Supposed to be faster than randrange'''
     return int(random() * maximum)
 
+def run_game():
+    '''The main game loop'''
+
+    def edit_move_template(_, index, value):
+        '''Called by show_move_menu()'''
+        move_template[index] += value
+
+    game_world = create_world()
+    move_template = [0 for x in game_world.dimension_range]
+    velocity = 0
+    while game_world.player_location != game_world.goal:
+        position1 = game_world.player_location
+        position2 = game_world.player_location
+        velocity = get_velocity(game_world.goal, position1, position2)
+
 
 world_template = {'dimensions': 2, 'size': 5}
