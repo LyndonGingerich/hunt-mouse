@@ -49,10 +49,6 @@ def eat_food():
     food = food.rstrip('\n')
     return f'The mouse finds {food} and scarfs it down. Good job!'
 
-def generate_numerical_selector(min_size, max_size, argument=None):
-    '''Helper function for Game.showMenu()'''
-    return [(str(x), x, argument) for x in range(min_size, max_size + 1)]
-
 def get_distance(address1, address2):
     '''In Cartesian space using tuples'''
     distances = tuple(abs(address1[x] - address2[x]) for x in range(len(address1)))
@@ -68,11 +64,6 @@ def rand_range(maximum):
 
 def run_game():
     '''The main game loop'''
-
-    def edit_move_template(_, index, value):
-        '''Called by show_move_menu()'''
-        move_template[index] += value
-
     game_world = World(world_dimensions, world_size)
     move_template = [0 for x in game_world.dimension_range]
     velocity = 0
