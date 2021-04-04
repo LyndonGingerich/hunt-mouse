@@ -6,12 +6,6 @@ import math
 from random import random, sample
 
 
-MAX_DIMENSIONS = 5
-MIN_DIMENSIONS = 2
-MAX_SIZE = 10
-MIN_SIZE = 3
-
-
 class World():
     '''Handles in-game abstractions'''
     def __init__(self, dimensions, size):
@@ -31,7 +25,7 @@ class World():
     def move_address(self, address, movement):
         '''Helper function for World.move_player'''
         return tuple(
-                adjust_to_boundaries(address[x] + movement[x], self.size - 1)
+                adjust_to_boundary(address[x] + movement[x], self.size - 1)
                 for x in movement
                 )
 
@@ -40,7 +34,7 @@ class World():
         self.player_location = self.move_address(self.player_location, movement)
 
 
-def adjust_to_boundaries(coordinate, boundary):
+def adjust_to_boundary(coordinate, boundary):
     '''Keeps the player from leaving the game area'''
     return boundary if coordinate > boundary else 0 if coordinate < 0 else coordinate
 
@@ -83,7 +77,3 @@ def run_game():
         position1 = game_world.player_location
         position2 = game_world.player_location
         velocity = get_velocity(game_world.goal, position1, position2)
-
-
-world_dimensions = 2
-world_size = 5
