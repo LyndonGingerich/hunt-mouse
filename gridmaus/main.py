@@ -75,8 +75,8 @@ def rand_range(maximum):
 
 def run_game():
     '''The main game loop'''
-    world_size = get_input('Length of game board: ', int)
-    world_dimensions = get_input('Number of dimensions of game board: ', int)
+    world_size = get_input('Length of game world: ', int)
+    world_dimensions = get_input('Number of dimensions of game world: ', int)
     game_world = World(world_dimensions, world_size)
     coordinates_string = '\n'.join(tuple(
         f'Dimension {index}: {value}' for index, value in enumerate(game_world.player_location)
