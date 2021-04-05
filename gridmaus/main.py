@@ -47,7 +47,7 @@ def eat_food():
         foods = [foods_file]
     food = foods[rand_range(len(foods))]
     food = food.rstrip('\n')
-    return f'The mouse finds {food} and scarfs it down. Good job!'
+    print(f'The mouse finds {food} and scarfs it down. Good job!')
 
 def get_distance(address1, address2):
     '''In Cartesian space using tuples
