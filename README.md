@@ -1,4 +1,4 @@
-# dimensional-gridmaus
+# gridmaus
 
 Turn-based dimensional search game guided solely by a display of velocity relative to the goal
 
