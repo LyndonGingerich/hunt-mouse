@@ -74,7 +74,7 @@ def run_game():
         print('Current velocity:', str(velocity))
         position1 = game_world.player_location
         move_template = tuple(
-            input(f'Movement in dimension {str(x)}: ') for x in game_world.dimension_range
+            int(input(f'Movement in dimension {str(x)}: ')) for x in game_world.dimension_range
             )
         game_world.move_player(tuple(move_template))
         position2 = game_world.player_location
