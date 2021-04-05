@@ -9,9 +9,7 @@ The PC is a mouse hunting for food hidden somewhere in a multi-dimensional grid.
 ## To do
 
 * Consider overhauling game flavor
-* Design and create game backend
-  * Game modes
-  * API
+* Add ability to be played by script
 * Design and implement database for user input
   * High scores
   * Programs
