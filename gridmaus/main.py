@@ -25,16 +25,16 @@ class World():
     def move_address(self, address, movement):
         '''Helper function for World.move_player'''
         to_address = tuple(address[x] + movement[x] for x in self.dimension_range)
-        return adjust_address_to_boundary(to_address, self.size - 1)
+        return adjust_address_to_boundaries(to_address, self)
 
     def move_player(self, movement):
         '''Probably the most important method of the game'''
         self.player_location = self.move_address(self.player_location, movement)
 
 
-def adjust_address_to_boundary(address, boundary):
+def adjust_address_to_boundaries(address, world):
     '''Keeps the player from leaving the game area'''
-    return tuple(adjust_coordinate_to_boundary(x, boundary) for x in address)
+    return tuple(adjust_coordinate_to_boundary(x, world.size - 1) for x in address)
 
 def adjust_coordinate_to_boundary(coordinate, boundary):
     '''Helper function for adjust_address_to_boundary()
@@ -65,10 +65,26 @@ def rand_range(maximum):
 
 def run_game():
     '''The main game loop'''
+    world_size = input('Length of game board: ')
+    world_dimensions = input('Number of dimensions of game board: ')
     game_world = World(world_dimensions, world_size)
-    move_template = [0 for x in game_world.dimension_range]
     velocity = 0
+
     while game_world.player_location != game_world.goal:
+        print('Current velocity:', str(velocity))
         position1 = game_world.player_location
+        move_template = tuple(
+            input(f'Movement in dimension {str(x)}: ') for x in game_world.dimension_range
+            )
+        game_world.move_player(tuple(move_template))
         position2 = game_world.player_location
         velocity = get_velocity(game_world.goal, position1, position2)
+
+    eat_food()
+
+    wishes_to_continue = input('Want to play again? (y/n)').lower()
+    if wishes_to_continue in ('yes', 'y'):
+        run_game()
+
+if __name__ == '__main__':
+    run_game()
