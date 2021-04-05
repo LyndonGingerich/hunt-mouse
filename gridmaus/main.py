@@ -65,17 +65,32 @@ def rand_range(maximum):
 
 def run_game():
     '''The main game loop'''
-    world_size = int(input('Length of game board: '))
-    world_dimensions = int(input('Number of dimensions of game board: '))
+
+    world_size = None
+    world_dimensions = None
+    while not isinstance(world_size, int) or not isinstance(world_dimensions, int):
+        try:
+            world_size = int(input('Length of game board: '))
+            world_dimensions = int(input('Number of dimensions of game board: '))
+        except ValueError:
+            print('Input must be valid integers.')
+
     game_world = World(world_dimensions, world_size)
     velocity = 0
 
     while game_world.player_location != game_world.goal:
         print('Current velocity:', str(velocity))
         position1 = game_world.player_location
-        move_template = tuple(
-            int(input(f'Movement in dimension {str(x)}: ')) for x in game_world.dimension_range
-            )
+
+        move_template = None
+        while not isinstance(move_template, tuple):
+            try:
+                move_template = tuple(
+                    int(input(f'Movement in dimension {str(x)}: '))
+                    for x in game_world.dimension_range
+                    )
+            except ValueError:
+                print('Input must be valid integers.')
         game_world.move_player(tuple(move_template))
         position2 = game_world.player_location
         velocity = get_velocity(game_world.goal, position1, position2)
