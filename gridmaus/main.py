@@ -78,9 +78,13 @@ def run_game():
     world_size = get_input('Length of game board: ', int)
     world_dimensions = get_input('Number of dimensions of game board: ', int)
     game_world = World(world_dimensions, world_size)
+    coordinates_string = '\n'.join(tuple(
+        f'Dimension {index}: {value}' for index, value in enumerate(game_world.player_location)
+        ))
     velocity = 0
 
     while game_world.player_location != game_world.goal:
+        print('Coordinates:', coordinates_string)
         print('Current velocity:', str(velocity))
         position1 = game_world.player_location
         move_template = None
