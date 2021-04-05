@@ -43,8 +43,8 @@ def adjust_coordinate_to_boundary(coordinate, boundary):
 
 def eat_food():
     '''Victory message'''
-    with open('foods.txt', 'r') as foods_file:
-        foods = [foods_file]
+    with open('gridmaus/foods.txt', 'r') as foods_file:
+        foods = list(foods_file)
     food = foods[rand_range(len(foods))]
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
