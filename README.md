@@ -16,3 +16,4 @@ The PC is a mouse hunting for food hidden somewhere in a multi-dimensional grid.
   * High scores
   * Programs
 * Write play documentation
+* Add options file and commands
