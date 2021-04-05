@@ -1,2 +1,0 @@
-pygame==2.0.1
-pygame_menu==4.0.1
