@@ -3,7 +3,7 @@ All addresses, including movement addresses, are tuples.
 '''
 
 import math
-from random import random, sample
+from random import random
 
 
 class World():
@@ -45,7 +45,7 @@ def eat_food():
     '''Victory message'''
     with open('foods.txt', 'r') as foods_file:
         foods = [foods_file]
-    food = sample(foods, 1)[0]
+    food = foods[rand_range(len(foods))]
     food = food.rstrip('\n')
     return f'The mouse finds {food} and scarfs it down. Good job!'
 
