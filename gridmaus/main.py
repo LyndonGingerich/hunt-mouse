@@ -55,6 +55,16 @@ def get_distance(address1, address2):
     distances = tuple(abs(address1[x] - address2[x]) for x in range(len(address1)))
     return math.hypot(*distances)
 
+def get_input(message, input_type):
+    '''Checks input type until correct'''
+    input_value = None
+    while not isinstance(input_value, input_type):
+        try:
+            input_value = input_type(input(message))
+        except ValueError:
+            print(f'Input must be a valid `{input_type}`.')
+    return input_value
+
 def get_velocity(goal, from_address, to_address):
     '''The player gets a readout of this.'''
     return get_distance(from_address, goal) - get_distance(to_address, goal)
@@ -65,32 +75,18 @@ def rand_range(maximum):
 
 def run_game():
     '''The main game loop'''
-
-    world_size = None
-    world_dimensions = None
-    while not isinstance(world_size, int) or not isinstance(world_dimensions, int):
-        try:
-            world_size = int(input('Length of game board: '))
-            world_dimensions = int(input('Number of dimensions of game board: '))
-        except ValueError:
-            print('Input must be valid integers.')
-
+    world_size = get_input('Length of game board: ', int)
+    world_dimensions = ('Number of dimensions of game board: ', int)
     game_world = World(world_dimensions, world_size)
     velocity = 0
 
     while game_world.player_location != game_world.goal:
         print('Current velocity:', str(velocity))
         position1 = game_world.player_location
-
         move_template = None
-        while not isinstance(move_template, tuple):
-            try:
-                move_template = tuple(
-                    int(input(f'Movement in dimension {str(x)}: '))
-                    for x in game_world.dimension_range
-                    )
-            except ValueError:
-                print('Input must be valid integers.')
+        move_template = tuple(
+            get_input(f'Movement in dimension {str(x)}: ', int) for x in game_world.dimension_range
+            )
         game_world.move_player(tuple(move_template))
         position2 = game_world.player_location
         velocity = get_velocity(game_world.goal, position1, position2)
