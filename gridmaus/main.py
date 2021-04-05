@@ -65,8 +65,8 @@ def rand_range(maximum):
 
 def run_game():
     '''The main game loop'''
-    world_size = input('Length of game board: ')
-    world_dimensions = input('Number of dimensions of game board: ')
+    world_size = int(input('Length of game board: '))
+    world_dimensions = int(input('Number of dimensions of game board: '))
     game_world = World(world_dimensions, world_size)
     velocity = 0
 
