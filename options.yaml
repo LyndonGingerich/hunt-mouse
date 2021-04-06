@@ -1,5 +1,0 @@
-manual_play: True
-output_coordinates: True
-teleport_enabled: False
-unlimited_movement_enabled: False
-warn_on_wall_collision: True
