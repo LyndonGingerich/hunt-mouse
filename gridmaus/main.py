@@ -39,7 +39,11 @@ def adjust_address_to_boundaries(address, world):
 def adjust_coordinate_to_boundary(coordinate, boundary):
     '''Helper function for adjust_address_to_boundary()
     Ensures that boundary <= coordinate <= 0.'''
-    return boundary if coordinate > boundary else coordinate if coordinate >= 0 else 0
+    if coordinate > boundary:
+        return boundary
+    if coordinate < 0:
+        return 0
+    return coordinate
 
 def eat_food():
     '''Victory message'''
