@@ -1,5 +1,6 @@
-world_size: 5
-world_dimensions: 3
+world:
+  size: 5
+  dimensions: 3
 
 manual_play: True
 output_coordinates: True
