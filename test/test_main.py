@@ -5,7 +5,7 @@ import sys
 import pytest
 
 sys.path.append('..')
-from gridmaus.gridmaus import main
+from gridmaus import main
 
 # Test code
 
