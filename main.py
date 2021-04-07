@@ -2,8 +2,14 @@
 All addresses, including movement addresses, are tuples.
 '''
 
+import json
 import math
 from random import random, sample
+
+
+with open('options.json', 'r') as options_file:
+    options_JSON = options_file.read()
+options = json.loads(options_JSON)
 
 
 class World():
@@ -22,19 +28,19 @@ class World():
         '''Sets the goal at the beginning of the game'''
         return tuple(rand_range(self.size) for x in self.dimension_range)
 
-    def move_address(self, address, movement):
-        '''Helper function for World.move_player'''
-        to_address = tuple(address[x] + movement[x] for x in self.dimension_range)
-        return adjust_address_to_boundaries(to_address, self)
-
     def move_player(self, movement):
         '''Probably the most important method of the game'''
-        self.player_location = self.move_address(self.player_location, movement)
+        current_address = self.player_location
+        movement_address = tuple(current_address[x] + movement[x] for x in self.dimension_range)
+        to_address = adjust_address_to_boundaries(movement_address, self.size - 1)
+        if to_address != movement_address:
+            print('Pow! The mouse runs into a wall!')
+        self.player_location = to_address
 
 
-def adjust_address_to_boundaries(address, world):
+def adjust_address_to_boundaries(address, boundary):
     '''Keeps the player from leaving the game area'''
-    return tuple(adjust_coordinate_to_boundary(x, world.size - 1) for x in address)
+    return tuple(adjust_coordinate_to_boundary(x, boundary) for x in address)
 
 def adjust_coordinate_to_boundary(coordinate, boundary):
     '''Helper function for adjust_address_to_boundary()
