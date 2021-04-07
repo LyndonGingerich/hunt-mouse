@@ -94,7 +94,8 @@ def run_game():
     velocity = 0
 
     while game_world.player_location != game_world.goal:
-        print('Coordinates:', coordinates_string)
+        if options['output_coordinates']:
+            print('Coordinates:', coordinates_string)
         print('Current velocity:', str(velocity))
         position1 = game_world.player_location
         move_template = tuple(
