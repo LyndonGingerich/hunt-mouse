@@ -1,10 +1,7 @@
 '''Automates testing'''
 
-import sys
-
 import pytest
 
-sys.path.append('..')
 from gridmaus import main
 
 # Test code
