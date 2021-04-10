@@ -12,7 +12,7 @@ with open('options.json', 'r') as options_file:
 options = json.loads(options_JSON)
 
 
-class World():
+class World:
     '''Handles in-game abstractions'''
     def __init__(self, dimensions, size):
         self.dimensions = dimensions
