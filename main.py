@@ -4,7 +4,7 @@ All addresses, including movement addresses, are tuples.
 
 import json
 import math
-from random import random, sample
+from random import choice, random
 
 
 with open('options.json', 'r') as options_file:
@@ -55,7 +55,7 @@ def eat_food():
     '''Victory message'''
     with open('gridmaus/foods.txt', 'r') as foods_file:
         foods = list(foods_file)
-    food = sample(foods, 1)[0]
+    food = choice(foods)
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
