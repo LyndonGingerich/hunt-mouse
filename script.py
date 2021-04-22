@@ -2,6 +2,6 @@
 
 import subprocess
 
-PROCESS = subprocess.call(['python.exe', 'main.py'], stdout=subprocess.PIPE)
+PROCESS = subprocess.run(['python.exe', 'main.py'], stin=subprocess.PIPE, capture_output=True)
 
 print(PROCESS)
