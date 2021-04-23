@@ -7,11 +7,6 @@ import math
 from random import choice, random
 
 
-with open('options.json', 'r') as options_file:
-    options_JSON = options_file.read()
-options = json.loads(options_JSON)
-
-
 class World:
     '''Handles in-game abstractions'''
     def __init__(self, dimensions, size):
@@ -75,6 +70,12 @@ def get_input(message, input_type):
             print(f'Input must be a valid `{input_type}`.')
     return input_value
 
+def get_options():
+    with open('options.json', 'r') as options_file:
+        options_JSON = options_file.read()
+    options = json.loads(options_JSON)
+    return options
+
 def get_velocity(goal, from_address, to_address):
     '''The player gets a readout of this.'''
     return get_distance(from_address, goal) - get_distance(to_address, goal)
@@ -94,6 +95,7 @@ def run_game():
     velocity = 0
 
     while game_world.player_location != game_world.goal:
+        options = get_options()
         if options['output_coordinates']:
             print('Coordinates:', coordinates_string)
         print('Current velocity:', str(velocity))
