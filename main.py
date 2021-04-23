@@ -1,4 +1,4 @@
-'''The game backend.
+'''The game backend
 All addresses, including movement addresses, are tuples.
 '''
 
