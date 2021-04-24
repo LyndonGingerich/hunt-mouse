@@ -6,4 +6,4 @@ dimensions = 3
 size = 5 # length of each dimension
 
 def move(velocity):
-    return [randrange(size)] * dimensions
+    return [randrange(3) - 1 for x in range(dimensions)]
