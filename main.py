@@ -23,6 +23,20 @@ class World:
     def generate_goal(self):
         '''Sets the goal at the beginning of the game'''
         return tuple(randrange(self.size) for x in self.dimension_range)
+    
+    def get_movement(self, velocity):
+        '''Retrieves movement data from the player'''
+        if options['manual_play']:
+            coordinates_string = '\n'.join(tuple(
+                f'Dimension {index}: {value}' for index, value in enumerate(game_world.player_location)
+                ))
+            print('Coordinates:', coordinates_string)
+            print('Current velocity:', str(velocity))
+            movement = tuple(
+                get_input(f'Movement in dimension {str(x)}: ', int) for x in game_world.dimension_range
+                )
+            return movement
+        return script.move(velocity)
 
     def move_player(self, movement):
         '''Probably the most important method of the game'''
@@ -91,21 +105,11 @@ if __name__ == '__main__':
             world_size = script.size
             world_dimensions = script.dimensions
         game_world = World(world_dimensions, world_size)
-        coordinates_string = '\n'.join(tuple(
-            f'Dimension {index}: {value}' for index, value in enumerate(game_world.player_location)
-            ))
         velocity = 0
 
         while game_world.player_location != game_world.goal:
-            options = get_options()
-            if options['manual_play']:
-                print('Coordinates:', coordinates_string)
-            print('Current velocity:', str(velocity))
             position1 = game_world.player_location
-            move_template = tuple(
-                get_input(f'Movement in dimension {str(x)}: ', int) for x in game_world.dimension_range
-                )
-            game_world.move_player(tuple(move_template))
+            game_world.move_player(game_world.get_movement(velocity))
             position2 = game_world.player_location
             velocity = get_velocity(game_world.goal, position1, position2)
 
