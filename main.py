@@ -3,7 +3,7 @@ All addresses, including movement addresses, are tuples.'''
 
 import json
 import math
-from random import choice, random
+from random import choice, randrange
 
 import script
 
@@ -22,7 +22,7 @@ class World:
 
     def generate_goal(self):
         '''Sets the goal at the beginning of the game'''
-        return tuple(rand_range(self.size) for x in self.dimension_range)
+        return tuple(randrange(self.size) for x in self.dimension_range)
 
     def move_player(self, movement):
         '''Probably the most important method of the game'''
@@ -80,10 +80,6 @@ def get_options():
 def get_velocity(goal, from_address, to_address):
     '''The player gets a readout of this.'''
     return get_distance(from_address, goal) - get_distance(to_address, goal)
-
-def rand_range(maximum):
-    '''Supposed to be faster than randrange'''
-    return int(random() * maximum)
 
 if __name__ == '__main__':
     while True:
