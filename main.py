@@ -1,10 +1,11 @@
 '''The game backend
-All addresses, including movement addresses, are tuples.
-'''
+All addresses, including movement addresses, are tuples.'''
 
 import json
 import math
 from random import choice, random
+
+from gridmaus import script
 
 
 class World:
