@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
         while game_world.player_location != game_world.goal:
             options = get_options()
-            if options['output_coordinates']:
+            if options['manual_play']:
                 print('Coordinates:', coordinates_string)
             print('Current velocity:', str(velocity))
             position1 = game_world.player_location
