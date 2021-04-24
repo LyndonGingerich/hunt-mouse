@@ -1,8 +1,8 @@
 '''The game backend
 All addresses, including movement addresses, are tuples.'''
 
-import json
-import math
+from json import loads
+from math import hypot
 from random import choice, randrange
 
 import script
@@ -73,7 +73,7 @@ def get_distance(address1, address2):
     '''In Cartesian space using tuples
     Iterates by index to display correlation between address1[x] and address2[x]'''
     distances = tuple(abs(address1[x] - address2[x]) for x in range(len(address1)))
-    return math.hypot(*distances)
+    return hypot(*distances)
 
 def get_input(message, input_type):
     '''Checks input type until correct'''
@@ -88,7 +88,7 @@ def get_input(message, input_type):
 def get_options():
     with open('options.json', 'r') as options_file:
         options_JSON = options_file.read()
-    options = json.loads(options_JSON)
+    options = loads(options_JSON)
     return options
 
 def get_velocity(goal, from_address, to_address):
