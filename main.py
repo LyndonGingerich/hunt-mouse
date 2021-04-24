@@ -63,7 +63,7 @@ def adjust_coordinate_to_boundary(coordinate, boundary):
 
 def eat_food():
     '''Victory message'''
-    with open('gridmaus/foods.txt', 'r') as foods_file:
+    with open('foods.txt', 'r') as foods_file:
         foods = list(foods_file)
     food = choice(foods)
     food = food.rstrip('\n')
