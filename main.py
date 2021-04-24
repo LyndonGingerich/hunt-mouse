@@ -105,20 +105,15 @@ def get_world_details():
 
 
 if __name__ == '__main__':
-    while True:
-        options = get_options()
-        world_size, world_dimensions = get_world_details()
-        game_world = World(world_dimensions, world_size)
-        velocity = 0
+    options = get_options()
+    world_size, world_dimensions = get_world_details()
+    game_world = World(world_dimensions, world_size)
+    velocity = 0
 
-        while game_world.player_location != game_world.goal:
-            position1 = game_world.player_location
-            game_world.move_player(game_world.get_movement(velocity))
-            position2 = game_world.player_location
-            velocity = get_velocity(game_world.goal, position1, position2)
+    while game_world.player_location != game_world.goal:
+        position1 = game_world.player_location
+        game_world.move_player(game_world.get_movement(velocity))
+        position2 = game_world.player_location
+        velocity = get_velocity(game_world.goal, position1, position2)
 
-        eat_food()
-
-        wishes_to_continue = input('Want to play again? (y/n)').lower()
-        if not wishes_to_continue in ('yes', 'y'):
-            break
+    eat_food()
