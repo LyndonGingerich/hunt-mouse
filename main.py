@@ -1,5 +1,6 @@
 '''The game backend
-All addresses, including movement addresses, are tuples.'''
+All addresses, including movement addresses, are tuples.
+Change the "manual_play" value in options.json to switch between the command line and script.py.'''
 
 from json import loads
 from math import hypot
