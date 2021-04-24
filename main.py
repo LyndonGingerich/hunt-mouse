@@ -5,7 +5,7 @@ import json
 import math
 from random import choice, random
 
-from gridmaus import script
+import script
 
 
 class World:
@@ -85,34 +85,36 @@ def rand_range(maximum):
     '''Supposed to be faster than randrange'''
     return int(random() * maximum)
 
-def run_game():
-    '''The main game loop'''
-    world_size = get_input('Length of game world: ', int)
-    world_dimensions = get_input('Number of dimensions of game world: ', int)
-    game_world = World(world_dimensions, world_size)
-    coordinates_string = '\n'.join(tuple(
-        f'Dimension {index}: {value}' for index, value in enumerate(game_world.player_location)
-        ))
-    velocity = 0
-
-    while game_world.player_location != game_world.goal:
-        options = get_options()
-        if options['output_coordinates']:
-            print('Coordinates:', coordinates_string)
-        print('Current velocity:', str(velocity))
-        position1 = game_world.player_location
-        move_template = tuple(
-            get_input(f'Movement in dimension {str(x)}: ', int) for x in game_world.dimension_range
-            )
-        game_world.move_player(tuple(move_template))
-        position2 = game_world.player_location
-        velocity = get_velocity(game_world.goal, position1, position2)
-
-    eat_food()
-
-    wishes_to_continue = input('Want to play again? (y/n)').lower()
-    if wishes_to_continue in ('yes', 'y'):
-        run_game()
-
 if __name__ == '__main__':
-    run_game()
+    while True:
+        options = get_options()
+        if options['manual_play']:
+            world_size = get_input('Length of game world: ', int)
+            world_dimensions = get_input('Number of dimensions of game world: ', int)
+        else:
+            world_size = script.size
+            world_dimensions = script.dimensions
+        game_world = World(world_dimensions, world_size)
+        coordinates_string = '\n'.join(tuple(
+            f'Dimension {index}: {value}' for index, value in enumerate(game_world.player_location)
+            ))
+        velocity = 0
+
+        while game_world.player_location != game_world.goal:
+            options = get_options()
+            if options['output_coordinates']:
+                print('Coordinates:', coordinates_string)
+            print('Current velocity:', str(velocity))
+            position1 = game_world.player_location
+            move_template = tuple(
+                get_input(f'Movement in dimension {str(x)}: ', int) for x in game_world.dimension_range
+                )
+            game_world.move_player(tuple(move_template))
+            position2 = game_world.player_location
+            velocity = get_velocity(game_world.goal, position1, position2)
+
+        eat_food()
+
+        wishes_to_continue = input('Want to play again? (y/n)').lower()
+        if not wishes_to_continue in ('yes', 'y'):
+            break
