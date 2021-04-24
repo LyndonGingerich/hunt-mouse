@@ -95,15 +95,19 @@ def get_velocity(goal, from_address, to_address):
     '''The player gets a readout of this.'''
     return get_distance(from_address, goal) - get_distance(to_address, goal)
 
+def get_world_details():
+    '''Defines the size and dimension of the game world'''
+    if options['manual_play']:
+        size = get_input('Length of game world: ', int)
+        dimensions = get_input('Number of dimensions of game world: ', int)
+        return size, dimensions
+    return script.size, script.dimensions
+
+
 if __name__ == '__main__':
     while True:
         options = get_options()
-        if options['manual_play']:
-            world_size = get_input('Length of game world: ', int)
-            world_dimensions = get_input('Number of dimensions of game world: ', int)
-        else:
-            world_size = script.size
-            world_dimensions = script.dimensions
+        world_size, world_dimensions = get_world_details()
         game_world = World(world_dimensions, world_size)
         velocity = 0
 
