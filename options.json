@@ -1,6 +1,5 @@
 {
     "manual_play": false,
     "teleport_enabled": false,
-    "unlimited_movement_enabled": false,
-    "warn_on_wall_collision": true
+    "unlimited_movement_enabled": false
 }

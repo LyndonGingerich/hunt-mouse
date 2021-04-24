@@ -43,7 +43,7 @@ class World:
         current_address = self.player_location
         movement_address = tuple(current_address[x] + movement[x] for x in self.dimension_range)
         to_address = adjust_address_to_boundaries(movement_address, self.size - 1)
-        if to_address != movement_address:
+        if options['manual_play'] and to_address != movement_address:
             print('Pow! The mouse runs into a wall!')
         self.player_location = to_address
 
