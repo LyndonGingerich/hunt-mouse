@@ -27,13 +27,12 @@ class World:
     def get_movement(self, velocity):
         '''Retrieves movement data from the player'''
         if options['manual_play']:
-            coordinates_string = '\n'.join(tuple(
-                f'Dimension {index}: {value}' for index, value in enumerate(game_world.player_location)
-                ))
+            print('-----')
+            coordinates_string = self.player_location
             print('Coordinates:', coordinates_string)
             print('Current velocity:', str(velocity))
             movement = tuple(
-                get_input(f'Movement in dimension {str(x)}: ', int) for x in game_world.dimension_range
+                get_input(f'Movement in dimension {str(x)}: ', int) for x in self.dimension_range
                 )
             return movement
         return script.move(velocity)
