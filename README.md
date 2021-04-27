@@ -15,3 +15,4 @@ The PC is a mouse hunting for food hidden somewhere in a multi-dimensional grid.
 * Write play documentation
 * Add functionality for limited movement and teleportation
 * Publish online
+* Build a code distribution
