@@ -2,7 +2,6 @@
 All addresses, including movement addresses, are tuples.
 Change the "manual_play" value in options.json to switch between the command line and script.py.'''
 
-from json import loads
 from math import hypot
 from random import choice, randrange
 
@@ -11,9 +10,10 @@ import script
 
 class World:
     '''Handles in-game abstractions'''
-    def __init__(self, dimensions, size):
+    def __init__(self, dimensions, size, controls='script'):
         self.dimensions = dimensions
         self.size = size
+        self.controls = controls
 
         dimension_center = int(self.size / 2)
         self.dimension_range = range(dimensions)
@@ -27,7 +27,7 @@ class World:
     
     def get_movement(self, velocity):
         '''Retrieves movement data from the player'''
-        if options['manual_play']:
+        if self.controls == 'manual':
             print('-----')
             coordinates_string = self.player_location
             print('Coordinates:', coordinates_string)
@@ -43,7 +43,7 @@ class World:
         current_address = self.player_location
         movement_address = tuple(current_address[x] + movement[x] for x in self.dimension_range)
         to_address = adjust_address_to_boundaries(movement_address, self.size - 1)
-        if options['manual_play'] and to_address != movement_address:
+        if self.controls == 'manual' and to_address != movement_address:
             print('Pow! The mouse runs into a wall!')
         self.player_location = to_address
 
@@ -85,29 +85,22 @@ def get_input(message, input_type):
             print(f'Input must be a valid `{input_type}`.')
     return input_value
 
-def get_options():
-    with open('options.json', 'r') as options_file:
-        options_JSON = options_file.read()
-    options = loads(options_JSON)
-    return options
-
 def get_velocity(goal, from_address, to_address):
     '''The player gets a readout of this.'''
     return get_distance(from_address, goal) - get_distance(to_address, goal)
 
-def get_world_details():
+def get_world_details(controls):
     '''Defines the size and dimension of the game world'''
-    if options['manual_play']:
+    if controls == 'manual':
         size = get_input('Length of game world: ', int)
         dimensions = get_input('Number of dimensions of game world: ', int)
         return size, dimensions
     return script.size, script.dimensions
 
-
-if __name__ == '__main__':
-    options = get_options()
-    world_size, world_dimensions = get_world_details()
-    game_world = World(world_dimensions, world_size)
+def run_game(world_controls):
+    '''The main game loop'''
+    world_size, world_dimensions = get_world_details(world_controls)
+    game_world = World(world_dimensions, world_size, world_controls)
     velocity = 0
 
     while game_world.player_location != game_world.goal:
