@@ -1,10 +1,13 @@
 '''The code for the web app'''
 
 from flask import Flask
+from flask_login import LoginManager
 
 import game
 
 app = Flask(__name__)
+
+login_manager = LoginManager()
 
 @app.route('/play/manual')
 def manual_play():
