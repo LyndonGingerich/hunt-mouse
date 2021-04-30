@@ -1,6 +1,5 @@
-'''The game backend
-All addresses, including movement addresses, are tuples.
-Change the "manual_play" value in options.json to switch between the command line and script.py.'''
+'''The main game file, which you run to run the game.
+run_game() runs demo mode by default.'''
 
 from math import hypot
 from random import choice, randrange
