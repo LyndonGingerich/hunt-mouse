@@ -109,7 +109,7 @@ harnessing your natural aptitude to grant you the power of inter-reality foragin
 Only trust your instincts, and the larders of who-knows-what parallel universe are yours!
 It is time for your navigational training to begin in the dimensional slipstream!"
 He flips a switch and fades from your sight into utter darkness.
-But somewhere--in the distance, or perhaps close by--beckons the fulfillment of an ancient craving.
+But somewhere--in the distance, or perhaps close by--beckons the alien fulfillment of an ancient craving.
 You can feel it.''')
 
 def run_game(demo=True):
