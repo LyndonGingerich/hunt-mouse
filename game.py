@@ -7,7 +7,7 @@ from random import choice, randrange
 import script
 
 
-class World:
+class Game:
     '''Handles in-game abstractions'''
     def __init__(self, dimensions, size, demo):
         self.demo = demo
@@ -88,13 +88,16 @@ def get_velocity(goal, from_address, to_address):
     '''The player gets a readout of this.'''
     return get_distance(from_address, goal) - get_distance(to_address, goal)
 
-def get_world_details(demo):
-    '''Defines the size and dimension of the game world'''
+def get_game_details(demo):
+    '''Defines the size and dimension of the game'''
     if demo:
-        size = get_input('Length of game world: ', int)
-        dimensions = get_input('Number of dimensions of game world: ', int)
+        print('You will be navigating using Cartesian coordinates along multiple axes.')
+        print('Each number you input will be added to the coordinate of your current location.')
+        print('A positive number moves you "forward" and a negative number "backward".')
+        size = get_input('How many units long would you like this game to be? ', int)
+        dimensions = get_input('In how many dimensions would you like to play? ', int)
         return size, dimensions
-    return script.world_length, script.dimensions
+    return script.game_size, script.game_dimensions
 
 def intro_game():
     '''Prints game introduction'''
@@ -110,22 +113,23 @@ Only trust your instincts, and the larders of who-knows-what parallel universe a
 It is time for your navigational training to begin in the dimensional slipstream!"
 He flips a switch and fades from your sight into utter darkness.
 But somewhere--in the distance, or perhaps close by--beckons the alien fulfillment of an ancient craving.
-You can feel it.''')
+You can feel it.
+-----''')
 
 def run_game(demo=True):
     '''The main game loop'''
     if demo:
         intro_game()
-    world_size, world_dimensions = get_world_details(demo)
-    game_world = World(world_dimensions, world_size, demo)
+    game_size, game_dimensions = get_game_details(demo)
+    game = Game(game_dimensions, game_size, demo)
     velocity = 0
     movements = 0
 
-    while game_world.player_location != game_world.goal:
-        position1 = game_world.player_location
-        game_world.move_player(game_world.get_movement(velocity))
-        position2 = game_world.player_location
-        velocity = get_velocity(game_world.goal, position1, position2)
+    while game.player_location != game.goal:
+        position1 = game.player_location
+        game.move_player(game.get_movement(velocity))
+        position2 = game.player_location
+        velocity = get_velocity(game.goal, position1, position2)
         movements += 1
 
     print(f'You won in only {movements} moves!')
