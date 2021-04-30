@@ -110,3 +110,6 @@ def run_game(demo=True):
         velocity = get_velocity(game_world.goal, position1, position2)
 
     eat_food()
+
+if __name__ == '__main__':
+    run_game()
