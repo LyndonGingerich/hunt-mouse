@@ -1,6 +1,6 @@
 # gridmaus
 
-Turn-based dimensional search game guided solely by a display of velocity relative to the goal
+You're a mad scientist's lab mouse in the interdimensional void. (It's totally a thing; just ask Wikipedia.) You're hungry. There's food somewhere, and you can tell whether you are moving closer to it or farther away.
 
 ## Gameplay
 
@@ -29,5 +29,4 @@ Fork the game. In game.py, change `run_game(demo=True)` to `run_game(demo=False)
 
 * Add database for high scores and submitted scripts
 * Add functionality for limited movement and teleportation
-* Add better general README description
 * Add worst-case scoring system for scripts
