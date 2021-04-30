@@ -23,7 +23,7 @@ class World:
     def generate_goal(self):
         '''Sets the goal at the beginning of the game'''
         return tuple(randrange(self.size) for x in self.dimension_range)
-    
+
     def get_movement(self, velocity):
         '''Retrieves movement data from the player'''
         if self.demo:
@@ -96,8 +96,26 @@ def get_world_details(demo):
         return size, dimensions
     return script.world_length, script.dimensions
 
+def intro_game():
+    '''Prints game introduction'''
+    print('''His gesticulations cause his lab coat to flap as wildly as his unkempt hair,
+        bleached from frequent late nights.
+        The fluorescent lighting glares off his glasses as he cackles.
+        The whiskers on your pointy nose prickle and your tail twitches apprehensively.
+        "Soon, my minion, we will conquer the multiverse!
+        Your brood has shown exemplary promise. I am confident that you will be the first survivor.
+        Your natural olfactory prowess has been genetically enhanced,
+        harnessing your natural aptitude to grant you the power of inter-reality foraging!
+        Only trust your instincts, and the larders of who-knows-what parallel universe are yours!
+        It is time for your navigational training to begin in the dimensional slipstream!"
+        He flips a switch and fades from your sight into utter darkness.
+        But somewhere--in the distance, or perhaps close by--beckons the fulfillment of an ancient craving.
+        You can feel it.''')
+
 def run_game(demo=True):
     '''The main game loop'''
+    if demo:
+        intro_game()
     world_size, world_dimensions = get_world_details(demo)
     game_world = World(world_dimensions, world_size, demo)
     velocity = 0
@@ -108,7 +126,8 @@ def run_game(demo=True):
         position2 = game_world.player_location
         velocity = get_velocity(game_world.goal, position1, position2)
 
-    eat_food()
+    if demo:
+        eat_food()
 
 if __name__ == '__main__':
     run_game()
