@@ -10,7 +10,7 @@ import script
 
 class World:
     '''Handles in-game abstractions'''
-    def __init__(self, dimensions, size, demo=False):
+    def __init__(self, dimensions, size, demo):
         self.dimensions = dimensions
         self.size = size
         self.demo = demo
@@ -89,7 +89,7 @@ def get_velocity(goal, from_address, to_address):
     '''The player gets a readout of this.'''
     return get_distance(from_address, goal) - get_distance(to_address, goal)
 
-def get_world_details(demo=False):
+def get_world_details(demo):
     '''Defines the size and dimension of the game world'''
     if demo:
         size = get_input('Length of game world: ', int)
@@ -97,7 +97,7 @@ def get_world_details(demo=False):
         return size, dimensions
     return script.size, script.dimensions
 
-def run_game(demo=False):
+def run_game(demo=True):
     '''The main game loop'''
     world_size, world_dimensions = get_world_details(demo)
     game_world = World(world_dimensions, world_size, demo)
