@@ -10,7 +10,6 @@ The PC is a mouse hunting for food hidden somewhere in a multi-dimensional grid.
 
 * Write game flavor
 * Add database for high scores and submitted scripts
-* Add account management to manage and submit scripts
 * Write play documentation
 * Add functionality for limited movement and teleportation
 * Publish online
