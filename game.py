@@ -10,10 +10,10 @@ import script
 
 class World:
     '''Handles in-game abstractions'''
-    def __init__(self, dimensions, size, controls='script'):
+    def __init__(self, dimensions, size, demo=False):
         self.dimensions = dimensions
         self.size = size
-        self.controls = controls
+        self.demo = demo
 
         dimension_center = int(self.size / 2)
         self.dimension_range = range(dimensions)
@@ -27,7 +27,7 @@ class World:
     
     def get_movement(self, velocity):
         '''Retrieves movement data from the player'''
-        if self.controls == 'manual':
+        if self.demo:
             print('-----')
             coordinates_string = self.player_location
             print('Coordinates:', coordinates_string)
@@ -43,7 +43,7 @@ class World:
         current_address = self.player_location
         movement_address = tuple(current_address[x] + movement[x] for x in self.dimension_range)
         to_address = adjust_address_to_boundaries(movement_address, self.size - 1)
-        if self.controls == 'manual' and to_address != movement_address:
+        if self.demo and to_address != movement_address:
             print('Pow! The mouse runs into a wall!')
         self.player_location = to_address
 
@@ -89,18 +89,18 @@ def get_velocity(goal, from_address, to_address):
     '''The player gets a readout of this.'''
     return get_distance(from_address, goal) - get_distance(to_address, goal)
 
-def get_world_details(controls):
+def get_world_details(demo=False):
     '''Defines the size and dimension of the game world'''
-    if controls == 'manual':
+    if demo:
         size = get_input('Length of game world: ', int)
         dimensions = get_input('Number of dimensions of game world: ', int)
         return size, dimensions
     return script.size, script.dimensions
 
-def run_game(world_controls):
+def run_game(demo=False):
     '''The main game loop'''
-    world_size, world_dimensions = get_world_details(world_controls)
-    game_world = World(world_dimensions, world_size, world_controls)
+    world_size, world_dimensions = get_world_details(demo)
+    game_world = World(world_dimensions, world_size, demo)
     velocity = 0
 
     while game_world.player_location != game_world.goal:
