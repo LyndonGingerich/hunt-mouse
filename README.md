@@ -4,6 +4,8 @@ Turn-based dimensional search game guided solely by a display of velocity relati
 
 ## Gameplay
 
+Run game.py to play.
+
 You will begin at the center of the "game world", or the setting for this particular iteration of the game, in every dimension.
 
 ### Demo mode
