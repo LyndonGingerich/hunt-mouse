@@ -27,8 +27,8 @@ Fork the game. In game.py, change `run_game(demo=True)` to `run_game(demo=False)
 
 ## To do
 
-* Add scoring system
 * Add database for high scores and submitted scripts
 * Add functionality for limited movement and teleportation
 * Publish online
 * Add better general README description
+* Add worst-case scoring system for scripts
