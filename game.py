@@ -10,9 +10,9 @@ import script
 class World:
     '''Handles in-game abstractions'''
     def __init__(self, dimensions, size, demo):
+        self.demo = demo
         self.dimensions = dimensions
         self.size = size
-        self.demo = demo
 
         dimension_center = int(self.size / 2)
         self.dimension_range = range(dimensions)
