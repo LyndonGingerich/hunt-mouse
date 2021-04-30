@@ -119,13 +119,16 @@ def run_game(demo=True):
     world_size, world_dimensions = get_world_details(demo)
     game_world = World(world_dimensions, world_size, demo)
     velocity = 0
+    movements = 0
 
     while game_world.player_location != game_world.goal:
         position1 = game_world.player_location
         game_world.move_player(game_world.get_movement(velocity))
         position2 = game_world.player_location
         velocity = get_velocity(game_world.goal, position1, position2)
+        movements += 1
 
+    print(f'You won in only {movements} moves!')
     if demo:
         eat_food()
 
