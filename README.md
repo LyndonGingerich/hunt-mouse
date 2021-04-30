@@ -26,8 +26,8 @@ Fork the game. In game.py, change `run_game(demo=True)` to `run_game(demo=False)
 ## To do
 
 * Write game flavor
+* Add scoring system
 * Add database for high scores and submitted scripts
 * Add functionality for limited movement and teleportation
 * Publish online
 * Build a code distribution
-* Add scoring system
