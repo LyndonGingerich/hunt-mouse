@@ -95,7 +95,7 @@ def get_world_details(demo):
         size = get_input('Length of game world: ', int)
         dimensions = get_input('Number of dimensions of game world: ', int)
         return size, dimensions
-    return script.size, script.dimensions
+    return script.world_length, script.dimensions
 
 def run_game(demo=True):
     '''The main game loop'''
