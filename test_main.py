@@ -18,7 +18,7 @@ def test_get_distance():
     assert game.get_distance((0, 0, 1), (0, 0, 0)) == 1
     assert game.get_distance((0, 7, 0), (0, 0, 0)) == 7
     assert game.get_distance((0, 0, 0), (0, 0, 0)) == 0
-    assert game.get_distance((0, 0, 0), (1, 1, 1)) == (2 ** 0.5) ** 3
+    assert game.get_distance((0, 0, 0), (1, 1, 1)) == 3 ** 0.5
 
 def test_get_velocity():
     assert game.get_velocity(goal=(0, 0, 0), from_address=(0, 0, 1), to_address=(0, 0, 2)) == -1
