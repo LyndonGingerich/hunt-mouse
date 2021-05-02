@@ -106,7 +106,7 @@ But somewhere--in the distance, or perhaps close by--beckons the alien fulfillme
 You can feel it.
 -----''')
 
-def run_game(demo=False):
+def run_game(demo=True):
     '''The main game loop'''
     if demo:
         intro_game()
