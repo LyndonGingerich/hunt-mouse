@@ -32,33 +32,23 @@ class Game:
             print('Coordinates:', coordinates_string)
             print('Current velocity:', str(velocity))
             movement = tuple(
-                get_input(f'Movement in dimension {str(x)}: ', int) for x in self.dimension_range
+                input(f'Movement in dimension {str(x)}: ') for x in self.dimension_range
                 )
-            return movement
-        return script.move(velocity)
+        else:
+            movement = script.move(velocity)
+        return convert_movement_address(movement)
 
     def move_player(self, movement):
         '''Probably the most important method of the game'''
         current_address = self.player_location
         movement_address = tuple(current_address[x] + movement[x] for x in self.dimension_range)
-        to_address = adjust_address_to_boundaries(movement_address, self.size - 1)
-        if self.demo and to_address != movement_address:
-            print('Pow! The mouse runs into a wall!')
-        self.player_location = to_address
+        self.player_location = movement_address
 
 
-def adjust_address_to_boundaries(address, boundary):
-    '''Keeps the player from leaving the game area'''
-    return tuple(adjust_coordinate_to_boundary(x, boundary) for x in address)
-
-def adjust_coordinate_to_boundary(coordinate, boundary):
-    '''Helper function for adjust_address_to_boundary()
-    Ensures that boundary <= coordinate <= 0.'''
-    if coordinate > boundary:
-        return boundary
-    if coordinate < 0:
-        return 0
-    return coordinate
+def convert_movement_address(movement):
+    '''Transforms an operator movement address into an addition movement address'''
+    operations = {'+': 1, '-': -1, '': 0}
+    return tuple(operations[i] for i in movement)
 
 def eat_food():
     '''Victory message'''
@@ -116,7 +106,7 @@ But somewhere--in the distance, or perhaps close by--beckons the alien fulfillme
 You can feel it.
 -----''')
 
-def run_game(demo=True):
+def run_game(demo=False):
     '''The main game loop'''
     if demo:
         intro_game()

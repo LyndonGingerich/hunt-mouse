@@ -6,13 +6,8 @@ import game
 
 # Test code
 
-def test_adjust_address_to_boundaries():
-    assert game.adjust_address_to_boundaries((1, 1, 5), 3) == (1, 1, 3)
-
-def test_adjust_coordinate_to_boundary():
-    assert game.adjust_coordinate_to_boundary(1, 5) == 1
-    assert game.adjust_coordinate_to_boundary(-1, 5) == 0
-    assert game.adjust_coordinate_to_boundary(7, 5) == 5
+def test_convert_movement_address():
+    assert game.convert_movement_address(('+', '-', '')) == (1, -1, 0)
 
 def test_get_distance():
     assert game.get_distance((0, 0, 1), (0, 0, 0)) == 1
