@@ -79,14 +79,21 @@ def get_distance(address1, address2):
     distances = tuple(abs(address1[x] - address2[x]) for x in range(len(address1)))
     return hypot(*distances)
 
-def get_input(message, input_type):
+def get_converted_input(message, conversion_function):
     '''Checks input type until correct'''
     input_value = None
-    while not isinstance(input_value, input_type):
+    error_types = {int: ValueError, string_to_bool: KeyError}
+    error_type = error_types[conversion_function]
+    error_messages = {
+        ValueError: f'Input must be a valid `{conversion_function}`.',
+        # KeyError is currently used only by string_to_bool().
+        KeyError: 'Please enter input that can be parsed as either "yes" or "no".'
+    }
+    while not isinstance(input_value, conversion_function):
         try:
-            input_value = input_type(input(message))
-        except ValueError:
-            print(f'Input must be a valid `{input_type}`.')
+            input_value = conversion_function(input(message))
+        except error_type:
+            print(error_messages[error_type])
     return input_value
 
 def get_velocity(goal, from_address, to_address):
@@ -99,8 +106,9 @@ def get_game_details(demo):
         print('You will be navigating using Cartesian coordinates along multiple axes.')
         print('Each number you input will be added to the coordinate of your current location.')
         print('A positive number moves you "forward" and a negative number "backward".')
-        size = get_input('How many units long would you like this game to be? ', int)
-        dimensions = get_input('In how many dimensions would you like to play? ', int)
+        tutorial_mode = get_converted_input('Would you like to play the tutorial?', string_to_bool)
+        size = get_converted_input('How many units long would you like this game to be? ', int)
+        dimensions = get_converted_input('In how many dimensions would you like to play? ', int)
         return size, dimensions
     return script.game_size, script.game_dimensions
 
@@ -123,6 +131,11 @@ def run_game(demo=True):
     print(f'You won in only {movements} moves!')
     if demo:
         eat_food()
+
+def string_to_bool(input_string):
+    '''Gets boolean input from the terminal'''
+    values = {'y': True, 'yes': True, 'n': False, 'no': False, '': False}
+    return values[input_string.lower()]
 
 if __name__ == '__main__':
     run_game()
