@@ -1,11 +1,26 @@
 '''The main game file, which you run to run the game.
 run_game() runs demo mode by default.'''
 
+from contextlib import contextmanager
+import curses
 from math import hypot
 from random import choice, randrange
 
 import script
 
+
+@contextmanager
+class Curse:
+    '''Context manager for curses text'''
+    def __init__(self):
+        pass
+
+    def __enter__(self):
+        screen = curses.initscr()
+        return screen
+
+    def __exit__(self, *_):
+        curses.endwin()
 
 class Game:
     '''Handles in-game abstractions'''
@@ -96,7 +111,6 @@ bleached from frequent late nights.
 The fluorescent lighting glares off his glasses as he cackles.
 The whiskers on your pointy nose prickle and your tail twitches apprehensively.
 "Soon, my minion, we will conquer the multiverse!
-Your brood has shown exemplary promise. I am confident that you will be the first survivor.
 Your natural olfactory prowess has been genetically enhanced,
 harnessing your natural aptitude to grant you the power of inter-reality foraging!
 Only trust your instincts, and the larders of who-knows-what parallel universe are yours!
