@@ -7,21 +7,6 @@ from random import choice, randrange
 import script
 
 
-GAME_INTRO = '''His gesticulations cause his lab coat to flap as wildly as his unkempt hair,
-bleached from frequent late nights.
-The fluorescent lighting glares off his glasses as he cackles.
-The whiskers on your pointy nose prickle and your tail twitches apprehensively.
-"Soon, my minion, we will conquer the multiverse!
-Your brood has shown exemplary promise. I am confident that you will be the first survivor.
-Your natural olfactory prowess has been genetically enhanced,
-harnessing your natural aptitude to grant you the power of inter-reality foraging!
-Only trust your instincts, and the larders of who-knows-what parallel universe are yours!
-It is time for your navigational training to begin in the dimensional slipstream!"
-He flips a switch and fades from your sight into utter darkness.
-But somewhere--in the distance, or perhaps close by--beckons the alien fulfillment of an ancient craving.
-You can feel it.
------'''
-
 class Game:
     '''Handles in-game abstractions'''
     def __init__(self, dimensions, size, demo):
@@ -113,14 +98,14 @@ def get_game_details(demo):
             )
 
         def tutorial_game_details():
-            print('You must now navigate blindly to find the food you can smell.')
+            details = size, dimensions = 5, 3
+            with open('tutorial.txt', 'r') as tutorial_text:
+                print(tutorial_text.read())
             print(
-                'The game difficulty is decided by two settings:',
-                '1. The size of the space in which you must navigate',
-                '2. The number of dimensions through which you must navigate'
+                '\n',
+                f'We will set this first game to {dimensions} dimensions, each of length {size}.'
             )
-            print('We will set this first game to size 5 and 2 dimensions.')
-            return 5, 2
+            return details
 
         tutorial = get_converted_input('Would you like to play the tutorial?', string_to_bool)
         return tutorial_game_details() if tutorial else succinct_game_details()
@@ -131,7 +116,8 @@ def run_game(demo=True):
     '''The main game loop
     The tutorial is available within demo mode.'''
     if demo:
-        print(GAME_INTRO)
+        with open('intro.txt', 'r') as intro_text:
+            print(intro_text.read())
     game_size, game_dimensions = get_game_details(demo)
     game = Game(game_dimensions, game_size, demo)
     velocity = 0
