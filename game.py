@@ -83,7 +83,7 @@ def get_converted_input(message, conversion_function):
     '''Checks input type until correct'''
     input_value = None
     error_types = {int: ValueError, string_to_bool: KeyError}
-    error_type = error_types[conversion_function]
+    error_to_check = error_types[conversion_function]
     error_messages = {
         ValueError: f'Input must be a valid `{conversion_function}`.',
         # KeyError is currently used only by string_to_bool().
@@ -92,8 +92,8 @@ def get_converted_input(message, conversion_function):
     while not isinstance(input_value, conversion_function):
         try:
             input_value = conversion_function(input(message))
-        except error_type:
-            print(error_messages[error_type])
+        except error_to_check:
+            print(error_messages[error_to_check])
     return input_value
 
 def get_velocity(goal, from_address, to_address):
@@ -101,19 +101,35 @@ def get_velocity(goal, from_address, to_address):
     return get_distance(from_address, goal) - get_distance(to_address, goal)
 
 def get_game_details(demo):
-    '''Defines the size and dimension of the game'''
-    if demo:
-        print('You will be navigating using Cartesian coordinates along multiple axes.')
-        print('Each number you input will be added to the coordinate of your current location.')
-        print('A positive number moves you "forward" and a negative number "backward".')
-        tutorial_mode = get_converted_input('Would you like to play the tutorial?', string_to_bool)
-        size = get_converted_input('How many units long would you like this game to be? ', int)
-        dimensions = get_converted_input('In how many dimensions would you like to play? ', int)
-        return size, dimensions
-    return script.game_size, script.game_dimensions
+    '''Defines the size and dimension of the game by user input'''
+    def demo_game_details():
+        '''Uses get_converted_input to get game details from the user'''
+        def succinct_game_details():
+            return (
+                get_converted_input(
+                    'How many units long would you like this game to be in each dimension? ', int
+                ),
+                get_converted_input('In how many dimensions would you like to play? ', int)
+            )
+
+        def tutorial_game_details():
+            print('You must now navigate blindly to find the food you can smell.')
+            print(
+                'The game difficulty is decided by two settings:',
+                '1. The size of the space in which you must navigate',
+                '2. The number of dimensions through which you must navigate'
+            )
+            print('We will set this first game to size 5 and 2 dimensions.')
+            return 5, 2
+
+        tutorial = get_converted_input('Would you like to play the tutorial?', string_to_bool)
+        return tutorial_game_details() if tutorial else succinct_game_details()
+
+    return demo_game_details() if demo else script.game_size, script.game_dimensions
 
 def run_game(demo=True):
-    '''The main game loop'''
+    '''The main game loop
+    The tutorial is available within demo mode.'''
     if demo:
         print(GAME_INTRO)
     game_size, game_dimensions = get_game_details(demo)
