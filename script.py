@@ -13,6 +13,6 @@ def move(velocity):
     '''The function run by the game to get new movements
     Return an iterable of length game_size of values from possible_values.'''
     possible_values = ('+', '-', '')
-    movement = [choice(possible_values) for x in range(game_dimensions)] # definitely edit this
+    movement = [choice(possible_values) for _ in range(game_dimensions)] # definitely edit this
     logs.append(Log(movement, velocity))
     return movement
