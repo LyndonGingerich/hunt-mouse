@@ -33,11 +33,11 @@ class Game:
         self.dimension_range = range(dimensions)
 
         self.goal = self.generate_goal()
-        self.player_location = tuple(dimension_center for x in self.dimension_range)
+        self.player_location = tuple(dimension_center for _ in self.dimension_range)
 
     def generate_goal(self):
         '''Sets the goal at the beginning of the game'''
-        return tuple(randrange(self.size) for x in self.dimension_range)
+        return tuple(randrange(self.size) for _ in self.dimension_range)
 
     def get_movement(self, velocity):
         '''Retrieves movement data from the player'''
