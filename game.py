@@ -7,6 +7,21 @@ from random import choice, randrange
 import script
 
 
+GAME_INTRO = '''His gesticulations cause his lab coat to flap as wildly as his unkempt hair,
+bleached from frequent late nights.
+The fluorescent lighting glares off his glasses as he cackles.
+The whiskers on your pointy nose prickle and your tail twitches apprehensively.
+"Soon, my minion, we will conquer the multiverse!
+Your brood has shown exemplary promise. I am confident that you will be the first survivor.
+Your natural olfactory prowess has been genetically enhanced,
+harnessing your natural aptitude to grant you the power of inter-reality foraging!
+Only trust your instincts, and the larders of who-knows-what parallel universe are yours!
+It is time for your navigational training to begin in the dimensional slipstream!"
+He flips a switch and fades from your sight into utter darkness.
+But somewhere--in the distance, or perhaps close by--beckons the alien fulfillment of an ancient craving.
+You can feel it.
+-----'''
+
 class Game:
     '''Handles in-game abstractions'''
     def __init__(self, dimensions, size, demo):
@@ -89,27 +104,10 @@ def get_game_details(demo):
         return size, dimensions
     return script.game_size, script.game_dimensions
 
-def intro_game():
-    '''Prints game introduction'''
-    print('''His gesticulations cause his lab coat to flap as wildly as his unkempt hair,
-bleached from frequent late nights.
-The fluorescent lighting glares off his glasses as he cackles.
-The whiskers on your pointy nose prickle and your tail twitches apprehensively.
-"Soon, my minion, we will conquer the multiverse!
-Your brood has shown exemplary promise. I am confident that you will be the first survivor.
-Your natural olfactory prowess has been genetically enhanced,
-harnessing your natural aptitude to grant you the power of inter-reality foraging!
-Only trust your instincts, and the larders of who-knows-what parallel universe are yours!
-It is time for your navigational training to begin in the dimensional slipstream!"
-He flips a switch and fades from your sight into utter darkness.
-But somewhere--in the distance, or perhaps close by--beckons the alien fulfillment of an ancient craving.
-You can feel it.
------''')
-
 def run_game(demo=True):
     '''The main game loop'''
     if demo:
-        intro_game()
+        print(GAME_INTRO)
     game_size, game_dimensions = get_game_details(demo)
     game = Game(game_dimensions, game_size, demo)
     velocity = 0
