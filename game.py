@@ -45,6 +45,7 @@ class Game:
             )
 
         movement = demo_movement() if self.demo else script.move(velocity)
+        convert_movement_address = lambda movement: tuple(MOVEMENT_OPERATORS[i] for i in movement)
         return convert_movement_address(movement)
 
     def move_player(self, movement):
@@ -52,17 +53,6 @@ class Game:
         current_address = self.player_location
         movement_address = tuple(current_address[x] + movement[x] for x in self.dimension_range)
         self.player_location = movement_address
-
-
-def convert_movement_address(movement):
-    '''Transforms an operator movement address into an addition movement address'''
-    return tuple(MOVEMENT_OPERATORS[i] for i in movement)
-
-def distance(address1, address2):
-    '''In Cartesian space using tuples
-    Iterates by index to display correlation between address1[x] and address2[x]'''
-    distances = tuple(abs(address1[x] - address2[x]) for x in range(len(address1)))
-    return hypot(*distances)
 
 def eat_food():
     '''Victory message'''
@@ -98,10 +88,6 @@ def get_int_input(message):
         failure_message='Please enter a positive integer.'
     ))
 
-def get_velocity(goal, from_address, to_address):
-    '''The player gets a readout of this.'''
-    return distance(from_address, goal) - distance(to_address, goal)
-
 def get_game_details(demo):
     '''Defines the size and dimension of the game by user input'''
     def demo_game_details():
@@ -132,6 +118,14 @@ def run_game(demo=True):
         '''Runs the actual gameplay; returns the number of moves the player took'''
         velocity = moves = 0
         to_position = game.player_location
+        distance = (
+            lambda address1, address2:
+            hypot(*(abs(address1[x] - address2[x]) for x in range(len(address1))))
+        )
+        get_velocity = (
+            lambda goal, from_address, to_address:
+            distance(from_address, goal) - distance(to_address, goal)
+        )
         while to_position != game.goal:
             from_position = to_position
             game.move_player(game.get_movement(velocity))
