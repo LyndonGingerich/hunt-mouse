@@ -101,10 +101,7 @@ def get_game_details(demo):
             details = size, dimensions = 5, 3
             with open('tutorial.txt', 'r') as tutorial_text:
                 print(tutorial_text.read())
-            print(
-                '\n',
-                f'We will set this first game to {dimensions} dimensions, each of length {size}.'
-            )
+            print(f'We will set this first game to {dimensions} dimensions, each of length {size}.')
             return details
 
         tutorial = get_converted_input('Would you like to play the tutorial?', string_to_bool)
@@ -115,24 +112,27 @@ def get_game_details(demo):
 def run_game(demo=True):
     '''The main game loop
     The tutorial is available within demo mode.'''
+    def play_and_get_moves():
+        '''Runs the actual gameplay; returns the number of moves the player took'''
+        velocity = 0
+        moves = 0
+        while game.player_location != game.goal:
+            from_position = to_position
+            game.move_player(game.get_movement(velocity))
+            to_position = game.player_location
+            velocity = get_velocity(game.goal, from_position, to_position)
+            moves += 1
+        return moves
+
     if demo:
         with open('intro.txt', 'r') as intro_text:
             print(intro_text.read())
     game_size, game_dimensions = get_game_details(demo)
     game = Game(game_dimensions, game_size, demo)
-    velocity = 0
-    movements = 0
-
-    while game.player_location != game.goal:
-        position1 = game.player_location
-        game.move_player(game.get_movement(velocity))
-        position2 = game.player_location
-        velocity = get_velocity(game.goal, position1, position2)
-        movements += 1
-
-    print(f'You won in only {movements} moves!')
+    moves = play_and_get_moves()
     if demo:
         eat_food()
+    print(f'You won in only {moves} moves!')
 
 def string_to_bool(input_string):
     '''Gets boolean input from the terminal'''
