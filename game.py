@@ -44,9 +44,7 @@ class Game:
 
     def move_player(self, movement):
         '''Where the action happens'''
-        current_address = self.player_location
-        movement_address = map(sum, zip(current_address, movement))
-        self.player_location = movement_address
+        self.player_location = map(sum, zip(self.player_location, movement))
 
 def eat_food():
     '''Victory message'''
