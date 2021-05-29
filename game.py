@@ -21,34 +21,31 @@ class Game:
         dimension_center = int(self.size / 2)
         self.dimension_range = range(dimensions)
 
-        generate_goal = lambda x: tuple(randrange(x.size) for _ in x.dimension_range)
-        self.goal = generate_goal(self)
-        self.player_location = tuple(dimension_center for _ in self.dimension_range)
+        self.goal = tuple(map(lambda _: randrange(self.size), self.dimension_range))
+        self.player_location = [dimension_center] * self.dimensions
 
     def get_movement(self, velocity):
         '''Retrieves movement data from the player'''
         def demo_movement():
-            is_movement_operator = lambda x: x in MOVEMENT_OPERATORS.keys()
-            print(DIVIDER)
-            coordinates_string = self.player_location
-            print('Coordinates:', coordinates_string)
-            print('Current velocity:', str(velocity))
-            return tuple(
-                validate_input(
-                    message=f'Movement in dimension {x}: ',
-                    condition=is_movement_operator,
+            def get_operator_input(dimension):
+                return validate_input(
+                    message=f'Movement in dimension {dimension}: ',
+                    condition=lambda x: x in MOVEMENT_OPERATORS.keys(),
                     failure_message='Please enter "+", "-", or nothing at all.'
-                ) for x in self.dimension_range
-            )
+                )
+
+            print(DIVIDER)
+            print('Coordinates:', tuple(self.player_location))
+            print('Current velocity:', str(velocity))
+            return map(get_operator_input, self.dimension_range)
 
         movement = demo_movement() if self.demo else script.move(velocity)
-        convert_movement_address = lambda movement: tuple(MOVEMENT_OPERATORS[i] for i in movement)
-        return convert_movement_address(movement)
+        return map(lambda x: MOVEMENT_OPERATORS[x], movement)
 
     def move_player(self, movement):
-        '''Probably the most important method of the game'''
+        '''Where the action happens'''
         current_address = self.player_location
-        movement_address = tuple(current_address[x] + movement[x] for x in self.dimension_range)
+        movement_address = map(sum, zip(current_address, movement))
         self.player_location = movement_address
 
 def eat_food():
@@ -78,10 +75,9 @@ def get_int_input(message):
         else:
             return True
 
-    is_valid_measurement = lambda x: converts_to_int(x) and int(x) > 0
     return int(validate_input(
         message=message,
-        condition=is_valid_measurement,
+        condition=lambda x: converts_to_int(x) and int(x) > 0,
         failure_message='Please enter a positive integer.'
     ))
 
@@ -90,10 +86,10 @@ def get_game_details(demo):
     def demo_game_details():
         '''Uses get_int_input to get game details from the user'''
         def succinct_game_details():
-            return (
-                get_int_input('How many units long would you like this game to be in each dimension? '),
-                get_int_input('In how many dimensions would you like to play? ')
-            )
+            return map(get_int_input, (
+                'How many units long would you like this game to be in each dimension? ',
+                'In how many dimensions would you like to play? '
+            ))
 
         def tutorial_game_details():
             details = size, dimensions = 5, 3
@@ -115,10 +111,9 @@ def run_game(demo=True):
         '''Runs the actual gameplay; returns the number of moves the player took'''
         velocity = moves = 0
         to_position = game.player_location
-        distance = (
-            lambda address1, address2:
-            hypot(*(abs(address1[x] - address2[x]) for x in range(len(address1))))
-        )
+        abs_difference = lambda x, y: abs(x - y)
+        abs_difference_of_tuple = lambda x: abs_difference(*x)
+        distance = lambda address1, address2: hypot(*map(abs_difference_of_tuple, zip(address1, address2)))
         get_velocity = (
             lambda goal, from_address, to_address:
             distance(from_address, goal) - distance(to_address, goal)
