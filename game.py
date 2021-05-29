@@ -35,7 +35,7 @@ class Game:
             print('Coordinates:', coordinates_string)
             print('Current velocity:', str(velocity))
             return tuple(
-                input(f'Movement in dimension {str(x)}: ') for x in self.dimension_range
+                input(f'Movement in dimension {x}: ') for x in self.dimension_range
                 )
 
         movement = demo_movement() if self.demo else script.move(velocity)
