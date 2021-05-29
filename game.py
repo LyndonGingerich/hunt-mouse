@@ -2,10 +2,13 @@
 run_game() runs demo mode by default.'''
 
 from math import hypot
+from os import get_terminal_size
 from random import choice, randrange
 
 import script
 
+
+DIVIDER = '-' * get_terminal_size()[0]
 
 class Game:
     '''Handles in-game abstractions'''
@@ -27,7 +30,7 @@ class Game:
     def get_movement(self, velocity):
         '''Retrieves movement data from the player'''
         if self.demo:
-            print('-----')
+            print(DIVIDER)
             coordinates_string = self.player_location
             print('Coordinates:', coordinates_string)
             print('Current velocity:', str(velocity))
@@ -100,12 +103,14 @@ def get_game_details(demo):
 
         def tutorial_game_details():
             details = size, dimensions = 5, 3
+            print(DIVIDER)
             with open('tutorial.txt', 'r') as tutorial_text:
                 print(tutorial_text.read())
             print(f'We will set this first game to {dimensions} dimensions, each of length {size}.')
+            print(DIVIDER)
             return details
 
-        tutorial = get_converted_input('Would you like to play the tutorial?', string_to_bool)
+        tutorial = get_converted_input('Would you like to play the tutorial? (y/n)', string_to_bool)
         return tutorial_game_details() if tutorial else succinct_game_details()
 
     return demo_game_details() if demo else script.game_size, script.game_dimensions
@@ -127,7 +132,9 @@ def run_game(demo=True):
 
     if demo:
         with open('intro.txt', 'r') as intro_text:
+            print(DIVIDER)
             print(intro_text.read())
+            print(DIVIDER)
     game_size, game_dimensions = get_game_details(demo)
     game = Game(game_dimensions, game_size, demo)
     moves = play_and_get_moves()
