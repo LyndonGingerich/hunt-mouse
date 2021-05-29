@@ -120,10 +120,10 @@ def run_game(demo=True):
     The tutorial is available within demo mode.'''
     def play_and_get_moves():
         '''Runs the actual gameplay; returns the number of moves the player took'''
-        velocity = 0
-        moves = 0
-        while game.player_location != game.goal:
-            from_position = game.player_location
+        velocity = moves = 0
+        to_position = game.player_location
+        while to_position != game.goal:
+            from_position = to_position
             game.move_player(game.get_movement(velocity))
             to_position = game.player_location
             velocity = get_velocity(game.goal, from_position, to_position)
@@ -132,9 +132,7 @@ def run_game(demo=True):
 
     if demo:
         with open('intro.txt', 'r') as intro_text:
-            print(DIVIDER)
-            print(intro_text.read())
-            print(DIVIDER)
+            print(DIVIDER, intro_text.read(), DIVIDER, sep='\n')
     game_size, game_dimensions = get_game_details(demo)
     game = Game(game_dimensions, game_size, demo)
     moves = play_and_get_moves()
