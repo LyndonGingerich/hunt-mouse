@@ -117,7 +117,7 @@ def run_game(demo=True):
         velocity = 0
         moves = 0
         while game.player_location != game.goal:
-            from_position = to_position
+            from_position = game.player_location
             game.move_player(game.get_movement(velocity))
             to_position = game.player_location
             velocity = get_velocity(game.goal, from_position, to_position)
