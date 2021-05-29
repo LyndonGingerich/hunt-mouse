@@ -29,16 +29,16 @@ class Game:
 
     def get_movement(self, velocity):
         '''Retrieves movement data from the player'''
-        if self.demo:
+        def demo_movement():
             print(DIVIDER)
             coordinates_string = self.player_location
             print('Coordinates:', coordinates_string)
             print('Current velocity:', str(velocity))
-            movement = tuple(
+            return tuple(
                 input(f'Movement in dimension {str(x)}: ') for x in self.dimension_range
                 )
-        else:
-            movement = script.move(velocity)
+
+        movement = demo_movement if self.demo else script.move(velocity)
         return convert_movement_address(movement)
 
     def move_player(self, movement):
