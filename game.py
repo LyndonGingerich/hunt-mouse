@@ -74,7 +74,8 @@ def get_converted_input(message, conversion_function):
         # KeyError is currently used only by string_to_bool().
         KeyError: 'Please enter input that can be parsed as either "yes" or "no".'
     }
-    while not isinstance(input_value, conversion_function):
+    return_types = {int: int, string_to_bool: bool}
+    while not isinstance(input_value, return_types[conversion_function]):
         try:
             input_value = conversion_function(input(message))
         except error_to_check:
