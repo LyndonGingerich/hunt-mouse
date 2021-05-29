@@ -118,7 +118,7 @@ def run_game(demo=True):
             lambda goal, from_address, to_address:
             distance(from_address, goal) - distance(to_address, goal)
         )
-        while to_position != game.goal:
+        while tuple(to_position) != game.goal:
             from_position = to_position
             game.move_player(game.get_movement(velocity))
             to_position = game.player_location
