@@ -38,7 +38,7 @@ class Game:
                 input(f'Movement in dimension {str(x)}: ') for x in self.dimension_range
                 )
 
-        movement = demo_movement if self.demo else script.move(velocity)
+        movement = demo_movement() if self.demo else script.move(velocity)
         return convert_movement_address(movement)
 
     def move_player(self, movement):
@@ -113,7 +113,7 @@ def get_game_details(demo):
         tutorial = get_converted_input('Would you like to play the tutorial? (y/n)', string_to_bool)
         return tutorial_game_details() if tutorial else succinct_game_details()
 
-    return demo_game_details() if demo else script.game_size, script.game_dimensions
+    return demo_game_details() if demo else (script.game_size, script.game_dimensions)
 
 def run_game(demo=True):
     '''The main game loop
