@@ -22,7 +22,7 @@ class Game:
         self.dimension_range = range(dimensions)
 
         self.goal = tuple(map(lambda _: randrange(self.size), self.dimension_range))
-        self.player_location = map(lambda _: dimension_center, self.dimension_range)
+        self.player_location = tuple(map(lambda _: dimension_center, self.dimension_range))
 
     def get_movement(self, velocity):
         '''Retrieves movement data from the player'''
@@ -35,7 +35,7 @@ class Game:
                 )
 
             print(DIVIDER)
-            print('Coordinates:', tuple(self.player_location))
+            print('Coordinates:', self.player_location)
             print('Current velocity:', str(velocity))
             return map(get_operator_input, self.dimension_range)
 
@@ -44,7 +44,7 @@ class Game:
 
     def move_player(self, movement):
         '''Where the action happens'''
-        self.player_location = map(sum, zip(self.player_location, movement))
+        self.player_location = tuple(map(sum, zip(self.player_location, movement)))
 
 def eat_food():
     '''Victory message'''
