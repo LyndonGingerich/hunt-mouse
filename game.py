@@ -22,7 +22,7 @@ class Game:
         self.dimension_range = range(dimensions)
 
         self.goal = tuple(map(lambda _: randrange(self.size), self.dimension_range))
-        self.player_location = [dimension_center] * self.dimensions
+        self.player_location = map(lambda _: dimension_center, self.dimension_range)
 
     def get_movement(self, velocity):
         '''Retrieves movement data from the player'''
