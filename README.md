@@ -5,6 +5,5 @@ You're a mad scientist's lab mouse in the interdimensional void. (It's totally a
 ## Play by script
 
 * Fork the game.
-* In game.py, change `run_game(demo=True)` to `run_game(demo=False)`.
 * Edit script.py with your code.
-* Run the game normally.
+* Run play-by-script.py.
