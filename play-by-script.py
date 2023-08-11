@@ -1,4 +1,4 @@
-'''Run this file to play the game using your code in script.py.'''
+"""Run this file to play the game using your code in script.py."""
 
 import game
 

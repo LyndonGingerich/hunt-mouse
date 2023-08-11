@@ -1,18 +1,19 @@
-'''The main game file, which you run to run the game.
-run_game() runs demo mode by default.'''
+"""The main game file, which you run to run the game.
+run_game() runs demo mode by default."""
 
-from math import hypot
 from os import get_terminal_size
 from random import choice, randrange
 
+from helpers import *
 import script
-
 
 DIVIDER = '-' * get_terminal_size()[0]
 MOVEMENT_OPERATORS = {'+': 1, '-': -1, '': 0}
 
+
 class Game:
-    '''Handles in-game abstractions'''
+    """Handles in-game abstractions"""
+
     def __init__(self, dimensions, size, demo):
         self.demo = demo
         self.dimensions = dimensions
@@ -25,7 +26,8 @@ class Game:
         self.player_location = tuple(map(lambda _: dimension_center, self.dimension_range))
 
     def get_movement(self, velocity):
-        '''Retrieves movement data from the player'''
+        """Retrieves movement data from the player"""
+
         def demo_movement():
             def get_operator_input(dimension):
                 return validate_input(
@@ -43,28 +45,32 @@ class Game:
         return map(lambda x: MOVEMENT_OPERATORS[x], movement)
 
     def move_player(self, movement):
-        '''Where the action happens'''
+        """Where the action happens"""
         self.player_location = tuple(map(sum, zip(self.player_location, movement)))
 
+
 def eat_food():
-    '''Victory message'''
+    """Victory message"""
     with open('foods.txt', 'r') as foods_file:
         foods = list(foods_file)
     food = choice(foods)
     food = food.rstrip('\n')
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
+
 def get_bool_input(message):
-    '''Gets boolean input from the terminal'''
+    """Gets boolean input from the terminal"""
     values = {'y': True, 'yes': True, 'n': False, 'no': False, '': False}
     return values[validate_input(
         message=message,
-        condition = lambda x: x in values,
+        condition=lambda x: x in values,
         failure_message='Please enter input that can be parsed as "yes" or "no".'
     )]
 
+
 def get_int_input(message):
-    '''Gets an integer input from the terminal'''
+    """Gets an integer input from the terminal"""
+
     def converts_to_int(check_string):
         try:
             int(check_string)
@@ -79,10 +85,13 @@ def get_int_input(message):
         failure_message='Please enter a positive integer.'
     ))
 
+
 def get_game_details(demo):
-    '''Defines the size and dimension of the game by user input'''
+    """Defines the size and dimension of the game by user input"""
+
     def demo_game_details():
-        '''Uses get_int_input to get game details from the user'''
+        """Uses get_int_input to get game details from the user"""
+
         def succinct_game_details():
             return map(get_int_input, (
                 'How many units long would you like this game to be in each dimension? ',
@@ -102,16 +111,15 @@ def get_game_details(demo):
 
     return demo_game_details() if demo else (script.game_size, script.game_dimensions)
 
+
 def run_game(demo=True):
-    '''The main game loop
-    The tutorial is available within demo mode.'''
+    """The main game loop
+    The tutorial is available within demo mode."""
+
     def play_and_get_moves():
-        '''Runs the actual gameplay; returns the number of moves the player took'''
-        velocity = moves = 0
+        """Runs the actual gameplay; returns the number of moves the player took"""
+        velocity = cumulative_moves = 0
         to_position = game.player_location
-        abs_difference = lambda x, y: abs(x - y)
-        abs_difference_of_tuple = lambda x: abs_difference(*x)
-        distance = lambda address1, address2: hypot(*map(abs_difference_of_tuple, zip(address1, address2)))
         get_velocity = (
             lambda goal, from_address, to_address:
             distance(from_address, goal) - distance(to_address, goal)
@@ -121,8 +129,8 @@ def run_game(demo=True):
             game.move_player(game.get_movement(velocity))
             to_position = game.player_location
             velocity = get_velocity(game.goal, from_position, to_position)
-            moves += 1
-        return moves
+            cumulative_moves += 1
+        return cumulative_moves
 
     if demo:
         with open('intro.txt', 'r') as intro_text:
@@ -134,14 +142,16 @@ def run_game(demo=True):
         eat_food()
     print(f'You won in only {moves} moves!')
 
+
 def validate_input(message, condition, failure_message):
-    '''Applies a condition to input to check it'''
+    """Applies a condition to input to check it"""
     text = input(message)
     text_valid = condition(text)
     while not text_valid:
         text = input(failure_message)
         text_valid = condition(text)
     return text
+
 
 if __name__ == '__main__':
     run_game()
