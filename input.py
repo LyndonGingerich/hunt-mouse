@@ -12,18 +12,9 @@ def get_bool_input(message):
 
 def get_natural_input(message):
     """Gets an integer input from the terminal"""
-
-    def converts_to_int(check_string):
-        try:
-            int(check_string)
-        except ValueError:
-            return False
-        else:
-            return True
-
     return int(validate_input_of_predicate(
         message=message,
-        condition=lambda x: converts_to_int(x) and int(x) > 0,
+        condition=lambda x: x.isdigit() and int(x) > 0,
         failure_message='Please enter a positive integer.'
     ))
 
