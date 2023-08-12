@@ -23,8 +23,8 @@ class Game:
         dimension_center = int(self.size / 2)
         self.player_location = repeat_tuple(dimension_center, self.dimensions)
 
-    def get_movement(self, velocity):
-        """Retrieves movement data from the player"""
+    def move_player(self, velocity):
+        """Where the action happens"""
 
         def demo_movement():
             def get_operator_input(dimension):
@@ -38,12 +38,10 @@ class Game:
             print('Current velocity:', str(velocity))
             return map(get_operator_input, range(self.dimensions))
 
-        movement = demo_movement() if self.demo else script.move(velocity)
-        return (MOVEMENT_OPERATORS[x] for x in movement)
+        operators = demo_movement() if self.demo else script.move(velocity)
+        movement = (MOVEMENT_OPERATORS[x] for x in operators)
 
-    def move_player(self, velocity):
-        """Where the action happens"""
-        self.player_location = tuple(map(sum, zip(self.player_location, self.get_movement(velocity))))
+        self.player_location = tuple(map(sum, zip(self.player_location, movement)))
 
 
 def eat_food():
