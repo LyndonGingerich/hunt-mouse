@@ -143,10 +143,8 @@ def run_game(demo=True):
 def validate_input_of_predicate(message, condition, failure_message):
     """Applies a condition to input to check it"""
     text = input(message)
-    text_valid = condition(text)
-    while not text_valid:
+    while not condition(text):
         text = input(failure_message)
-        text_valid = condition(text)
     return text
 
 
