@@ -151,11 +151,11 @@ def validate_input(message, condition, failure_message):
 
 
 def validate_input_of_values(message, valid_values):
-    return validate_input(
-        message=message,
-        condition=lambda x: x in valid_values,
-        failure_message=f'Valid inputs: {valid_values}'
-    )
+    """Checks whether an input is in a set of valid inputs"""
+    text = input(message).lower()
+    while text not in valid_values:
+        text = input(f'Valid inputs: {valid_values}')
+    return text
 
 
 if __name__ == '__main__':
