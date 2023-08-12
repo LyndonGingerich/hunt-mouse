@@ -85,30 +85,31 @@ def run_game(demo=True):
     """The main game loop
     The tutorial is available within demo mode."""
 
+    moves = Counter()
+
     def get_velocity(goal, from_address, to_address):
         return distance(from_address, goal) - distance(to_address, goal)
 
-    def play_and_get_moves():
-        """Runs the actual gameplay; returns the number of moves the player took"""
-        velocity = cumulative_moves = 0
+    def play():
+        """Runs the actual gameplay"""
+        velocity = 0
         to_position = game.player_location
         while tuple(to_position) != game.goal:
             from_position = to_position
             game.move_player(game.get_movement(velocity))
             to_position = game.player_location
             velocity = get_velocity(game.goal, from_position, to_position)
-            cumulative_moves += 1
-        return cumulative_moves
+            moves.increment()
 
     if demo:
         with open('intro.txt', 'r') as intro_text:
             print(DIVIDER, intro_text.read(), DIVIDER, sep='\n')
     game_size, game_dimensions = get_game_details(demo)
     game = Game(game_dimensions, game_size, demo)
-    moves = play_and_get_moves()
+    play()
     if demo:
         eat_food()
-    print(f'You won in only {moves} moves!')
+    print(f'You won in only {moves.read()} moves!')
 
 
 if __name__ == '__main__':
