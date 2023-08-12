@@ -19,8 +19,7 @@ class Game:
         self.demo = demo
         self.dimensions = dimensions
         self.size = size
-        self.dimension_range = range(dimensions)
-        self.goal = tuple(randrange(self.size) for _ in self.dimension_range)
+        self.goal = tuple(randrange(self.size) for _ in range(self.dimensions))
         dimension_center = int(self.size / 2)
         self.player_location = repeat_tuple(dimension_center, self.dimensions)
 
@@ -37,7 +36,7 @@ class Game:
             print(DIVIDER)
             print('Coordinates:', self.player_location)
             print('Current velocity:', str(velocity))
-            return map(get_operator_input, self.dimension_range)
+            return map(get_operator_input, range(self.dimensions))
 
         movement = demo_movement() if self.demo else script.move(velocity)
         return (MOVEMENT_OPERATORS[x] for x in movement)
