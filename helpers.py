@@ -1,4 +1,4 @@
-"""Generic library functions."""
+"""Miscellaneous non-project-specific helpers"""
 
 from math import hypot
 
