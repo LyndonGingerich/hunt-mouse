@@ -99,7 +99,7 @@ def run_game(demo=True):
     moves = Counter()
     velocity = 0
     to_position = game.player_location
-    while tuple(to_position) != game.goal:
+    while to_position != game.goal:
         from_position = to_position
         game.move_player(game.get_movement(velocity))
         to_position = game.player_location
