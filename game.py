@@ -22,8 +22,8 @@ class Game:
         dimension_center = int(self.size / 2)
         self.dimension_range = range(dimensions)
 
-        self.goal = tuple(map(lambda _: randrange(self.size), self.dimension_range))
-        self.player_location = tuple(map(lambda _: dimension_center, self.dimension_range))
+        self.goal = tuple(randrange(self.size) for _ in self.dimension_range)
+        self.player_location = repeat_tuple(dimension_center, self.dimensions)
 
     def get_movement(self, velocity):
         """Retrieves movement data from the player"""
@@ -42,7 +42,7 @@ class Game:
             return map(get_operator_input, self.dimension_range)
 
         movement = demo_movement() if self.demo else script.move(velocity)
-        return map(lambda x: MOVEMENT_OPERATORS[x], movement)
+        return (MOVEMENT_OPERATORS[x] for x in movement)
 
     def move_player(self, movement):
         """Where the action happens"""
@@ -93,10 +93,10 @@ def get_game_details(demo):
         """Uses get_int_input to get game details from the user"""
 
         def succinct_game_details():
-            return map(get_int_input, (
-                'How many units long would you like this game to be in each dimension? ',
-                'In how many dimensions would you like to play? '
-            ))
+            return (
+                get_int_input('How many units long would you like this game to be in each dimension? '),
+                get_int_input('In how many dimensions would you like to play? ')
+            )
 
         def tutorial_game_details():
             details = size, dimensions = 5, 3

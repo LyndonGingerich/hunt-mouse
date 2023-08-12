@@ -13,3 +13,7 @@ def abs_difference_of_tuple(x):
 
 def distance(address1, address2):
     return hypot(*map(abs_difference_of_tuple, zip(address1, address2)))
+
+
+def repeat_tuple(element, length):
+    return tuple([element] * length)
