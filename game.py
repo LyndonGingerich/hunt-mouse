@@ -116,14 +116,13 @@ def run_game(demo=True):
     """The main game loop
     The tutorial is available within demo mode."""
 
+    def get_velocity(goal, from_address, to_address):
+        return distance(from_address, goal) - distance(to_address, goal)
+
     def play_and_get_moves():
         """Runs the actual gameplay; returns the number of moves the player took"""
         velocity = cumulative_moves = 0
         to_position = game.player_location
-        get_velocity = (
-            lambda goal, from_address, to_address:
-            distance(from_address, goal) - distance(to_address, goal)
-        )
         while tuple(to_position) != game.goal:
             from_position = to_position
             game.move_player(game.get_movement(velocity))
