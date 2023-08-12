@@ -3,12 +3,12 @@
 from math import hypot
 
 
-def abs_difference(x, y):
+def difference(x, y):
     return abs(x - y)
 
 
 def abs_difference_of_tuple(x):
-    return abs_difference(*x)
+    return difference(*x)
 
 
 def distance(address1, address2):
