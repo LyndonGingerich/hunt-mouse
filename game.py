@@ -19,11 +19,9 @@ class Game:
         self.demo = demo
         self.dimensions = dimensions
         self.size = size
-
-        dimension_center = int(self.size / 2)
         self.dimension_range = range(dimensions)
-
         self.goal = tuple(randrange(self.size) for _ in self.dimension_range)
+        dimension_center = int(self.size / 2)
         self.player_location = repeat_tuple(dimension_center, self.dimensions)
 
     def get_movement(self, velocity):
