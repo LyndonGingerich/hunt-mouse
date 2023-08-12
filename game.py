@@ -41,9 +41,9 @@ class Game:
         movement = demo_movement() if self.demo else script.move(velocity)
         return (MOVEMENT_OPERATORS[x] for x in movement)
 
-    def move_player(self, movement):
+    def move_player(self, velocity):
         """Where the action happens"""
-        self.player_location = tuple(map(sum, zip(self.player_location, movement)))
+        self.player_location = tuple(map(sum, zip(self.player_location, self.get_movement(velocity))))
 
 
 def eat_food():
@@ -101,7 +101,7 @@ def run_game(demo=True):
     to_position = game.player_location
     while to_position != game.goal:
         from_position = to_position
-        game.move_player(game.get_movement(velocity))
+        game.move_player(velocity)
         to_position = game.player_location
         velocity = get_velocity(game.goal, from_position, to_position)
         moves.increment()
