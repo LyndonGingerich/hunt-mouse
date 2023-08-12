@@ -30,10 +30,9 @@ class Game:
 
         def demo_movement():
             def get_operator_input(dimension):
-                return validate_input(
+                return validate_input_of_values(
                     message=f'Movement in dimension {dimension}: ',
-                    condition=lambda x: x in MOVEMENT_OPERATORS.keys(),
-                    failure_message='Please enter "+", "-", or nothing at all.'
+                    valid_values=set(MOVEMENT_OPERATORS.keys())
                 )
 
             print(DIVIDER)
@@ -61,10 +60,9 @@ def eat_food():
 def get_bool_input(message):
     """Gets boolean input from the terminal"""
     values = {'y': True, 'yes': True, 'n': False, 'no': False, '': False}
-    return values[validate_input(
+    return values[validate_input_of_values(
         message=message,
-        condition=lambda x: x in values,
-        failure_message='Please enter input that can be parsed as "yes" or "no".'
+        valid_values=set(values.keys())
     )]
 
 
@@ -150,6 +148,14 @@ def validate_input(message, condition, failure_message):
         text = input(failure_message)
         text_valid = condition(text)
     return text
+
+
+def validate_input_of_values(message, valid_values):
+    return validate_input(
+        message=message,
+        condition=lambda x: x in valid_values,
+        failure_message=f'Valid inputs: {valid_values}'
+    )
 
 
 if __name__ == '__main__':
