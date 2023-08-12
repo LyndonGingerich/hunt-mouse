@@ -14,3 +14,14 @@ def distance(address1, address2):
 
 def repeat_tuple(element, length):
     return tuple([element] * length)
+
+
+class Counter:
+    def __init__(self):
+        self.count = 0
+
+    def increment(self):
+        self.count += 1
+
+    def read(self):
+        return self.count
