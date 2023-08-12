@@ -4,6 +4,11 @@
 def get_bool_input(message):
     """Gets boolean input from the terminal"""
     values = {'y': True, 'yes': True, 'n': False, 'no': False, '': False}
+    return get_dict_input(message, values)
+
+
+def get_dict_input(message, values):
+    """Selects value from a dictionary by user input"""
     input_value = validate_input_of_values(message=message, valid_values=set(values.keys()))
     return values[input_value]
 
