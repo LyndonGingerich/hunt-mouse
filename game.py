@@ -1,13 +1,13 @@
 """The main game file, which you run to run the game.
 run_game() runs demo mode by default."""
 
-from os import get_terminal_size
+from shutil import get_terminal_size
 from random import choice, randrange
 
 from helpers import *
 import script
 
-DIVIDER = '-' * get_terminal_size()[0]
+DIVIDER = '-' * get_terminal_size().columns
 MOVEMENT_OPERATORS = {'+': 1, '-': -1, '': 0}
 
 
