@@ -10,7 +10,7 @@ def get_bool_input(message):
     )]
 
 
-def get_int_input(message):
+def get_natural_input(message):
     """Gets an integer input from the terminal"""
 
     def converts_to_int(check_string):
