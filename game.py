@@ -6,6 +6,7 @@ from shutil import get_terminal_size
 import script
 from helpers import *
 from input import *
+from input import get_natural_input
 
 DIVIDER = '-' * get_terminal_size().columns
 MOVEMENT_OPERATORS = {'+': 1, '-': -1, '': 0, '1': 1, '0': 0, '-1': -1}
@@ -59,13 +60,10 @@ def get_game_details():
     def get_manual_game_details():
         """Uses get_int_input to get game details from the user"""
 
-        def succinct_game_details():
-            return (
-                get_natural_input('Number of dimensions: '),
-                get_natural_input('Game size in each dimension: ')
-            )
-
-        return succinct_game_details()
+        return (
+            get_natural_input('Number of dimensions: '),
+            get_natural_input('Game size in each dimension: ')
+        )
 
     return get_manual_game_details() if script.PLAY_MANUALLY else (script.game_size, script.game_dimensions)
 
