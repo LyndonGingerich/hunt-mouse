@@ -76,9 +76,6 @@ def run_game():
         return distance(from_address, goal) - distance(to_address, goal)
 
     # initialize
-    if script.play_manually:
-        with open('intro.txt', 'r') as intro_text:
-            print(DIVIDER, intro_text.read(), DIVIDER, sep='\n')
     game_size, game_dimensions = get_game_details()
     game = Game(game_dimensions, game_size)
 
