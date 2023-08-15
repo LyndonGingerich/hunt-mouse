@@ -63,21 +63,18 @@ def run_game():
     """The main game loop.
     The tutorial is available when not playing by script."""
 
-    def get_velocity(goal, from_address, to_address):
-        return distance(from_address, goal) - distance(to_address, goal)
-
     # initialize
     game = Game()
 
     # play
     moves = Counter()
     velocity = 0
-    to_position = game.player_location
-    while to_position != game.goal:
-        from_position = to_position
+    current_distance = distance(game.player_location, game.goal)
+    while game.player_location != game.goal:
         game.move_player(velocity)
-        to_position = game.player_location
-        velocity = get_velocity(game.goal, from_position, to_position)
+        new_distance = distance(game.player_location, game.goal)
+        velocity = current_distance - new_distance
+        current_distance = new_distance
         moves.increment()
 
     # finish
