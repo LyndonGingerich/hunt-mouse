@@ -34,7 +34,7 @@ class Game:
             print(DIVIDER)
             print('Coordinates:', self.player_location)
             print('Current velocity:', str(velocity))
-            return tuple(map(get_operator_input, range(self.dimensions)))
+            return tuple(get_operator_input(i) for i in range(self.dimensions))
 
         def get_new_player_coordinates():
             new_movement = move_manually() if script.PLAY_MANUALLY else script.move(velocity)
