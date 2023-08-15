@@ -93,7 +93,7 @@ def run_game():
     # finish
     if script.PLAY_MANUALLY:
         eat_food()
-    print(f'You won in only {moves.read()} moves!')
+    print(f'Number of moves: {moves.read()}')
 
 
 if __name__ == '__main__':
