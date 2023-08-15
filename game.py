@@ -61,8 +61,8 @@ def get_game_details():
 
         def succinct_game_details():
             return (
-                get_natural_input('How many units long would you like this game to be in each dimension? '),
-                get_natural_input('In how many dimensions would you like to play? ')
+                get_natural_input('Number of dimensions: '),
+                get_natural_input('Game size in each dimension: ')
             )
 
         return succinct_game_details()
