@@ -4,7 +4,7 @@ from collections import namedtuple
 from random import choice  # needed only for sample code
 
 # Change this to False to use your script.
-play_manually = True
+PLAY_MANUALLY = True
 
 game_dimensions = 3
 game_size = 5

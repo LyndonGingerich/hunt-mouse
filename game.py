@@ -36,7 +36,7 @@ class Game:
             print('Current velocity:', str(velocity))
             return map(get_operator_input, range(self.dimensions))
 
-        operators = move_manually() if script.play_manually else script.move(velocity)
+        operators = move_manually() if script.PLAY_MANUALLY else script.move(velocity)
         movement = (MOVEMENT_OPERATORS[x] for x in operators)
 
         self.player_location = tuple(map(sum, zip(self.player_location, movement)))
@@ -65,7 +65,7 @@ def get_game_details():
 
         return succinct_game_details()
 
-    return get_manual_game_details() if script.play_manually else (script.game_size, script.game_dimensions)
+    return get_manual_game_details() if script.PLAY_MANUALLY else (script.game_size, script.game_dimensions)
 
 
 def run_game():
@@ -91,7 +91,7 @@ def run_game():
         moves.increment()
 
     # finish
-    if script.play_manually:
+    if script.PLAY_MANUALLY:
         eat_food()
     print(f'You won in only {moves.read()} moves!')
 
