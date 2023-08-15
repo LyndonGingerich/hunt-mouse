@@ -63,16 +63,7 @@ def get_game_details():
                 get_natural_input('In how many dimensions would you like to play? ')
             )
 
-        def tutorial_game_details():
-            details = size, dimensions = 5, 3
-            print(DIVIDER)
-            with open('tutorial.txt', 'r') as tutorial_text:
-                print(tutorial_text.read())
-            print(f'We will set this first game to {dimensions} dimensions, each of length {size}.')
-            return details
-
-        tutorial = get_bool_input('Would you like to play the tutorial? (y/n)')
-        return tutorial_game_details() if tutorial else succinct_game_details()
+        return succinct_game_details()
 
     return get_manual_game_details() if script.play_manually else (script.game_size, script.game_dimensions)
 
