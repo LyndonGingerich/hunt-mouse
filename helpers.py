@@ -18,10 +18,10 @@ def repeat_tuple(element, length):
 
 class Counter:
     def __init__(self):
-        self.count = 0
+        self.__count = 0
 
     def increment(self):
-        self.count += 1
+        self.__count += 1
 
     def read(self):
-        return self.count
+        return self.__count
