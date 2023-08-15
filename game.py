@@ -48,7 +48,7 @@ def eat_food():
         foods = list(foods_file)
     food = choice(foods)
     food = food.rstrip('\n')
-    print(f'The mouse finds {food} and scarfs it down. Good job!')
+    print(f'You find and devour {food}. Victory is sweet.')
 
 
 def get_game_details():
