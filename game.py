@@ -36,10 +36,12 @@ class Game:
             print('Current velocity:', str(velocity))
             return tuple(map(get_operator_input, range(self.dimensions)))
 
-        operators = move_manually() if script.PLAY_MANUALLY else script.move(velocity)
-        movement = (MOVEMENT_OPERATORS[x] for x in operators)
+        def get_new_player_coordinates():
+            new_movement = move_manually() if script.PLAY_MANUALLY else script.move(velocity)
+            for coordinate, operator in zip(self.player_location, new_movement):
+                yield coordinate + MOVEMENT_OPERATORS[operator]
 
-        self.player_location = tuple(map(sum, zip(self.player_location, movement)))
+        self.player_location = tuple(get_new_player_coordinates())
 
 
 def eat_food():
