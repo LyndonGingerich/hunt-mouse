@@ -57,15 +57,12 @@ def eat_food():
 def get_game_details():
     """Defines the size and dimension of the game by user input"""
 
-    def get_manual_game_details():
-        """Uses get_int_input to get game details from the user"""
-
+    if script.PLAY_MANUALLY:
         return (
             get_natural_input('Number of dimensions: '),
             get_natural_input('Game size in each dimension: ')
         )
-
-    return get_manual_game_details() if script.PLAY_MANUALLY else (script.game_size, script.game_dimensions)
+    return script.game_size, script.game_dimensions
 
 
 def run_game():
