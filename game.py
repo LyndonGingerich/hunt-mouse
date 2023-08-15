@@ -15,9 +15,14 @@ MOVEMENT_OPERATORS = {'+': 1, '-': -1, '': 0, '1': 1, '0': 0, '-1': -1}
 class Game:
     """Handles in-game abstractions"""
 
-    def __init__(self, dimensions, size):
-        self.dimensions = dimensions
-        self.size = size
+    def __init__(self):
+        self.dimensions, self.size = (
+            get_natural_input('Number of dimensions: '),
+            get_natural_input('Game size in each dimension: ')
+        ) if script.PLAY_MANUALLY else (
+            script.game_size, script.game_dimensions
+        )
+
         self.goal = tuple(randrange(self.size) for _ in range(self.dimensions))
         dimension_center = int(self.size / 2)
         self.player_location = repeat_tuple(dimension_center, self.dimensions)
@@ -54,17 +59,6 @@ def eat_food():
     print(f'You find and devour {food}. Victory is sweet.')
 
 
-def get_game_details():
-    """Defines the size and dimension of the game by user input"""
-
-    if script.PLAY_MANUALLY:
-        return (
-            get_natural_input('Number of dimensions: '),
-            get_natural_input('Game size in each dimension: ')
-        )
-    return script.game_size, script.game_dimensions
-
-
 def run_game():
     """The main game loop.
     The tutorial is available when not playing by script."""
@@ -73,8 +67,7 @@ def run_game():
         return distance(from_address, goal) - distance(to_address, goal)
 
     # initialize
-    game_size, game_dimensions = get_game_details()
-    game = Game(game_dimensions, game_size)
+    game = Game()
 
     # play
     moves = Counter()
