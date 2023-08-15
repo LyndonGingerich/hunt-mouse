@@ -1,5 +1,4 @@
-"""The main game file, which you run to run the game.
-run_game() runs demo mode by default."""
+"""The main game file, which you run to run the game."""
 
 from random import choice, randrange
 from shutil import get_terminal_size
@@ -15,8 +14,7 @@ MOVEMENT_OPERATORS = {'+': 1, '-': -1, '': 0, '1': 1, '0': 0, '-1': -1}
 class Game:
     """Handles in-game abstractions"""
 
-    def __init__(self, dimensions, size, demo):
-        self.demo = demo
+    def __init__(self, dimensions, size):
         self.dimensions = dimensions
         self.size = size
         self.goal = tuple(randrange(self.size) for _ in range(self.dimensions))
@@ -26,7 +24,7 @@ class Game:
     def move_player(self, velocity):
         """Where the action happens"""
 
-        def demo_movement():
+        def move_manually():
             def get_operator_input(dimension):
                 return validate_input_of_values(
                     message=f'Movement in dimension {dimension}: ',
@@ -38,7 +36,7 @@ class Game:
             print('Current velocity:', str(velocity))
             return map(get_operator_input, range(self.dimensions))
 
-        operators = demo_movement() if self.demo else script.move(velocity)
+        operators = move_manually() if script.play_manually else script.move(velocity)
         movement = (MOVEMENT_OPERATORS[x] for x in operators)
 
         self.player_location = tuple(map(sum, zip(self.player_location, movement)))
@@ -53,10 +51,10 @@ def eat_food():
     print(f'The mouse finds {food} and scarfs it down. Good job!')
 
 
-def get_game_details(demo):
+def get_game_details():
     """Defines the size and dimension of the game by user input"""
 
-    def demo_game_details():
+    def get_manual_game_details():
         """Uses get_int_input to get game details from the user"""
 
         def succinct_game_details():
@@ -76,22 +74,22 @@ def get_game_details(demo):
         tutorial = get_bool_input('Would you like to play the tutorial? (y/n)')
         return tutorial_game_details() if tutorial else succinct_game_details()
 
-    return demo_game_details() if demo else (script.game_size, script.game_dimensions)
+    return get_manual_game_details() if script.play_manually else (script.game_size, script.game_dimensions)
 
 
-def run_game(demo=True):
-    """The main game loop
-    The tutorial is available within demo mode."""
+def run_game():
+    """The main game loop.
+    The tutorial is available when not playing by script."""
 
     def get_velocity(goal, from_address, to_address):
         return distance(from_address, goal) - distance(to_address, goal)
 
     # initialize
-    if demo:
+    if script.play_manually:
         with open('intro.txt', 'r') as intro_text:
             print(DIVIDER, intro_text.read(), DIVIDER, sep='\n')
-    game_size, game_dimensions = get_game_details(demo)
-    game = Game(game_dimensions, game_size, demo)
+    game_size, game_dimensions = get_game_details()
+    game = Game(game_dimensions, game_size)
 
     # play
     moves = Counter()
@@ -105,7 +103,7 @@ def run_game(demo=True):
         moves.increment()
 
     # finish
-    if demo:
+    if script.play_manually:
         eat_food()
     print(f'You won in only {moves.read()} moves!')
 
